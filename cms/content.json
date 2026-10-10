@@ -1,0 +1,577 @@
+{
+  "AristaSiteSettings": [
+    {
+      "title": "Site Settings",
+      "logo": "assets/images/v3/logo.png",
+      "brandName": "Arista Music Center",
+      "registrationButtonText": "Đăng ký học thử",
+      "programButtonText": "Học thử bộ môn này →",
+      "teacherButtonText": "Đặt lịch gặp giáo viên",
+      "callButtonText": "Gọi",
+      "floatingRegistrationButtonText": "Học thử",
+      "zaloButtonText": "Zalo",
+      "messengerButtonText": "Messenger",
+      "addressLabel": "Địa chỉ",
+      "phoneLabel": "Hotline",
+      "hoursLabel": "Giờ hoạt động",
+      "primaryPhone": "0935672244",
+      "primaryPhoneLabel": "093.567.2244 (Mr. Hoàng)",
+      "secondaryPhone": "0896465225",
+      "secondaryPhoneLabel": "089.646.5225",
+      "address": "STH03B.32 Đường số 2C, KĐT Lê Hồng Phong 2, P. Phước Hải, Nha Trang, Khánh Hòa",
+      "openingHours": "Thứ 2 – Thứ 6: 17:00 – 20:00\nThứ 7: 8:00 – 19:00\nChủ nhật: 8:00 – 11:00",
+      "locationImage": "assets/images/v3s/building.jpg",
+      "locationImageDescription": "Cơ sở Arista Music Center",
+      "facebookUrl": "https://www.facebook.com/hocpianonhatrang/",
+      "facebookTitle": "Fanpage Facebook",
+      "facebookDescription": "Tin tức, lịch biểu diễn, hình ảnh lớp học",
+      "youtubeUrl": "https://www.youtube.com/@aristamusiccenter8738",
+      "youtubeTitle": "Kênh YouTube Arista Music Center",
+      "youtubeDescription": "Xem học viên biểu diễn và luyện tập",
+      "zaloUrl": "https://zalo.me/0935672244",
+      "messengerUrl": "https://m.me/hocpianonhatrang",
+      "footerDescription": "Piano · Violin · Trống · Guitar · Thanh nhạc · Saxophone · Đàn bầu · Mỹ thuật",
+      "copyrightText": "© 2026 Arista Music Center · Nha Trang",
+      "faqContactText": "Chưa thấy câu trả lời bạn cần? Gọi"
+    }
+  ],
+  "AristaPageContent": [
+    {
+      "title": "Hero",
+      "sectionKey": "hero",
+      "introText": "Trung tâm âm nhạc · Nha Trang",
+      "heading": "Ươm mầm tài năng",
+      "tagline": "Confidence in being yourself",
+      "description": "Đào tạo Piano, Violin, Guitar, Thanh nhạc, Trống, Saxophone, Đàn bầu và Mỹ thuật cho trẻ em và người lớn. Lộ trình bài bản từ vỡ lòng đến luyện thi quốc tế, cùng sân khấu thật cho mỗi học viên.",
+      "image": "assets/images/v3s/hero-seaside.jpg",
+      "imageDescription": "Dàn nhạc học viên Arista biểu diễn bên vịnh Nha Trang",
+      "primaryButtonText": "Đăng ký học thử →",
+      "secondaryButtonText": "Xem lộ trình học",
+      "menuLabel": "",
+      "showInMenu": false,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Quote",
+      "sectionKey": "quote",
+      "introText": "",
+      "heading": "",
+      "tagline": "",
+      "description": "“Mỗi thanh âm được tạo nên không chỉ để hoàn thiện một bản nhạc, mà còn để nuôi dưỡng một tâm hồn biết cảm nhận và một cá tính dám thể hiện.”",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "",
+      "showInMenu": false,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Teaching Philosophy",
+      "sectionKey": "philosophy",
+      "introText": "Triết lý giảng dạy",
+      "heading": "Học nhạc theo cách của Arista",
+      "tagline": "",
+      "description": "Không chỉ là kỹ thuật, đó là hành trình tìm ra giọng nói âm nhạc của riêng mỗi học viên.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "",
+      "showInMenu": false,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Programs",
+      "sectionKey": "programs",
+      "introText": "Chương trình",
+      "heading": "Các bộ môn",
+      "tagline": "",
+      "description": "",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Chương trình",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "Cơ bản\nNâng cao\nChứng chỉ quốc tế\nLuyện thi\nOnline",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Learning Journey",
+      "sectionKey": "learning-journey",
+      "introText": "Lộ trình học",
+      "heading": "Từ nốt nhạc đầu tiên đến sân khấu",
+      "tagline": "",
+      "description": "Mỗi giai đoạn được xây dựng để học viên chơi nhạc cụ tự tin, đúng kỹ thuật và giàu cảm xúc.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Lộ trình",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Teachers",
+      "sectionKey": "teachers",
+      "introText": "",
+      "heading": "Đội ngũ giảng viên",
+      "tagline": "",
+      "description": "Giảng viên chuyên môn cho từng bộ môn, trực tiếp biểu diễn cùng học viên trên sân khấu.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Giảng viên",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Achievements",
+      "sectionKey": "achievements",
+      "introText": "Thành tích",
+      "heading": "",
+      "tagline": "",
+      "description": "",
+      "image": "assets/images/v3s/crescendo-orchestra.jpg",
+      "imageDescription": "Học viên Arista độc tấu cùng dàn nhạc tại Crescendo 2025",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Thành tích",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "43",
+      "featuredLabel": "giải thưởng tại Việt Nam Piano Got Talent 2026",
+      "caption": "Độc tấu cùng dàn nhạc · Crescendo International Music Festival & Competition 2025"
+    },
+    {
+      "title": "Student Moments",
+      "sectionKey": "moments",
+      "introText": "Khoảnh khắc",
+      "heading": "Học viên Arista trên sân khấu",
+      "tagline": "",
+      "description": "Music Festival & Concert 2026 — Gala “Confidence in being yourself”, 08.02.2026.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Khoảnh khắc",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "FAQ",
+      "sectionKey": "faq",
+      "introText": "Hỏi đáp",
+      "heading": "Câu hỏi thường gặp",
+      "tagline": "",
+      "description": "",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Hỏi đáp",
+      "showInMenu": true,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    },
+    {
+      "title": "Registration",
+      "sectionKey": "registration",
+      "introText": "Đăng ký",
+      "heading": "Bắt đầu hành trình âm nhạc của bạn",
+      "tagline": "",
+      "description": "Để lại thông tin, Arista sẽ liên hệ tư vấn lộ trình và sắp xếp buổi học thử.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "",
+      "showInMenu": false,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": ""
+    }
+  ],
+  "AristaHeroHighlights": [
+    {
+      "title": "Giải thưởng tại Piano Got Talent 2026",
+      "value": "43",
+      "show": true
+    },
+    {
+      "title": "Năm giảng dạy của giám đốc chuyên môn",
+      "value": "15+",
+      "show": true
+    },
+    {
+      "title": "Bộ môn âm nhạc & mỹ thuật",
+      "value": "8",
+      "show": true
+    },
+    {
+      "title": "Người theo dõi · 100% đề xuất",
+      "value": "11K",
+      "show": true
+    }
+  ],
+  "AristaTeachingPhilosophy": [
+    {
+      "title": "Nền tảng vững chắc",
+      "description": "Chú trọng kỹ thuật và cảm thụ âm nhạc, đi từng bước, không đốt cháy giai đoạn.",
+      "show": true
+    },
+    {
+      "title": "Màu âm của riêng bạn",
+      "description": "Học viên phát triển theo khả năng và tốc độ riêng, tìm ra cá tính trong từng giai điệu.",
+      "show": true
+    },
+    {
+      "title": "Từ lớp học ra sân khấu",
+      "description": "Biểu diễn, giao lưu và cuộc thi giúp các em rèn bản lĩnh và khả năng phối hợp.",
+      "show": true
+    },
+    {
+      "title": "Tình yêu bền lâu",
+      "description": "Mỗi học viên tìm thấy niềm vui trong âm nhạc và sự tự tin trong từng màn trình diễn.",
+      "show": true
+    }
+  ],
+  "AristaPrograms": [
+    {
+      "title": "Piano",
+      "categoryLabel": "Thế mạnh",
+      "description": "Từ vỡ lòng đến luyện thi trong nước và quốc tế.",
+      "image": "assets/images/07_1658160102975822.jpg",
+      "show": true
+    },
+    {
+      "title": "Violin",
+      "categoryLabel": "Dây",
+      "description": "Lớp cá nhân và hòa tấu cùng dàn dây của trung tâm.",
+      "image": "assets/images/v3s/student-violin.jpg",
+      "show": true
+    },
+    {
+      "title": "Guitar",
+      "categoryLabel": "Dây",
+      "description": "Classic, lead và bass.",
+      "image": "assets/images/v3s/teacher-guitar.jpg",
+      "show": true
+    },
+    {
+      "title": "Saxophone",
+      "categoryLabel": "Kèn hơi",
+      "description": "Hơi thở, khẩu hình, màu âm và biểu diễn.",
+      "image": "assets/images/v3s/gala-sax.jpg",
+      "show": true
+    },
+    {
+      "title": "Trống",
+      "categoryLabel": "Tiết tấu",
+      "description": "Nhịp điệu, kỹ thuật và chơi cùng ban nhạc.",
+      "image": "assets/images/v3s/student-drum.jpg",
+      "show": true
+    },
+    {
+      "title": "Đàn bầu",
+      "categoryLabel": "Nhạc cụ dân tộc",
+      "description": "Âm sắc truyền thống Việt, độc tấu và hòa tấu.",
+      "image": "assets/images/v3s/danbau-hands.jpg",
+      "show": true
+    },
+    {
+      "title": "Thanh nhạc",
+      "categoryLabel": "Giọng hát",
+      "description": "Lớp thiếu nhi và người lớn.",
+      "image": "",
+      "show": true
+    },
+    {
+      "title": "Mỹ thuật",
+      "categoryLabel": "Sáng tạo",
+      "description": "Vẽ thiếu nhi, minh họa, màu nước, ký họa.",
+      "image": "assets/images/17_1591101263015040.jpg",
+      "show": true
+    }
+  ],
+  "AristaLearningJourney": [
+    {
+      "title": "Làm quen nhạc cụ",
+      "description": "Tư thế, cách cầm và đặt tay đúng.",
+      "show": true
+    },
+    {
+      "title": "Kỹ thuật nền",
+      "description": "Ngón tay, hơi thở, khẩu hình theo từng bộ môn.",
+      "show": true
+    },
+    {
+      "title": "Âm thanh",
+      "description": "Kiểm soát âm lượng, âm sắc và độ chuẩn.",
+      "show": true
+    },
+    {
+      "title": "Tiết tấu & cảm thụ",
+      "description": "Nhịp điệu, biểu cảm, kể chuyện qua câu nhạc.",
+      "show": true
+    },
+    {
+      "title": "Biểu diễn",
+      "description": "Hòa tấu, gala và các cuộc thi.",
+      "show": true
+    }
+  ],
+  "AristaTeachers": [
+    {
+      "title": "Thầy Trần Hữu Nhật Hoàng",
+      "role": "Giám đốc chuyên môn",
+      "credential": "THẠC SĨ BIỂU DIỄN PIANO",
+      "photo": "assets/images/v3s/hoang-piano.jpg",
+      "qualifications": "Thạc sĩ Biểu diễn Piano, Học viện Âm nhạc Huế\nGiảng viên Piano, Đại học Khánh Hòa từ 2014\nHơn 15 năm giảng dạy\nChuyên luyện thi piano trong nước và quốc tế",
+      "highlightText": "Hơn 15 năm\ngiảng dạy piano",
+      "featured": true,
+      "show": true
+    },
+    {
+      "title": "Thầy Phạm Văn Duy",
+      "role": "Saxophone",
+      "credential": "",
+      "photo": "assets/images/v3s/teacher-sax.jpg",
+      "qualifications": "",
+      "highlightText": "",
+      "featured": false,
+      "show": true
+    },
+    {
+      "title": "Giảng viên Violin",
+      "role": "Violin",
+      "credential": "",
+      "photo": "assets/images/v3s/teacher-violin.jpg",
+      "qualifications": "",
+      "highlightText": "",
+      "featured": false,
+      "show": true
+    },
+    {
+      "title": "Giảng viên Guitar",
+      "role": "Guitar",
+      "credential": "",
+      "photo": "assets/images/v3s/teacher-guitar.jpg",
+      "qualifications": "",
+      "highlightText": "",
+      "featured": false,
+      "show": true
+    },
+    {
+      "title": "Giảng viên Trống",
+      "role": "Trống",
+      "credential": "",
+      "photo": "assets/images/v3s/teacher-drum.jpg",
+      "qualifications": "",
+      "highlightText": "",
+      "featured": false,
+      "show": true
+    },
+    {
+      "title": "Giảng viên Đàn bầu",
+      "role": "Đàn bầu",
+      "credential": "",
+      "photo": "assets/images/v3s/teacher-danbau.jpg",
+      "qualifications": "",
+      "highlightText": "",
+      "featured": false,
+      "show": true
+    }
+  ],
+  "AristaAchievements": [
+    {
+      "title": "Piano Got Talent 2026",
+      "year": "2026",
+      "result": "43 giải — 4 Vàng, 18 Bạc, 19 Đồng, 2 Chuyên nghiệp Nhạc nhẹ",
+      "show": true
+    },
+    {
+      "title": "Festival Piano Talent Toàn Quốc 2026",
+      "year": "2026",
+      "result": "Gold Award, Silver Award · Gala công diễn tại Hà Nội",
+      "show": true
+    },
+    {
+      "title": "Crescendo 2025 Hà Nội",
+      "year": "2025",
+      "result": "Gold Prize (bảng D) · Prospect Prize (bảng B chuyên nghiệp) · Học bổng 5.000 SGD",
+      "show": true
+    },
+    {
+      "title": "TSP International Art Showcase, Thượng Hải",
+      "year": "2025",
+      "result": "Gold Prize · Vượt qua chung kết Thượng Hải",
+      "show": true
+    },
+    {
+      "title": "Crescendo 2024 Singapore",
+      "year": "2024",
+      "result": "Gold & Silver Prize",
+      "show": true
+    },
+    {
+      "title": "Piano Việt Nam's Got Talent 2024",
+      "year": "2024",
+      "result": "Nhất, Nhì, Ba",
+      "show": true
+    }
+  ],
+  "AristaAwardCounts": [
+    {
+      "title": "Vàng",
+      "value": "4",
+      "show": true
+    },
+    {
+      "title": "Bạc",
+      "value": "18",
+      "show": true
+    },
+    {
+      "title": "Đồng",
+      "value": "19",
+      "show": true
+    },
+    {
+      "title": "Nhạc nhẹ",
+      "value": "2",
+      "show": true
+    }
+  ],
+  "AristaAchievementPhotos": [
+    {
+      "title": "Nhận Diploma tại Crescendo 2025",
+      "image": "assets/images/v3s/crescendo-diploma.jpg",
+      "show": true
+    },
+    {
+      "title": "Học bổng 5.000 SGD · Crescendo",
+      "image": "assets/images/v3s/scholarship.jpg",
+      "show": true
+    },
+    {
+      "title": "Gold Prize · TSP 2025 Thượng Hải",
+      "image": "assets/images/v3s/tsp-2025.jpg",
+      "show": true
+    },
+    {
+      "title": "Festival Piano Talent Toàn Quốc 2026",
+      "image": "assets/images/v3s/festival-2026.jpg",
+      "show": true
+    },
+    {
+      "title": "Tài Năng Piano Việt Nam 2026",
+      "image": "assets/images/v3s/pianovn-2026.jpg",
+      "show": true
+    },
+    {
+      "title": "Lễ tốt nghiệp chứng chỉ LCM (London College of Music)",
+      "image": "assets/images/v3s/lcm.jpg",
+      "show": true
+    }
+  ],
+  "AristaStudentMoments": [
+    {
+      "title": "Arista's Christmas Concert",
+      "image": "assets/images/v3s/concert-group.jpg",
+      "show": true
+    },
+    {
+      "title": "Violin · Gala 2026",
+      "image": "assets/images/v3s/student-violin.jpg",
+      "show": true
+    },
+    {
+      "title": "Hòa tấu bên vịnh Nha Trang",
+      "image": "assets/images/v3s/hero-seaside.jpg",
+      "show": true
+    },
+    {
+      "title": "Trống · Christmas Concert",
+      "image": "assets/images/v3s/student-drum.jpg",
+      "show": true
+    },
+    {
+      "title": "Piano Việt Nam 2025",
+      "image": "assets/images/v3s/pianovn-2025.jpg",
+      "show": true
+    },
+    {
+      "title": "Đàn bầu",
+      "image": "assets/images/v3s/teacher-danbau.jpg",
+      "show": true
+    },
+    {
+      "title": "Saxophone biểu diễn giao lưu",
+      "image": "assets/images/v3s/teacher-sax.jpg",
+      "show": true
+    },
+    {
+      "title": "Gala · Confidence in being yourself",
+      "image": "assets/images/v3s/gala-sax.jpg",
+      "show": true
+    }
+  ],
+  "AristaFaq": [
+    {
+      "title": "Bao nhiêu tuổi thì có thể bắt đầu học?",
+      "answer": "Arista nhận học viên trẻ em, thiếu nhi và người lớn. Giáo viên sẽ đánh giá trong buổi học thử để tư vấn thời điểm và bộ môn phù hợp.",
+      "show": true
+    },
+    {
+      "title": "Chưa biết nhạc lý có học được không?",
+      "answer": "Hoàn toàn được. Lớp Cơ bản bắt đầu từ những bước đầu tiên, nhạc lý được lồng ghép dần trong quá trình học.",
+      "show": true
+    },
+    {
+      "title": "Có cần mua nhạc cụ trước khi học không?",
+      "answer": "Nên trao đổi với giáo viên trước để được tư vấn loại nhạc cụ phù hợp độ tuổi và mục tiêu. Arista cũng nhập khẩu và cung cấp đàn piano Nhật.",
+      "show": true
+    },
+    {
+      "title": "Học phí và lịch học như thế nào?",
+      "answer": "Học phí tùy chương trình và hình thức học. Vui lòng để lại thông tin hoặc gọi hotline để được tư vấn chi tiết và xếp lịch phù hợp.",
+      "show": true
+    }
+  ]
+}

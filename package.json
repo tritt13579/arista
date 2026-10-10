@@ -1,0 +1,10 @@
+{
+  "name": "arista-wix-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cms:export": "node scripts/export-cms.mjs",
+    "check": "node scripts/check-project.mjs"
+  }
+}

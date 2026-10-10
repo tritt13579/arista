@@ -1,0 +1,611 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "id": "AristaSiteSettings",
+      "name": "Arista — Site Settings",
+      "datasetId": null,
+      "fields": [
+        {
+          "id": "title",
+          "name": "Settings Name",
+          "type": "Text",
+          "hidden": true
+        },
+        {
+          "id": "logo",
+          "name": "Logo",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "brandName",
+          "name": "Brand Name",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "registrationButtonText",
+          "name": "Registration Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "programButtonText",
+          "name": "Program Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "teacherButtonText",
+          "name": "Teacher Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "callButtonText",
+          "name": "Call Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "floatingRegistrationButtonText",
+          "name": "Floating Registration Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "zaloButtonText",
+          "name": "Zalo Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "messengerButtonText",
+          "name": "Messenger Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "addressLabel",
+          "name": "Address Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "phoneLabel",
+          "name": "Phone Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "hoursLabel",
+          "name": "Opening Hours Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "primaryPhone",
+          "name": "Primary Phone",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "primaryPhoneLabel",
+          "name": "Primary Phone Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "secondaryPhone",
+          "name": "Secondary Phone",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "secondaryPhoneLabel",
+          "name": "Secondary Phone Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "address",
+          "name": "Address",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "openingHours",
+          "name": "Opening Hours",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "locationImage",
+          "name": "Location Image",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "locationImageDescription",
+          "name": "Location Image Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "facebookUrl",
+          "name": "Facebook URL",
+          "type": "URL",
+          "hidden": false
+        },
+        {
+          "id": "facebookTitle",
+          "name": "Facebook Link Title",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "facebookDescription",
+          "name": "Facebook Link Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "youtubeUrl",
+          "name": "YouTube URL",
+          "type": "URL",
+          "hidden": false
+        },
+        {
+          "id": "youtubeTitle",
+          "name": "YouTube Link Title",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "youtubeDescription",
+          "name": "YouTube Link Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "zaloUrl",
+          "name": "Zalo URL",
+          "type": "URL",
+          "hidden": false
+        },
+        {
+          "id": "messengerUrl",
+          "name": "Messenger URL",
+          "type": "URL",
+          "hidden": false
+        },
+        {
+          "id": "footerDescription",
+          "name": "Footer Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "copyrightText",
+          "name": "Copyright Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "faqContactText",
+          "name": "FAQ Contact Text",
+          "type": "Text",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaPageContent",
+      "name": "Arista — Page Content",
+      "datasetId": "pageContentDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Section Name",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "sectionKey",
+          "name": "Section Key",
+          "type": "Text",
+          "hidden": true
+        },
+        {
+          "id": "introText",
+          "name": "Intro Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "heading",
+          "name": "Heading",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "tagline",
+          "name": "Tagline",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "imageDescription",
+          "name": "Image Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "primaryButtonText",
+          "name": "Primary Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "secondaryButtonText",
+          "name": "Secondary Button Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "menuLabel",
+          "name": "Menu Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "showInMenu",
+          "name": "Show in Menu",
+          "type": "Boolean",
+          "hidden": false
+        },
+        {
+          "id": "showSection",
+          "name": "Show Section",
+          "type": "Boolean",
+          "hidden": false
+        },
+        {
+          "id": "labels",
+          "name": "Labels",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "featuredValue",
+          "name": "Featured Value",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "featuredLabel",
+          "name": "Featured Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "caption",
+          "name": "Image Caption",
+          "type": "Text",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaHeroHighlights",
+      "name": "Arista — Hero Highlights",
+      "datasetId": "heroHighlightsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "value",
+          "name": "Value",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaTeachingPhilosophy",
+      "name": "Arista — Teaching Philosophy",
+      "datasetId": "philosophyDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaPrograms",
+      "name": "Arista — Programs",
+      "datasetId": "programsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Program Name",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "categoryLabel",
+          "name": "Category Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaLearningJourney",
+      "name": "Arista — Learning Journey",
+      "datasetId": "learningJourneyDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Step Title",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaTeachers",
+      "name": "Arista — Teachers",
+      "datasetId": "teachersDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Teacher Name",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "role",
+          "name": "Role",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "credential",
+          "name": "Credential",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "photo",
+          "name": "Photo",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "qualifications",
+          "name": "Qualifications",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "highlightText",
+          "name": "Highlight Text",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "featured",
+          "name": "Featured Teacher",
+          "type": "Boolean",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaAchievements",
+      "name": "Arista — Achievements",
+      "datasetId": "achievementsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Event Name",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "year",
+          "name": "Year",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "result",
+          "name": "Result",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaAwardCounts",
+      "name": "Arista — Award Counts",
+      "datasetId": "awardCountsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Label",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "value",
+          "name": "Value",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaAchievementPhotos",
+      "name": "Arista — Achievement Photos",
+      "datasetId": "achievementPhotosDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Caption",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaStudentMoments",
+      "name": "Arista — Student Moments",
+      "datasetId": "studentMomentsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Caption",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaFaq",
+      "name": "Arista — FAQ",
+      "datasetId": "faqDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Question",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "answer",
+          "name": "Answer",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Show Item",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}
