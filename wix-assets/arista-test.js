@@ -14,6 +14,6 @@ class AristaTest extends HTMLElement {
   }
 }
 
-if (!customElements.get('wix-default-custom-element')) {
-  customElements.define('wix-default-custom-element', AristaTest);
+if (!customElements.get('arista-test')) {
+  customElements.define('arista-test', AristaTest);
 }
