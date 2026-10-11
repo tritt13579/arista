@@ -1,0 +1,17 @@
+.quote {
+  background: white;
+  text-align: center;
+}
+.quote .section-inner {
+  padding-block: 96px;
+}
+.quote blockquote {
+  max-width: 900px;
+  margin: auto;
+  font:
+    500 clamp(22px, 3vw, 32px)/1.5 "Playfair Display",
+    Georgia,
+    serif;
+  white-space: pre-line;
+  text-wrap: pretty;
+}

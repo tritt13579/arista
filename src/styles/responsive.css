@@ -1,0 +1,161 @@
+/* Desktop is the default. Narrower layouts accumulate in descending order. */
+@media (max-width: 1280px) {
+  .header-inner {
+    gap: 16px;
+  }
+  main {
+    gap: 36px;
+  }
+}
+/* Collapse navigation at the tablet breakpoint. */
+@media (max-width: 1024px) {
+  .toggle {
+    display: block;
+  }
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    right: 20px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px;
+    max-height: calc(100dvh - var(--header-height) - 20px);
+    overflow-y: auto;
+    background: #0c0f33f5;
+    border: 1px solid #ffffff29;
+    border-radius: 14px;
+    box-shadow: 0 20px 40px #0004;
+  }
+  nav.open {
+    display: flex;
+  }
+  .nav-link {
+    text-align: left;
+    padding: 10px 14px;
+    white-space: normal;
+  }
+  .nav-link:hover {
+    background: #ffffff0d;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .section-inner,
+  .quote .section-inner {
+    padding-block: 80px;
+  }
+  main {
+    gap: 28px;
+  }
+  .stat {
+    padding: 22px 16px;
+  }
+}
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 124px 24px 56px;
+    gap: 40px;
+  }
+  .copy {
+    max-width: 620px;
+  }
+  h1 {
+    font-size: clamp(44px, 7vw, 64px);
+  }
+  dl {
+    width: 100%;
+    max-width: 620px;
+  }
+}
+@media (max-width: 640px) {
+  .section-inner,
+  .quote .section-inner {
+    padding: 60px 20px;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+    gap: 16px;
+  }
+  .pillar {
+    padding: 26px 22px;
+  }
+  .section-description {
+    font-size: 15px;
+  }
+  .section-heading {
+    gap: 16px;
+  }
+  .label {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+  .header-inner {
+    padding: 0 20px;
+  }
+  .header-cta {
+    display: none;
+  }
+  .logo {
+    max-width: 136px;
+    max-height: 44px;
+  }
+  main {
+    padding: 116px 20px 48px;
+    gap: 32px;
+  }
+  .copy {
+    gap: 20px;
+  }
+  h1 {
+    font-size: clamp(40px, 8vw, 44px);
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .description {
+    font-size: 15px;
+  }
+  .slogan {
+    font-size: 24px;
+  }
+  .actions {
+    width: 100%;
+  }
+  .actions button {
+    /* Wrap by available space without needing a separate small-phone breakpoint. */
+    flex: 1 1 220px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  dd {
+    font-size: clamp(34px, 6.25vw, 40px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .nav-link,
+  .pillar,
+  .program,
+  .program-media img,
+  .reveal {
+    transition: none;
+  }
+  .reveal.waiting {
+    opacity: 1;
+    transform: none;
+  }
+  .pillar:hover,
+  .program:hover,
+  .cta:hover {
+    transform: none;
+  }
+}

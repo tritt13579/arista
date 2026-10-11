@@ -1,6 +1,7 @@
 // Paste into the Arista Preview page code, never masterPage.js.
 // Custom Element ID: aristaHome. Tag: arista-home.
-// Required now: pageContentDataset and heroHighlightsDataset (Read, no sorts).
+// Required: pageContentDataset, heroHighlightsDataset, philosophyDataset,
+// programsDataset (Read, no sorts; mirror CMS order).
 import wixData from 'wix-data';
 
 $w.onReady(function () {
@@ -15,18 +16,23 @@ $w.onReady(function () {
   };
   element.on('arista-ready', send);
   element.on('arista-action', event => {
-    // Scrolling and native Wix Form integration are implemented with the remaining sections.
-    console.info('ARISTA ACTION (sections pending):', event.detail);
+    // Rendered section navigation is handled inside the Custom Element.
+    // Registration events include programName for the future native Wix Form.
+    console.info('ARISTA ACTION:', event.detail);
   });
 
   const sections = readDataset($w('#pageContentDataset'));
   const highlights = readDataset($w('#heroHighlightsDataset'));
+  const philosophy = readDataset($w('#philosophyDataset'));
+  const programs = readDataset($w('#programsDataset'));
   send();
   Promise.all([
     wixData.query('AristaSiteSettings').limit(2).find({ consistentRead: true }),
     sections,
-    highlights
-  ]).then(([settingsResult, sections, highlights]) => {
+    highlights,
+    philosophy,
+    programs
+  ]).then(([settingsResult, sections, highlights, philosophy, programs]) => {
     if (settingsResult.items.length !== 1) throw new Error('Site Settings must contain exactly one visible record.');
     const settings = settingsResult.items[0];
     const visible = sections.filter(item => item.showSection === true);
@@ -42,8 +48,16 @@ $w.onReady(function () {
         secondaryLabel: hero.secondaryButtonText, secondaryTarget: 'learning-journey'
       } : null,
       menu: visible.filter(item => item.showInMenu === true).map(item => ({ title: item.menuLabel || '', target: item.sectionKey })),
-      stats: highlights.filter(item => item.show === true).map(item => ({ title: item.title || '', value: String(item.value ?? '') }))
+      stats: highlights.filter(item => item.show === true).map(item => ({ title: item.title || '', value: String(item.value ?? '') })),
+      quote: visible.find(item => item.sectionKey === 'quote') || null,
+      philosophy: createSection('philosophy', philosophy),
+      programs: createSection('programs', programs),
+      programButtonText: settings.programButtonText || ''
     };
+    function createSection(key, items) {
+      const section = visible.find(item => item.sectionKey === key);
+      return section ? { ...section, items: items.filter(item => item.show === true) } : null;
+    }
     console.info('ARISTA CMS READY', { menu: payload.menu.length, highlights: payload.stats.length });
     send();
   }).catch(error => {

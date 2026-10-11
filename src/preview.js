@@ -1,4 +1,3 @@
-import './components/arista-home.js';
 import { createHomeContent } from './content/home-content.js';
 
 const element = document.querySelector('arista-home');
@@ -13,5 +12,6 @@ const sections = content.AristaPageContent.map(item => ({ ...item }));
 const assetUrl = value => value ? new URL(`../${value}`, import.meta.url).href : '';
 settings.logo = assetUrl(settings.logo);
 for (const section of sections) section.image = assetUrl(section.image);
-element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights)));
+const programs = content.AristaPrograms.map(item => ({ ...item, image: assetUrl(item.image) }));
+element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs)));
 element.addEventListener('arista-action', event => console.info('ARISTA ACTION (sections pending):', event.detail));

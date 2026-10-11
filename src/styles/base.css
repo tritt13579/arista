@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #0c0f33;
+  color: white;
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+  width: 100%;
+  min-width: 0;
+  -webkit-font-smoothing: antialiased;
+  --header-height: 76px;
+}
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #f0c878;
+  outline-offset: 4px;
+}
+.cta {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 14px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #d9a441;
+  color: #0c0f33;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.cta:hover {
+  background: #f0c878;
+  transform: translateY(-2px);
+}
+.secondary {
+  background: transparent;
+  color: white;
+  border-color: #ffffff80;
+}
+.secondary:hover {
+  background: #ffffff10;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #f0c878;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.8;
+}
+.eyebrow:before {
+  content: "";
+  flex: none;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}

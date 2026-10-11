@@ -1,0 +1,20 @@
+.pillar,
+.program {
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+.pillar:hover,
+.program:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -28px #1c226066;
+}
+.reveal.waiting {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal {
+  transition:
+    opacity 0.6s,
+    transform 0.6s;
+}

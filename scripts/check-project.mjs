@@ -67,6 +67,17 @@ function checkJs(dir) {
   }
 }
 checkJs('src');checkJs('scripts');
+// The Wix URL must be a standalone classic script, with CSS embedded and no module loader.
+const bundle = fs.readFileSync('dist/arista-home.js', 'utf8');
+const registry = new Map();
+const customElements = { get: name => registry.get(name), define: (name, element) => registry.set(name, element) };
+const runtime = { HTMLElement: class {}, customElements };
+new vm.Script(bundle).runInNewContext(runtime);
+assert.equal(typeof registry.get('arista-home'), 'function');
+assert.deepEqual(Array.from(registry.get('arista-home').observedAttributes), ['content']);
+const registeredElement = registry.get('arista-home');
+new vm.Script(bundle).runInNewContext(runtime);
+assert.equal(registry.get('arista-home'), registeredElement, 'Loading the bundle twice must not register twice');
 const reference=fs.readFileSync('reference/index.html','utf8');
 for(const match of reference.matchAll(/(?:\.\.\/)?assets\/images\/[A-Za-z0-9_./~-]+/g))assert.ok(fs.existsSync(match[0].replace(/^\.\.\//,'')),`Missing reference asset: ${match[0]}`);
 // Verify that the standalone Wix page code matches the local adapter contract.
@@ -79,7 +90,9 @@ function dataset(rows){return {onReady(handler){ready.push(handler);},getTotalCo
 const handles={
   '#aristaHome':component,
   '#pageContentDataset':dataset(content.AristaPageContent),
-  '#heroHighlightsDataset':dataset(swapped)
+  '#heroHighlightsDataset':dataset(swapped),
+  '#philosophyDataset':dataset(content.AristaTeachingPhilosophy),
+  '#programsDataset':dataset(content.AristaPrograms)
 };
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
@@ -87,5 +100,12 @@ const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){r
 vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace("import wixData from 'wix-data';",''),{$w,wixData,console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
-assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped))));
+assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms))));
+assert.equal(wixPayload.philosophy.items.length,4);
+assert.equal(wixPayload.programs.items.length,8);
+const changedPrograms = [...content.AristaPrograms].reverse().map((item,index)=>({...item,show:index!==1}));
+const hiddenSections = content.AristaPageContent.map(item=>({...item,showSection:!['quote','philosophy'].includes(item.sectionKey)}));
+const changed = createHomeContent(content.AristaSiteSettings[0],hiddenSections,[],[],changedPrograms);
+assert.equal(changed.quote,null);assert.equal(changed.philosophy,null);
+assert.deepEqual(changed.programs.items.map(item=>item.title),changedPrograms.filter(item=>item.show).map(item=>item.title));
 console.log('PASS: 12 schemas/CSVs, 11 dataset IDs, sample data, image paths, multiline CSV round-trip, ordered home adapter, mocked Wix payload parity and JavaScript syntax. Wix runtime and visual layout require Preview verification.');
