@@ -13,5 +13,8 @@ const assetUrl = value => value ? new URL(`../${value}`, import.meta.url).href :
 settings.logo = assetUrl(settings.logo);
 for (const section of sections) section.image = assetUrl(section.image);
 const programs = content.AristaPrograms.map(item => ({ ...item, image: assetUrl(item.image) }));
-element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs)));
+const teachers = content.AristaTeachers.map(item => ({ ...item, photo: assetUrl(item.photo) }));
+const achievementPhotos = content.AristaAchievementPhotos.map(item => ({ ...item, image: assetUrl(item.image) }));
+const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, image: assetUrl(item.image) }));
+element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq)));
 element.addEventListener('arista-action', event => console.info('ARISTA ACTION (sections pending):', event.detail));

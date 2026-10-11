@@ -15,7 +15,6 @@
 }
 .photo {
   object-fit: cover;
-  object-position: center 40%;
 }
 .overlay {
   background:
@@ -55,10 +54,10 @@ h1 {
   text-wrap: balance;
 }
 .slogan {
-  margin: 0;
+  margin: -6px 0 0;
   color: #f0c878;
   font:
-    italic 500 clamp(20.24px, 2.944vw, 39.56px)/1.3 "Playfair Display",
+    italic 500 clamp(22px, 2.5vw, 36px)/1.3 "Playfair Display",
     Georgia,
     serif;
 }
@@ -87,15 +86,17 @@ dl {
   backdrop-filter: blur(8px);
 }
 .stat {
-  background: #0c0f33bb;
-  padding: 24px 20px;
+  background: rgba(12, 15, 51, 0.55);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 dt {
   font-size: 13.5px;
-  line-height: 1.65;
+  line-height: 1.5;
   color: #ffffffd9;
 }
 dd {

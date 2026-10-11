@@ -1,4 +1,5 @@
 import { imageUrl } from "../utils/image-url.js";
+import { imageFocusPosition } from "../utils/image-focus.js";
 
 export const heroTemplate = `
 <div class="shell" hidden lang="vi">
@@ -7,7 +8,7 @@ export const heroTemplate = `
   <main>
     <div class="copy">
       <p class="eyebrow"></p>
-      <h1></h1>
+      <h1 tabindex="-1"></h1>
       <p class="slogan"></p>
       <p class="description"></p>
       <div class="actions">
@@ -37,6 +38,7 @@ export function renderHero(root, hero, stats, action) {
     if (url && img.getAttribute("src") !== url) img.src = url;
     if (!url) img.removeAttribute("src");
     img.alt = String(alt || "");
+    img.style.objectPosition = imageFocusPosition(hero.imageFocusHeight, 40);
   }
   for (const [selector, label, target] of [
     [".primary", hero.primaryLabel, hero.primaryTarget],

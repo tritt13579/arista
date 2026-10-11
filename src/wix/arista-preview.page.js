@@ -1,7 +1,10 @@
 // Paste into the Arista Preview page code, never masterPage.js.
 // Custom Element ID: aristaHome. Tag: arista-home.
 // Required: pageContentDataset, heroHighlightsDataset, philosophyDataset,
-// programsDataset (Read, no sorts; mirror CMS order).
+// programsDataset, learningJourneyDataset, teachersDataset (Read, no sorts; mirror CMS order).
+// Also required: achievementsDataset, awardCountsDataset, achievementPhotosDataset (Read, no sorts).
+// Student Moments: studentMomentsDataset (Read, no sorts).
+// FAQ: faqDataset (Read, no sorts).
 import wixData from 'wix-data';
 
 $w.onReady(function () {
@@ -25,14 +28,28 @@ $w.onReady(function () {
   const highlights = readDataset($w('#heroHighlightsDataset'));
   const philosophy = readDataset($w('#philosophyDataset'));
   const programs = readDataset($w('#programsDataset'));
+  const learningJourney = readDataset($w('#learningJourneyDataset'));
+  const teachers = readDataset($w('#teachersDataset'));
+  const achievements = readDataset($w('#achievementsDataset'));
+  const awardCounts = readDataset($w('#awardCountsDataset'));
+  const achievementPhotos = readDataset($w('#achievementPhotosDataset'));
+  const studentMoments = readDataset($w('#studentMomentsDataset'));
+  const faq = readDataset($w('#faqDataset'));
   send();
   Promise.all([
     wixData.query('AristaSiteSettings').limit(2).find({ consistentRead: true }),
     sections,
     highlights,
     philosophy,
-    programs
-  ]).then(([settingsResult, sections, highlights, philosophy, programs]) => {
+    programs,
+    learningJourney,
+    teachers,
+    achievements,
+    awardCounts,
+    achievementPhotos,
+    studentMoments,
+    faq
+  ]).then(([settingsResult, sections, highlights, philosophy, programs, learningJourney, teachers, achievements, awardCounts, achievementPhotos, studentMoments, faq]) => {
     if (settingsResult.items.length !== 1) throw new Error('Site Settings must contain exactly one visible record.');
     const settings = settingsResult.items[0];
     const visible = sections.filter(item => item.showSection === true);
@@ -43,7 +60,9 @@ $w.onReady(function () {
       hero: hero ? {
         eyebrow: hero.introText, heading: hero.heading, slogan: hero.tagline,
         description: hero.description, image: hero.image, imageAlt: hero.imageDescription,
+        imageFocusHeight: hero.imageFocusHeight,
         logo: settings.logo, headerLabel: settings.registrationButtonText,
+        logoFocusHeight: settings.logoFocusHeight,
         primaryLabel: hero.primaryButtonText, primaryTarget: 'registration',
         secondaryLabel: hero.secondaryButtonText, secondaryTarget: 'learning-journey'
       } : null,
@@ -52,8 +71,27 @@ $w.onReady(function () {
       quote: visible.find(item => item.sectionKey === 'quote') || null,
       philosophy: createSection('philosophy', philosophy),
       programs: createSection('programs', programs),
+      learningJourney: createSection('learning-journey', learningJourney),
+      teachers: createSection('teachers', teachers),
+      achievements: createAchievements(),
+      moments: createMoments(),
+      faq: createFaq(),
       programButtonText: settings.programButtonText || ''
     };
+    function createFaq() {
+      const section = createSection('faq', faq);
+      return section ? { ...section, contactText: settings.faqContactText || '', phone: settings.primaryPhone || '', phoneLabel: settings.primaryPhoneLabel || '' } : null;
+    }
+    function createMoments() {
+      const section = createSection('moments', studentMoments);
+      return section ? { ...section, socialLinks: ['youtube', 'facebook'].map(platform => ({
+        platform, url: settings[`${platform}Url`] || '', title: settings[`${platform}Title`] || '', description: settings[`${platform}Description`] || ''
+      })) } : null;
+    }
+    function createAchievements() {
+      const section = createSection('achievements', achievements);
+      return section ? { ...section, counts: awardCounts.filter(item => item.show === true), photos: achievementPhotos.filter(item => item.show === true) } : null;
+    }
     function createSection(key, items) {
       const section = visible.find(item => item.sectionKey === key);
       return section ? { ...section, items: items.filter(item => item.show === true) } : null;

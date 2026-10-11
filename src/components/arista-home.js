@@ -13,6 +13,12 @@ import { heroTemplate, renderHero } from "../sections/hero.js";
 import { renderQuote } from "../sections/quote.js";
 import { renderPhilosophy } from "../sections/philosophy.js";
 import { renderPrograms } from "../sections/programs.js";
+import { renderLearningJourney } from "../sections/learning-journey.js";
+import { renderTeachers } from "../sections/teachers.js";
+import { renderAchievements } from "../sections/achievements.js";
+import { renderStudentMoments } from "../sections/student-moments.js";
+import { renderFaq } from "../sections/faq.js";
+import { openImageViewer } from "../utils/image-viewer.js";
 
 class AristaHome extends HTMLElement {
   static get observedAttributes() {
@@ -56,8 +62,19 @@ class AristaHome extends HTMLElement {
     );
   }
   action(target, label, extra = {}) {
+    // Release the modal's scroll lock before navigating to a section.
+    this.closeMenu();
+    if (target === "top") {
+      window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      this.shadowRoot.querySelector("h1")?.focus({ preventScroll: true });
+      this.emit("arista-action", { target, label, ...extra });
+      return;
+    }
     const section = this.shadowRoot.getElementById(target);
     if (section && !section.hidden) {
+      const inner = section.querySelector(".section-inner");
+      const contentInset = inner ? parseFloat(getComputedStyle(inner).paddingTop) || 0 : 0;
+      section.style.setProperty("--section-content-inset", `${contentInset}px`);
       section.scrollIntoView({
         behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "auto"
@@ -70,6 +87,8 @@ class AristaHome extends HTMLElement {
     this.closeMenu();
   }
   disconnectedCallback() {
+    this.imageViewer?.close();
+    this.closeMenu();
     this.revealObserver?.disconnect();
     this.headerObserver?.disconnect();
     window.removeEventListener("scroll", this.onViewportChange);
@@ -86,9 +105,15 @@ class AristaHome extends HTMLElement {
       data.philosophy,
       data.programs,
       data.programButtonText,
+      data.learningJourney,
+      data.teachers,
+      data.achievements,
+      data.moments,
+      data.faq,
     ]);
     if (key === this.lastSectionsKey) return;
     this.lastSectionsKey = key;
+    this.imageViewer?.close();
     const root = this.shadowRoot.querySelector(".sections");
     const blocks = [
       renderQuote(data.quote),
@@ -98,6 +123,11 @@ class AristaHome extends HTMLElement {
         data.programButtonText,
         this.action.bind(this),
       ),
+      renderLearningJourney(data.learningJourney),
+      renderTeachers(data.teachers, this.action.bind(this)),
+      renderAchievements(data.achievements, (images, index) => openImageViewer(this, images, index)),
+      renderStudentMoments(data.moments, (images, index) => openImageViewer(this, images, index)),
+      renderFaq(data.faq),
     ].filter(Boolean);
     this.revealObserver?.disconnect();
     root.replaceChildren(...blocks);
@@ -120,6 +150,7 @@ class AristaHome extends HTMLElement {
       console.error("ARISTA CMS:", data.message || "Failed to load content.");
     if (data.state === "ready") this.renderSections(data);
     if (data.state === "ready" && !data.hero) {
+      this.closeMenu();
       root.querySelector(".shell").hidden = true;
       root.querySelector("header").hidden = true;
       this.lastDisplayKey = "";

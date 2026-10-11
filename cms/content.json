@@ -32,7 +32,9 @@
       "messengerUrl": "https://m.me/hocpianonhatrang",
       "footerDescription": "Piano · Violin · Trống · Guitar · Thanh nhạc · Saxophone · Đàn bầu · Mỹ thuật",
       "copyrightText": "© 2026 Arista Music Center · Nha Trang",
-      "faqContactText": "Chưa thấy câu trả lời bạn cần? Gọi"
+      "faqContactText": "Chưa thấy câu trả lời bạn cần? Gọi",
+      "logoFocusHeight": 50,
+      "locationImageFocusHeight": 50
     }
   ],
   "AristaPageContent": [
@@ -53,7 +55,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 40
     },
     {
       "title": "Quote",
@@ -69,10 +72,11 @@
       "menuLabel": "",
       "showInMenu": false,
       "showSection": true,
-      "labels": "",
+      "labels": "một tâm hồn biết cảm nhận\nmột cá tính dám thể hiện",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Teaching Philosophy",
@@ -91,7 +95,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Programs",
@@ -110,7 +115,8 @@
       "labels": "Cơ bản\nNâng cao\nChứng chỉ quốc tế\nLuyện thi\nOnline",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Learning Journey",
@@ -129,7 +135,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Teachers",
@@ -148,7 +155,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Achievements",
@@ -167,7 +175,8 @@
       "labels": "",
       "featuredValue": "43",
       "featuredLabel": "giải thưởng tại Việt Nam Piano Got Talent 2026",
-      "caption": "Độc tấu cùng dàn nhạc · Crescendo International Music Festival & Competition 2025"
+      "caption": "Độc tấu cùng dàn nhạc · Crescendo International Music Festival & Competition 2025",
+      "imageFocusHeight": 50
     },
     {
       "title": "Student Moments",
@@ -186,7 +195,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "FAQ",
@@ -205,7 +215,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     },
     {
       "title": "Registration",
@@ -224,7 +235,8 @@
       "labels": "",
       "featuredValue": "",
       "featuredLabel": "",
-      "caption": ""
+      "caption": "",
+      "imageFocusHeight": 50
     }
   ],
   "AristaHeroHighlights": [
@@ -277,56 +289,64 @@
       "categoryLabel": "Thế mạnh",
       "description": "Từ vỡ lòng đến luyện thi trong nước và quốc tế.",
       "image": "assets/images/07_1658160102975822.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Violin",
       "categoryLabel": "Dây",
       "description": "Lớp cá nhân và hòa tấu cùng dàn dây của trung tâm.",
       "image": "assets/images/v3s/student-violin.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Guitar",
       "categoryLabel": "Dây",
       "description": "Classic, lead và bass.",
       "image": "assets/images/v3s/teacher-guitar.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Saxophone",
       "categoryLabel": "Kèn hơi",
       "description": "Hơi thở, khẩu hình, màu âm và biểu diễn.",
       "image": "assets/images/v3s/gala-sax.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Trống",
       "categoryLabel": "Tiết tấu",
       "description": "Nhịp điệu, kỹ thuật và chơi cùng ban nhạc.",
       "image": "assets/images/v3s/student-drum.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Đàn bầu",
       "categoryLabel": "Nhạc cụ dân tộc",
       "description": "Âm sắc truyền thống Việt, độc tấu và hòa tấu.",
       "image": "assets/images/v3s/danbau-hands.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Thanh nhạc",
       "categoryLabel": "Giọng hát",
       "description": "Lớp thiếu nhi và người lớn.",
       "image": "",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Mỹ thuật",
       "categoryLabel": "Sáng tạo",
       "description": "Vẽ thiếu nhi, minh họa, màu nước, ký họa.",
       "image": "assets/images/17_1591101263015040.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     }
   ],
   "AristaLearningJourney": [
@@ -365,7 +385,8 @@
       "qualifications": "Thạc sĩ Biểu diễn Piano, Học viện Âm nhạc Huế\nGiảng viên Piano, Đại học Khánh Hòa từ 2014\nHơn 15 năm giảng dạy\nChuyên luyện thi piano trong nước và quốc tế",
       "highlightText": "Hơn 15 năm\ngiảng dạy piano",
       "featured": true,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     },
     {
       "title": "Thầy Phạm Văn Duy",
@@ -375,7 +396,8 @@
       "qualifications": "",
       "highlightText": "",
       "featured": false,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     },
     {
       "title": "Giảng viên Violin",
@@ -385,7 +407,8 @@
       "qualifications": "",
       "highlightText": "",
       "featured": false,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     },
     {
       "title": "Giảng viên Guitar",
@@ -395,7 +418,8 @@
       "qualifications": "",
       "highlightText": "",
       "featured": false,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     },
     {
       "title": "Giảng viên Trống",
@@ -405,7 +429,8 @@
       "qualifications": "",
       "highlightText": "",
       "featured": false,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     },
     {
       "title": "Giảng viên Đàn bầu",
@@ -415,7 +440,8 @@
       "qualifications": "",
       "highlightText": "",
       "featured": false,
-      "show": true
+      "show": true,
+      "photoFocusHeight": 20
     }
   ],
   "AristaAchievements": [
@@ -482,73 +508,87 @@
     {
       "title": "Nhận Diploma tại Crescendo 2025",
       "image": "assets/images/v3s/crescendo-diploma.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Học bổng 5.000 SGD · Crescendo",
       "image": "assets/images/v3s/scholarship.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Gold Prize · TSP 2025 Thượng Hải",
       "image": "assets/images/v3s/tsp-2025.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Festival Piano Talent Toàn Quốc 2026",
       "image": "assets/images/v3s/festival-2026.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Tài Năng Piano Việt Nam 2026",
       "image": "assets/images/v3s/pianovn-2026.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     },
     {
       "title": "Lễ tốt nghiệp chứng chỉ LCM (London College of Music)",
       "image": "assets/images/v3s/lcm.jpg",
-      "show": true
+      "show": true,
+      "imageFocusHeight": 50
     }
   ],
   "AristaStudentMoments": [
     {
       "title": "Arista's Christmas Concert",
       "image": "assets/images/v3s/concert-group.jpg",
+      "imageFocusHeight": 50,
       "show": true
     },
     {
       "title": "Violin · Gala 2026",
       "image": "assets/images/v3s/student-violin.jpg",
+      "imageFocusHeight": 25,
       "show": true
     },
     {
       "title": "Hòa tấu bên vịnh Nha Trang",
       "image": "assets/images/v3s/hero-seaside.jpg",
+      "imageFocusHeight": 60,
       "show": true
     },
     {
       "title": "Trống · Christmas Concert",
       "image": "assets/images/v3s/student-drum.jpg",
+      "imageFocusHeight": 40,
       "show": true
     },
     {
       "title": "Piano Việt Nam 2025",
       "image": "assets/images/v3s/pianovn-2025.jpg",
+      "imageFocusHeight": 55,
       "show": true
     },
     {
       "title": "Đàn bầu",
       "image": "assets/images/v3s/teacher-danbau.jpg",
+      "imageFocusHeight": 30,
       "show": true
     },
     {
       "title": "Saxophone biểu diễn giao lưu",
       "image": "assets/images/v3s/teacher-sax.jpg",
+      "imageFocusHeight": 25,
       "show": true
     },
     {
       "title": "Gala · Confidence in being yourself",
       "image": "assets/images/v3s/gala-sax.jpg",
+      "imageFocusHeight": 50,
       "show": true
     }
   ],

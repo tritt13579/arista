@@ -1,5 +1,6 @@
 import { node } from "../utils/dom.js";
 import { imageUrl } from "../utils/image-url.js";
+import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
 export function renderPrograms(content, buttonText, action) {
@@ -23,6 +24,7 @@ export function renderPrograms(content, buttonText, action) {
     if (url) {
       const image = node("img", "");
       image.alt = String(item.title || "");
+      image.style.objectPosition = imageFocusPosition(item.imageFocusHeight);
       image.loading = "lazy";
       image.decoding = "async";
       image.addEventListener("error", fallback, { once: true });

@@ -19,6 +19,12 @@
           "hidden": false
         },
         {
+          "id": "logoFocusHeight",
+          "name": "Logo Focus Height",
+          "type": "Number",
+          "hidden": false
+        },
+        {
           "id": "brandName",
           "name": "Brand Name",
           "type": "Text",
@@ -124,6 +130,12 @@
           "id": "locationImage",
           "name": "Location Image",
           "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "locationImageFocusHeight",
+          "name": "Location Image Focus Height",
+          "type": "Number",
           "hidden": false
         },
         {
@@ -245,6 +257,12 @@
           "id": "image",
           "name": "Image",
           "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "imageFocusHeight",
+          "name": "Image Focus Height",
+          "type": "Number",
           "hidden": false
         },
         {
@@ -389,6 +407,12 @@
           "hidden": false
         },
         {
+          "id": "imageFocusHeight",
+          "name": "Image Focus Height",
+          "type": "Number",
+          "hidden": false
+        },
+        {
           "id": "show",
           "name": "Show Item",
           "type": "Boolean",
@@ -448,6 +472,12 @@
           "id": "photo",
           "name": "Photo",
           "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "photoFocusHeight",
+          "name": "Photo Focus Height",
+          "type": "Number",
           "hidden": false
         },
         {
@@ -550,6 +580,12 @@
           "hidden": false
         },
         {
+          "id": "imageFocusHeight",
+          "name": "Image Focus Height",
+          "type": "Number",
+          "hidden": false
+        },
+        {
           "id": "show",
           "name": "Show Item",
           "type": "Boolean",
@@ -572,6 +608,12 @@
           "id": "image",
           "name": "Image",
           "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "imageFocusHeight",
+          "name": "Image Focus Height",
+          "type": "Number",
           "hidden": false
         },
         {

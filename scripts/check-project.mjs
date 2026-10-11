@@ -4,6 +4,17 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
 import { createHomeContent } from '../src/content/home-content.js';
+import { imageFocusPosition } from '../src/utils/image-focus.js';
+
+assert.equal(imageFocusPosition(0), 'center 0%');
+assert.equal(imageFocusPosition(30), 'center 30%');
+assert.equal(imageFocusPosition(100), 'center 100%');
+for (const value of [undefined, null, '', '30', NaN, Infinity]) {
+  assert.equal(imageFocusPosition(value), 'center 50%');
+}
+assert.equal(imageFocusPosition(undefined, 20), 'center 20%');
+assert.equal(imageFocusPosition(-10), 'center 0%');
+assert.equal(imageFocusPosition(150), 'center 100%');
 
 const schema = JSON.parse(fs.readFileSync('cms/schema.json','utf8'));
 const content = JSON.parse(fs.readFileSync('cms/content.json','utf8'));
@@ -27,6 +38,9 @@ for(const collection of schema.collections) {
   assert.ok(!ids.has(collection.id));ids.add(collection.id);
   if(collection.datasetId){assert.ok(!datasets.has(collection.datasetId));datasets.add(collection.datasetId);}
   const fields=new Map(collection.fields.map(field=>[field.id,field]));
+  for (const field of collection.fields.filter(field => field.type === 'Image')) {
+    assert.equal(fields.get(`${field.id}FocusHeight`)?.type, 'Number', `Missing focus field for ${collection.id}.${field.id}`);
+  }
   assert.equal(fields.size,collection.fields.length);
   assert.ok(fields.has('title'));
   const rows=content[collection.id];
@@ -36,6 +50,7 @@ for(const collection of schema.collections) {
       assert.ok(fields.has(key),`Unknown field ${collection.id}.${key}`);
       const type=fields.get(key).type;
       if(type==='Boolean')assert.equal(typeof value,'boolean');
+      else if(type==='Number'){assert.equal(typeof value,'number');assert.ok(Number.isFinite(value));}
       else assert.equal(typeof value,'string');
       if(type==='Image' && value)assert.ok(fs.existsSync(value),`Missing image ${value}`);
       if(type==='URL' && value)assert.equal(new URL(value).protocol,'https:');
@@ -92,7 +107,14 @@ const handles={
   '#pageContentDataset':dataset(content.AristaPageContent),
   '#heroHighlightsDataset':dataset(swapped),
   '#philosophyDataset':dataset(content.AristaTeachingPhilosophy),
-  '#programsDataset':dataset(content.AristaPrograms)
+  '#programsDataset':dataset(content.AristaPrograms),
+  '#learningJourneyDataset':dataset(content.AristaLearningJourney),
+  '#teachersDataset':dataset(content.AristaTeachers),
+  '#achievementsDataset':dataset(content.AristaAchievements),
+  '#awardCountsDataset':dataset(content.AristaAwardCounts),
+  '#achievementPhotosDataset':dataset(content.AristaAchievementPhotos),
+  '#studentMomentsDataset':dataset(content.AristaStudentMoments),
+  '#faqDataset':dataset(content.AristaFaq)
 };
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
@@ -100,7 +122,37 @@ const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){r
 vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace("import wixData from 'wix-data';",''),{$w,wixData,console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
-assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms))));
+assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq))));
+assert.equal(wixPayload.faq.items.length, 4);
+const reorderedFaq = [...content.AristaFaq].reverse().map((item, index) => ({ ...item, show: index !== 1 }));
+const faqPayload = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],[],[],[],[],reorderedFaq).faq;
+assert.deepEqual(faqPayload.items, reorderedFaq.filter(item => item.show));
+assert.equal(faqPayload.phone, content.AristaSiteSettings[0].primaryPhone);
+assert.equal(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent.map(item => ({...item,showSection:item.sectionKey !== 'faq'})),[],[],[],[],[],[],[],[],[],reorderedFaq).faq, null);
+assert.equal(wixPayload.moments.items.length,8);
+assert.equal(wixPayload.moments.socialLinks[0].url,content.AristaSiteSettings[0].youtubeUrl);
+const changedMoments = [...content.AristaStudentMoments].reverse().map((item,index)=>({...item,show:index!==1}));
+assert.deepEqual(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],[],[],[],changedMoments).moments.items,changedMoments.filter(item=>item.show));
+assert.equal(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent.map(item=>({...item,showSection:item.sectionKey!=='moments'})),[],[],[],[],[],[],[],[],changedMoments).moments,null);
+assert.equal(wixPayload.achievements.items.length,6);
+assert.equal(wixPayload.achievements.counts.length,4);
+assert.equal(wixPayload.achievements.photos.length,6);
+const changedAwards = [...content.AristaAchievements].reverse().map((item,index)=>({...item,show:index!==1}));
+const changedCounts = [...content.AristaAwardCounts].reverse().map((item,index)=>({...item,show:index!==1}));
+const changedPhotos = [...content.AristaAchievementPhotos].reverse().map((item,index)=>({...item,show:index!==1}));
+const changedAchievements = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],changedAwards,changedCounts,changedPhotos).achievements;
+assert.deepEqual(changedAchievements.items,changedAwards.filter(item=>item.show));
+assert.deepEqual(changedAchievements.counts,changedCounts.filter(item=>item.show));
+assert.deepEqual(changedAchievements.photos,changedPhotos.filter(item=>item.show));
+assert.equal(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent.map(item=>({...item,showSection:item.sectionKey!=='achievements'})),[],[],[],[],[],changedAwards,changedCounts,changedPhotos).achievements,null);
+assert.equal(wixPayload.teachers.items.length,6);
+const changedTeachers = [...content.AristaTeachers].reverse().map((item,index)=>({...item,show:index!==1}));
+assert.deepEqual(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],changedTeachers).teachers.items.map(item=>item.title),changedTeachers.filter(item=>item.show).map(item=>item.title));
+assert.equal(wixPayload.learningJourney.items.length,5);
+const reorderedJourney = [...content.AristaLearningJourney].reverse().map((item,index)=>({...item,show:index!==1}));
+const journeyPayload = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],reorderedJourney);
+assert.deepEqual(journeyPayload.learningJourney.items.map(item=>item.title),reorderedJourney.filter(item=>item.show).map(item=>item.title));
+assert.equal(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent.map(item=>({...item,showSection:item.sectionKey!=='learning-journey'})),[],[],[],reorderedJourney).learningJourney,null);
 assert.equal(wixPayload.philosophy.items.length,4);
 assert.equal(wixPayload.programs.items.length,8);
 const changedPrograms = [...content.AristaPrograms].reverse().map((item,index)=>({...item,show:index!==1}));

@@ -1,0 +1,189 @@
+.teacher-team-heading > div {
+  flex: 1 1 300px;
+}
+.teacher-team-heading h2 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 36px);
+  text-wrap: initial;
+}
+.teacher-team-heading > .section-description {
+  flex: 0 1 440px;
+  max-width: 440px;
+  font-size: 15.5px;
+}
+.featured-teacher {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+.featured-teacher-media {
+  position: relative;
+  min-width: 0;
+}
+.featured-teacher-photo,
+.teacher-photo {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #1c2260;
+  border-radius: 20px;
+  aspect-ratio: 4/5;
+  color: #f0c878;
+}
+.featured-teacher-photo img,
+.teacher-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+}
+.portrait-fallback {
+  padding: 24px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.teacher-highlight {
+  position: absolute;
+  right: 16px;
+  bottom: 28px;
+  max-width: calc(100% - 32px);
+  margin: 0;
+  padding: 16px 22px;
+  border-radius: 14px;
+  background: #d9a441;
+  color: #0c0f33;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  box-shadow: 0 20px 40px -20px #00000080;
+}
+.featured-teacher-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.featured-teacher-name {
+  margin: 0;
+  font: 500 clamp(30px, 3.6vw, 42px)/1.2 "Playfair Display", Georgia, serif;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.teacher-credential {
+  margin: 0;
+  color: #986a18;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .06em;
+  white-space: pre-line;
+}
+.teacher-qualifications {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: grid;
+  gap: 12px;
+  color: #3d4060;
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+.teacher-qualifications li {
+  position: relative;
+  padding-left: 26px;
+  overflow-wrap: anywhere;
+}
+.teacher-qualifications li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: #986a18;
+}
+.teacher-action {
+  background: #1c2260;
+  color: white;
+  margin-top: 8px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.teacher-action:hover {
+  color: #0c0f33;
+}
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.teacher-card {
+  min-width: 0;
+  margin: 0;
+}
+.teacher-photo {
+  aspect-ratio: 3/4;
+  border-radius: 16px;
+}
+.teacher-name {
+  margin: 14px 0 4px;
+  font: 500 20px/1.4 "Playfair Display", Georgia, serif;
+  overflow-wrap: anywhere;
+}
+.teacher-role,
+.teacher-card-credential {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #986a18;
+  overflow-wrap: anywhere;
+}
+.teacher-role {
+  font-weight: 600;
+}
+@media (max-width: 1024px) {
+  .featured-teacher {
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+  .teacher-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .teacher-team-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .teacher-team-heading > div,
+  .teacher-team-heading > .section-description {
+    flex: none;
+  }
+  .featured-teacher {
+    grid-template-columns: 1fr;
+  }
+  .featured-teacher-media {
+    width: 100%;
+    max-width: 480px;
+    justify-self: center;
+  }
+}
+@media (max-width: 640px) {
+  .teacher-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+  .teacher-name {
+    font-size: 18px;
+  }
+  .teacher-highlight {
+    padding: 12px 16px;
+    bottom: 16px;
+    font-size: 13px;
+  }
+}

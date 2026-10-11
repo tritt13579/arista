@@ -35,6 +35,12 @@ max-width breakpoints: 1280px reduces spacing, 1024px collapses navigation and r
 card grids to two columns, 768px stacks the hero, and 640px switches cards to one column with
 phone spacing. Small-phone text and buttons adapt fluidly without extra width
 breakpoints. Test these layouts using the local preview and the Wix test site.
+At 1024px and below, the two-line menu toggle opens a full-viewport navy modal
+with numbered CMS navigation items and a registration CTA. The modal traps focus,
+supports Escape/close, locks background scrolling and restores styles on close or
+disconnect. It closes when returning to desktop. The CTA uses the existing action
+event; native Wix Forms integration is still pending. Editor/Preview iframes limit
+the modal to the iframe viewport, so verify fullscreen behavior on the Wix test site.
 
 Run `npm run cms:export` after editing sample content. Run `npm run check` to
 build and validate schema, CSV consistency, local assets, JavaScript syntax and
@@ -81,12 +87,52 @@ Once Wix uses this URL, successful pushes to `main` update the component availab
 to all Wix pages that load it, including published pages. Use local/tunnel development
 for unfinished work and push to `main` when the update is ready to deploy.
 
-The current renderer implements menu, hero, quote, teaching philosophy and programs.
-It requires four read-only datasets: `pageContentDataset`, `heroHighlightsDataset`,
-`philosophyDataset` and `programsDataset`. Do not add dataset sorts when mirroring CMS order.
+The current renderer implements menu, hero, quote, teaching philosophy, programs, learning journey, teachers, achievements and student moments.
+It requires eleven read-only datasets: `pageContentDataset`, `heroHighlightsDataset`,
+`philosophyDataset`, `programsDataset`, `learningJourneyDataset`, `teachersDataset`,
+`achievementsDataset`, `awardCountsDataset`, `achievementPhotosDataset`, `studentMomentsDataset` and `faqDataset`. Do not add dataset sorts when mirroring CMS order.
+Connect `learningJourneyDataset` to `AristaLearningJourney`. Journey numbers follow the visible item order;
+edit the section heading and description in the Learning Journey record of `AristaPageContent`.
+Connect `teachersDataset` to `AristaTeachers`. Enable `featured` for one visible teacher to show the large profile;
+the remaining visible teachers follow CMS order in the team grid. If no teacher is featured, only the team is shown.
+If multiple teachers are featured, the first in CMS order receives the large profile.
+Each line of `qualifications` becomes a list item. The Teachers record in `AristaPageContent` supplies the team
+heading/description and optional `primaryButtonText` for a registration action with `teacherName`.
+Connect the three achievement datasets to `AristaAchievements`, `AristaAwardCounts` and `AristaAchievementPhotos` respectively.
+The Achievements record in `AristaPageContent` supplies `featuredValue`, `featuredLabel`, `image`, `imageDescription` and `caption`.
+The headline value is editorial content, not an automatic sum of the award counts.
+Connect `studentMomentsDataset` to `AristaStudentMoments`; `title` supplies the caption and image alt text.
+The Moments record in `AristaPageContent` supplies its intro, heading and description.
+Visible images follow mirrored CMS order. The responsive mosaic emphasizes the first photos without additional layout fields.
+YouTube/Facebook links, titles and descriptions come from `AristaSiteSettings`;
+empty or non-HTTPS links are omitted. Student moments reuse the same image viewer as achievements.
+Achievement lists, counts and photos preserve mirrored CMS order and respect `show`.
+Photos open in a shared image viewer with previous/next controls, arrow keys, Escape and focus restoration;
+the viewer blocks wheel, single-touch and scroll-key input without changing the Wix page's root overflow or scrollbar width.
+Long captions can scroll inside the dialog. Focus/scroll are restored only when needed;
+updating section content or disconnecting the component closes the viewer and clears its pending frame.
 Navigation scrolls to rendered sections. Program buttons emit `arista-action` with
 `target: 'registration'` and `programName`; native Wix Forms integration is pending.
 Other collections contain seed content for later sections.
+Connect `faqDataset` to `AristaFaq`. Question (`title`), Answer (`answer`) and Show Item
+(`show`) use mirrored CMS order. Each question uses native details/summary, starts closed,
+and can be toggled independently with pointer, Enter or Space. Answers preserve line breaks.
+The FAQ record in Page Content supplies intro/heading/optional description and section visibility.
+Site Settings supplies `faqContactText`, `primaryPhone` and `primaryPhoneLabel` for the call link;
+empty or invalid phone numbers omit the contact line. No extra collection fields are required.
+
+Every Image field has a companion Number field named `<imageFieldId>FocusHeight`:
+`imageFocusHeight`, `photoFocusHeight`, `logoFocusHeight` or `locationImageFocusHeight`.
+Use 0 for the top, 50 for the center and 100 for the bottom. The shared
+`src/utils/image-focus.js` helper clamps finite numbers to 0–100 and ignores invalid values.
+For existing content without the new fields, Hero retains 40 and teacher portraits retain 20;
+all other images default to 50. Explicit 0 is supported. Seed content preserves those defaults
+and the reference focal points for Student Moments.
+The header logo uses contain, so focus changes alignment only when its box has spare space.
+The full-size image viewer uses contain and keeps showing the entire image.
+`locationImageFocusHeight` is prepared for the future contact section; it is not rendered yet.
+After adding the fields in Wix, replace the dev page code with the latest
+`src/wix/arista-preview.page.js` to forward Hero and logo focus values.
 The fixed header lives outside the hero clipping container. It follows the component
 width, changes background after 40px of scrolling, and reserves its measured height
 when navigating to sections. Font faces are loaded once in the document head so

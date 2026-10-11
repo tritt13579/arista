@@ -2,6 +2,9 @@
   background: white;
   text-align: center;
 }
+.quote-highlight {
+  color: #b8862b;
+}
 .quote .section-inner {
   padding-block: 96px;
 }

@@ -1,18 +1,30 @@
 import { imageUrl } from "../utils/image-url.js";
+import { imageFocusPosition } from "../utils/image-focus.js";
 
 export const headerTemplate = `
 <header hidden lang="vi">
   <div class="header-inner">
-    <div class="brand">
+    <button class="brand" type="button" aria-label="Back to top">
       <img class="logo" alt="Arista Music Center" hidden>
       <span class="brand-text">Arista</span>
-    </div>
+    </button>
     <button class="toggle" type="button" aria-label="Open menu"
-      aria-controls="arista-nav" aria-expanded="false">☰ Menu</button>
+      aria-controls="mobile-menu" aria-expanded="false"><span aria-hidden="true" class="menu-icon"></span></button>
     <nav id="arista-nav" aria-label="Main navigation"></nav>
     <button class="cta header-cta" type="button"></button>
   </div>
 </header>
+<dialog id="mobile-menu" class="mobile-menu" aria-label="Menu chính" aria-modal="true">
+  <div class="mobile-menu-top">
+    <div class="mobile-brand"></div>
+    <button class="menu-close" type="button" aria-label="Close menu" autofocus>✕</button>
+  </div>
+  <nav class="mobile-nav" aria-label="Điều hướng"></nav>
+  <div class="mobile-menu-footer">
+    <button class="cta mobile-menu-cta" type="button"></button>
+    <p class="mobile-menu-caption"></p>
+  </div>
+</dialog>
 `;
 
 export function renderHeader(root, hero, menu, action) {
@@ -22,6 +34,7 @@ export function renderHeader(root, hero, menu, action) {
   if (url && img.getAttribute("src") !== url) img.src = url;
   if (!url) img.removeAttribute("src");
   img.alt = "Arista Music Center";
+  img.style.objectPosition = imageFocusPosition(hero.logoFocusHeight);
   root.querySelector(".brand-text").hidden = !!url;
   const button = root.querySelector(".header-cta");
   const label = hero.headerLabel || hero.primaryLabel;
@@ -41,33 +54,126 @@ export function renderHeader(root, hero, menu, action) {
       return button;
     }),
   );
+  root
+    .querySelector(".mobile-brand")
+    .replaceChildren(root.querySelector(".brand").cloneNode(true));
+  root.querySelectorAll(".brand").forEach(brand => {
+    brand.onclick = () => action("top", "Back to top");
+  });
+  root.querySelector(".mobile-nav").replaceChildren(
+    ...menu.map((item, index) => {
+      const link = document.createElement("button");
+      link.type = "button";
+      link.className = "mobile-nav-link";
+      link.style.setProperty("--item-index", index);
+      const number = document.createElement("span");
+      number.className = "menu-number";
+      number.setAttribute("aria-hidden", "true");
+      number.textContent = String(index + 1).padStart(2, "0");
+      const title = document.createElement("span");
+      title.className = "menu-title";
+      title.textContent = String(item.title || "");
+      const arrow = document.createElement("span");
+      arrow.className = "menu-arrow";
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.textContent = "↗";
+      link.append(number, title, arrow);
+      link.addEventListener("click", () =>
+        action(String(item.target || ""), String(item.title || "")),
+      );
+      return link;
+    }),
+  );
+  const mobileButton = root.querySelector(".mobile-menu-cta");
+  mobileButton.textContent = String(label || "");
+  mobileButton.hidden = !label;
+  mobileButton.onclick = () =>
+    action(String(hero.primaryTarget || ""), String(label || ""));
+  root.querySelector(".mobile-menu-caption").textContent = String(
+    hero.eyebrow || "",
+  );
 }
 
 export function bindHeader(host) {
+  const dialog = host.shadowRoot.querySelector(".mobile-menu");
   host.shadowRoot.querySelector(".toggle").addEventListener("click", () => {
-    const open = host.shadowRoot.querySelector("nav").classList.toggle("open");
+    if (dialog.open) {
+      closeMenu(host, true);
+      return;
+    }
+    const session = { x: window.scrollX, y: window.scrollY };
+    host.menuScrollSession = session;
+    dialog.showModal();
+    restoreMenuScroll(session);
+    host.menuScrollFrame = requestAnimationFrame(() => {
+      host.menuScrollFrame = 0;
+      if (host.menuScrollSession === session && dialog.open) restoreMenuScroll(session);
+    });
     host.shadowRoot
       .querySelector(".toggle")
-      .setAttribute("aria-expanded", String(open));
-    host.shadowRoot
-      .querySelector(".toggle")
-      .setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      .setAttribute("aria-expanded", "true");
+  });
+  host.shadowRoot
+    .querySelector(".menu-close")
+    .addEventListener("click", () => closeMenu(host, true));
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeMenu(host, true);
+  });
+  dialog.addEventListener("close", () => {
+    if (!dialog.open) closeMenu(host);
+  });
+  const canScroll = delta => delta < 0 ? dialog.scrollTop > 0 :
+    dialog.scrollTop + dialog.clientHeight < dialog.scrollHeight - 1;
+  dialog.addEventListener("wheel", event => {
+    if (!event.ctrlKey && !canScroll(event.deltaY)) event.preventDefault();
+  }, { passive: false });
+  let touchY = 0;
+  dialog.addEventListener("touchstart", event => {
+    touchY = event.touches[0]?.clientY || 0;
+  }, { passive: true });
+  dialog.addEventListener("touchmove", event => {
+    if (event.touches.length !== 1) return;
+    const nextY = event.touches[0].clientY;
+    if (!canScroll(touchY - nextY)) event.preventDefault();
+    touchY = nextY;
+  }, { passive: false });
+  dialog.addEventListener("keydown", event => {
+    if (!["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) return;
+    if (event.key === " " && event.target.closest("button")) return;
+    event.preventDefault();
+    const direction = ["ArrowUp", "PageUp", "Home"].includes(event.key) || (event.key === " " && event.shiftKey) ? -1 : 1;
+    const distance = ["Home", "End"].includes(event.key) ? dialog.scrollHeight : ["ArrowUp", "ArrowDown"].includes(event.key) ? 40 : dialog.clientHeight;
+    dialog.scrollBy({ top: direction * distance, behavior: "instant" });
   });
   host.shadowRoot.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Escape" &&
-      host.shadowRoot.querySelector("nav").classList.contains("open")
-    ) {
-      host.closeMenu();
-      host.shadowRoot.querySelector(".toggle").focus();
+    if (event.key === "Tab" && dialog.open) {
+      const buttons = [...dialog.querySelectorAll("button")].filter(
+        (button) => !button.disabled && button.getClientRects().length > 0,
+      );
+      const first = buttons[0];
+      const last = buttons.at(-1);
+      const active = host.shadowRoot.activeElement;
+      if (
+        (event.shiftKey && active === first) ||
+        (!event.shiftKey && active === last)
+      ) {
+        event.preventDefault();
+        (event.shiftKey ? last : first)?.focus();
+      }
+    }
+    if (event.key === "Escape" && dialog.open) {
+      event.preventDefault();
+      closeMenu(host, true);
     }
   });
   host.shadowRoot.addEventListener("click", (event) => {
-    if (!event.target.closest("header")) host.closeMenu();
+    if (!event.target.closest("header, .mobile-menu")) host.closeMenu();
   });
 }
 
 export function updateHeader(host) {
+  if (window.matchMedia("(min-width: 1025px)").matches) closeMenu(host);
   const header = host.shadowRoot.querySelector("header");
   const rect = host.getBoundingClientRect();
   const height =
@@ -82,12 +188,26 @@ export function updateHeader(host) {
   host.style.setProperty("--header-height", `${height}px`);
 }
 
-export function closeMenu(host) {
-  host.shadowRoot.querySelector("nav").classList.remove("open");
+export function closeMenu(host, restoreFocus = false) {
+  const dialog = host.shadowRoot.querySelector(".mobile-menu");
+  const session = host.menuScrollSession;
+  const wasOpen = dialog.open;
+  host.menuScrollSession = null;
+  cancelAnimationFrame(host.menuScrollFrame);
+  host.menuScrollFrame = 0;
+  if (dialog.open) dialog.close();
   host.shadowRoot
     .querySelector(".toggle")
     .setAttribute("aria-expanded", "false");
   host.shadowRoot
     .querySelector(".toggle")
     .setAttribute("aria-label", "Open menu");
+  if (restoreFocus && wasOpen && host.isConnected)
+    host.shadowRoot.querySelector(".toggle").focus({ preventScroll: true });
+  if (session) restoreMenuScroll(session);
+}
+
+function restoreMenuScroll(session) {
+  if (Math.abs(window.scrollX - session.x) > 0.5 || Math.abs(window.scrollY - session.y) > 0.5)
+    window.scrollTo({ left: session.x, top: session.y, behavior: "instant" });
 }

@@ -27,6 +27,13 @@ header.scrolled {
 }
 .brand {
   flex: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
   font:
     500 25px Georgia,
     serif;
@@ -61,12 +68,152 @@ nav {
 .toggle {
   display: none;
   color: white;
-  background: #0c0f3340;
-  border: 1px solid #ffffff50;
-  padding: 10px 14px;
+  background: transparent;
+  border: 0;
+  padding: 10px;
+  width: 48px;
+  height: 48px;
+  place-items: center;
   min-height: 44px;
   border-radius: 8px;
   margin-left: auto;
+}
+.menu-icon {
+  width: 24px;
+  height: 10px;
+  border-block: 1.5px solid #f0c878;
+}
+.mobile-menu:not([open]) {
+  display: none;
+}
+.mobile-menu {
+  overscroll-behavior: contain;
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  max-height: none;
+  padding: max(16px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+    max(24px, env(safe-area-inset-left));
+  border: 0;
+  background: #0c0f33;
+  color: #faf6ee;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+}
+.mobile-menu::backdrop {
+  background: #0c0f33;
+}
+.mobile-menu-top,
+.mobile-nav,
+.mobile-menu-footer {
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
+  flex-shrink: 0;
+}
+.mobile-menu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ffffff29;
+}
+.menu-close {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ffffff29;
+  border-radius: 50%;
+  background: transparent;
+  color: #f0c878;
+  font-size: 21px;
+}
+.mobile-nav {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  padding-block: clamp(20px, 4vh, 40px);
+}
+.mobile-nav-link {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  min-height: 56px;
+  text-align: left;
+  color: #faf6ee;
+  border: 0;
+  border-bottom: 1px solid #ffffff14;
+  background: transparent;
+}
+.menu-number {
+  flex: none;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #d9a441;
+}
+.menu-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font:
+    500 clamp(26px, 5vw, 38px)/1.2 "Playfair Display",
+    Georgia,
+    serif;
+}
+.menu-arrow {
+  flex: none;
+  color: #d9a441;
+  font-size: 20px;
+}
+.mobile-nav-link:hover .menu-title {
+  color: #f0c878;
+}
+.mobile-menu-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid #ffffff29;
+}
+.mobile-menu-cta {
+  width: 100%;
+  white-space: normal;
+}
+.mobile-menu-caption {
+  margin: 20px 0 0;
+  color: #ffffff99;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+}
+@keyframes menu-item-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu[open] .mobile-nav-link {
+    animation: menu-item-enter 0.35s ease both;
+    animation-delay: calc(var(--item-index) * 35ms);
+  }
 }
 .header-cta {
   flex: none;
