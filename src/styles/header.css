@@ -170,7 +170,7 @@ nav {
   min-width: 0;
   overflow-wrap: anywhere;
   font:
-    500 clamp(26px, 5vw, 38px)/1.2 "Playfair Display",
+    500 clamp(26px, 5vw, 38px) / 1.2 "Playfair Display",
     Georgia,
     serif;
 }
@@ -210,9 +210,37 @@ nav {
   }
 }
 @media (prefers-reduced-motion: no-preference) {
+  .mobile-menu[open] {
+    animation: menu-fade-in 180ms ease-out both;
+  }
+  .mobile-menu[open]::backdrop {
+    animation: menu-fade-in 180ms ease-out both;
+  }
+  .mobile-menu.is-closing::backdrop {
+    animation: menu-fade-out 180ms ease-in both;
+  }
   .mobile-menu[open] .mobile-nav-link {
-    animation: menu-item-enter 0.35s ease both;
-    animation-delay: calc(var(--item-index) * 35ms);
+    animation: menu-item-enter 240ms ease-out both;
+    animation-delay: calc(var(--item-index) * 25ms);
+  }
+}
+.mobile-menu.is-closing > * {
+  pointer-events: none;
+}
+@keyframes menu-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes menu-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 .header-cta {

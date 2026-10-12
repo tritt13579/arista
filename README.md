@@ -39,7 +39,7 @@ At 1024px and below, the two-line menu toggle opens a full-viewport navy modal
 with numbered CMS navigation items and a registration CTA. The modal traps focus,
 supports Escape/close, locks background scrolling and restores styles on close or
 disconnect. It closes when returning to desktop. The CTA uses the existing action
-event; native Wix Forms integration is still pending. Editor/Preview iframes limit
+event; the registration section submits through the Wix backend web method. Editor/Preview iframes limit
 the modal to the iframe viewport, so verify fullscreen behavior on the Wix test site.
 
 Run `npm run cms:export` after editing sample content. Run `npm run check` to
@@ -108,12 +108,23 @@ YouTube/Facebook links, titles and descriptions come from `AristaSiteSettings`;
 empty or non-HTTPS links are omitted. Student moments reuse the same image viewer as achievements.
 Achievement lists, counts and photos preserve mirrored CMS order and respect `show`.
 Photos open in a shared image viewer with previous/next controls, arrow keys, Escape and focus restoration;
+switching clears the old photo and shows a loading message in a stable frame until the new image loads and decodes.
+Only the latest selection can update the viewer. Failed loads show a message, and each ready photo prefetches one next photo.
 the viewer blocks wheel, single-touch and scroll-key input without changing the Wix page's root overflow or scrollbar width.
 Long captions can scroll inside the dialog. Focus/scroll are restored only when needed;
 updating section content or disconnecting the component closes the viewer and clears its pending frame.
 Navigation scrolls to rendered sections. Program buttons emit `arista-action` with
-`target: 'registration'` and `programName`; native Wix Forms integration is pending.
+`target: 'registration'` and `programName`; the registration form preselects the matching program.
 Other collections contain seed content for later sections.
+Footer and floating contacts read existing Site Settings fields, with no additional dataset.
+Footer uses `logo`, `logoFocusHeight`, `brandName`, `footerDescription` and `copyrightText`.
+The logo returns to the top. Floating contacts use `primaryPhone`, `callButtonText`,
+`zaloUrl`, `zaloButtonText`, `messengerUrl`, `messengerButtonText` and `floatingRegistrationButtonText`.
+Missing labels or invalid links omit the corresponding contact; external URLs require HTTPS.
+The floating bar appears after scrolling 70% of the viewport height from the component top,
+stays within the component's horizontal bounds and uses a compact layout on mobile.
+Footer bottom padding reserves space for it. Native modal dialogs remain above the bar.
+The trial button navigates to the Registration form.
 Connect `faqDataset` to `AristaFaq`. Question (`title`), Answer (`answer`) and Show Item
 (`show`) use mirrored CMS order. Each question uses native details/summary, starts closed,
 and can be toggled independently with pointer, Enter or Space. Answers preserve line breaks.
@@ -130,7 +141,7 @@ all other images default to 50. Explicit 0 is supported. Seed content preserves 
 and the reference focal points for Student Moments.
 The header logo uses contain, so focus changes alignment only when its box has spare space.
 The full-size image viewer uses contain and keeps showing the entire image.
-`locationImageFocusHeight` is prepared for the future contact section; it is not rendered yet.
+`locationImageFocusHeight` controls the location image in Registration.
 After adding the fields in Wix, replace the dev page code with the latest
 `src/wix/arista-preview.page.js` to forward Hero and logo focus values.
 The fixed header lives outside the hero clipping container. It follows the component
@@ -146,3 +157,58 @@ and mobile; the component does not automatically resize the Wix element wrapper.
 The old `wix-assets/` experiment paths have been retired. Update the development
 page source URL and page code before testing. This repository does not publish,
 delete, or modify the client's Wix site or collections automatically.
+
+
+## Responsive Wix images
+
+`src/utils/image-url.js` creates WebP fit variants for public Wix JPG/PNG/WebP
+media. Renderers set `srcset` and `sizes` for their layout; the browser chooses a
+candidate based on viewport and pixel density. Known original dimensions cap
+the candidates. The entire image is resized, preserving the CSS focal point.
+The image viewer retains the original URL and loads it when opened. SVG, GIF,
+external URLs, already transformed URLs and local assets are left unchanged.
+A failed variant retries the original once, then uses the section error state.
+Hero keeps high fetch priority; section images keep native lazy loading.
+This change does not add background prefetching or change any CMS fields/page code.
+
+## Trial registration
+
+The Registration record in `AristaPageContent` supplies visibility, intro, heading,
+description, optional caption and optional submit label (`primaryButtonText`).
+`AristaSiteSettings` supplies address/phone/hours labels and values, plus
+`locationImage`, `locationImageDescription` and `locationImageFocusHeight`.
+Visible Programs supply the form choices. No new CMS collection, fields or dataset is needed.
+
+Create a **backend web module** named `trial-registration.web.js` in the Wix code
+panel and copy `src/wix/backend/trial-registration.web.js` into it. Replace the dev
+page code with `src/wix/arista-preview.page.js`, then rebuild/deploy the component.
+Keep the native Wix Form in Forms & Submissions; it does not need to be placed on
+the canvas. Its layout and confirmation settings do not style this custom UI.
+
+The backend targets form `1a3ca13f-0752-41c7-94ab-776889eec506` with keys
+`full_name`, `phone`, `student_type`, `program`, `message`. Verify these are the
+form field keys, not just labels. Name and phone are required; choices/message
+are optional. Dropdown values must exactly match the Wix form. If program names
+change, update the CMS, Wix form options and backend PROGRAMS allowlist together.
+The backend accepts only those fields, normalizes Vietnamese phone numbers to
++84, and never trusts a client-supplied form ID, status or submission options.
+
+The component emits `arista-registration-submit`; page code calls the backend
+and returns a correlated `registration-result` attribute without rerendering the
+page. Pending controls prevent repeated clicks. Errors preserve typed values;
+success resets the form and displays a confirmation. There is no automatic retry
+when the outcome is uncertain. Backend errors do not log names or phone numbers.
+
+Local `index.html` simulates success and explicitly says no information was sent.
+`npm run check` verifies the adapter/bridge contract and backend validation,
+normalization, fixed destination, duplicate cooldown and failure behavior using
+mocked Wix methods. It does not send a real submission.
+
+Before accepting live registrations, submit a clearly marked test on the Wix
+test site and verify the row in **Forms & Submissions > View submissions**, including
+phone and both dropdown values. Verify notification recipients/automation with
+that same test; API success alone does not prove an email was delivered.
+The basic hidden honeypot and per-phone server-instance cooldown are not CAPTCHA
+or a distributed rate limiter. A public custom endpoint needs stronger spam
+protection if abuse occurs; native Wix Form anti-spam behavior must not be assumed
+to apply to this elevated API call.

@@ -3,7 +3,9 @@
   color: #1c2260;
 }
 .section {
-  scroll-margin-top: calc(var(--header-height) + 24px - var(--section-content-inset, 0px));
+  scroll-margin-top: calc(
+    var(--header-height) + 24px - var(--section-content-inset, 0px)
+  );
 }
 .section:focus-visible {
   outline: 3px solid #1c2260;
@@ -20,7 +22,7 @@
 .section h2 {
   margin: 14px 0 16px;
   font:
-    500 clamp(30px, 4vw, 46px)/1.2 "Playfair Display",
+    500 clamp(30px, 4vw, 46px) / 1.2 "Playfair Display",
     Georgia,
     serif;
   text-wrap: balance;

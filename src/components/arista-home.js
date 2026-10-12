@@ -18,11 +18,14 @@ import { renderTeachers } from "../sections/teachers.js";
 import { renderAchievements } from "../sections/achievements.js";
 import { renderStudentMoments } from "../sections/student-moments.js";
 import { renderFaq } from "../sections/faq.js";
+import { renderRegistration } from "../sections/registration.js";
+import { renderFooter } from "../sections/footer.js";
+import { renderFloatingContacts, updateFloatingContacts } from "../sections/floating-contacts.js";
 import { openImageViewer } from "../utils/image-viewer.js";
 
 class AristaHome extends HTMLElement {
   static get observedAttributes() {
-    return ["content"];
+    return ["content", "registration-result"];
   }
   constructor() {
     super();
@@ -54,7 +57,16 @@ class AristaHome extends HTMLElement {
     this.emit("arista-ready", {});
   }
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue && this.isConnected) this.render();
+    if (oldValue === newValue || !this.isConnected) return;
+    if (name === "registration-result") {
+      try {
+        this.shadowRoot.getElementById("registration")?.receiveResult(JSON.parse(newValue));
+      } catch (_) {
+        console.warn("ARISTA: invalid registration response.");
+      }
+      return;
+    }
+    this.render();
   }
   emit(name, detail) {
     this.dispatchEvent(
@@ -62,6 +74,10 @@ class AristaHome extends HTMLElement {
     );
   }
   action(target, label, extra = {}) {
+    if (this.shadowRoot.querySelector(".mobile-menu").open) {
+      closeMenu(this, false, () => this.action(target, label, extra));
+      return;
+    }
     // Release the modal's scroll lock before navigating to a section.
     this.closeMenu();
     if (target === "top") {
@@ -71,6 +87,7 @@ class AristaHome extends HTMLElement {
       return;
     }
     const section = this.shadowRoot.getElementById(target);
+    if (target === "registration" && extra.programName) section?.selectProgram(extra.programName);
     if (section && !section.hidden) {
       const inner = section.querySelector(".section-inner");
       const contentInset = inner ? parseFloat(getComputedStyle(inner).paddingTop) || 0 : 0;
@@ -87,6 +104,8 @@ class AristaHome extends HTMLElement {
     this.closeMenu();
   }
   disconnectedCallback() {
+    this.shadowRoot.getElementById("registration")?.dispose();
+    this.shadowRoot.querySelector(".floating-contact-shell")?.dispose();
     this.imageViewer?.close();
     this.closeMenu();
     this.revealObserver?.disconnect();
@@ -98,6 +117,7 @@ class AristaHome extends HTMLElement {
   }
   updateHeader() {
     updateHeader(this);
+    updateFloatingContacts(this);
   }
   renderSections(data) {
     const key = JSON.stringify([
@@ -110,6 +130,9 @@ class AristaHome extends HTMLElement {
       data.achievements,
       data.moments,
       data.faq,
+      data.registration,
+      data.footer,
+      data.contacts,
     ]);
     if (key === this.lastSectionsKey) return;
     this.lastSectionsKey = key;
@@ -128,9 +151,18 @@ class AristaHome extends HTMLElement {
       renderAchievements(data.achievements, (images, index) => openImageViewer(this, images, index)),
       renderStudentMoments(data.moments, (images, index) => openImageViewer(this, images, index)),
       renderFaq(data.faq),
+      renderRegistration(data.registration, detail => this.emit("arista-registration-submit", detail)),
+      renderFooter(data.footer, this.action.bind(this)),
     ].filter(Boolean);
     this.revealObserver?.disconnect();
+    this.shadowRoot.getElementById("registration")?.dispose();
     root.replaceChildren(...blocks);
+    const previousContacts = this.shadowRoot.querySelector(".floating-contact-shell");
+    previousContacts?.dispose();
+    previousContacts?.remove();
+    const contacts = renderFloatingContacts(data.contacts, this.action.bind(this));
+    if (contacts) this.shadowRoot.append(contacts);
+    updateFloatingContacts(this);
     observeReveals(this, root);
   }
   closeMenu() {

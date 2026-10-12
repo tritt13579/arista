@@ -1,0 +1,233 @@
+.floating-contact-shell {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  pointer-events: none;
+}
+.floating-contacts {
+  flex: none;
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid #ffffff24;
+  background: #0c0f33;
+  box-shadow: 0 14px 34px #0005;
+  pointer-events: auto;
+}
+.floating-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 0;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.floating-contact:hover {
+  background: #1c2260;
+}
+.contact-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.contact-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+}
+.contact-icon-call {
+  background: #34a853;
+}
+.contact-icon-zalo {
+  border-radius: 8px;
+  background: #0068ff;
+  font-size: 9px;
+  font-weight: 700;
+}
+.contact-icon-messenger {
+  background: linear-gradient(135deg, #0099ff, #a033ff 60%, #ff5c87);
+}
+.floating-registration {
+  min-height: 44px;
+  min-width: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d9a441;
+  color: #0c0f33;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.floating-registration:hover {
+  background: #f0c878;
+}
+.floating-contact-toggle {
+  display: none;
+}
+.contact-toggle-icon {
+  display: grid;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+.contact-toggle-icon svg {
+  grid-area: 1 / 1;
+  transition:
+    opacity 170ms ease,
+    transform 170ms ease;
+}
+.contact-toggle-chat {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+.contact-toggle-close {
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+.is-open .contact-toggle-chat {
+  opacity: 0;
+  transform: rotate(30deg);
+}
+.is-open .contact-toggle-close {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+.floating-contacts :focus-visible,
+.floating-contact-toggle:focus-visible {
+  outline: 2px solid #f0c878;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .floating-contact-shell {
+    justify-content: flex-end;
+    padding: 0 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .floating-contact-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 1px solid #ffffff24;
+    border-radius: 999px;
+    background: #0c0f33;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 6px 20px #0003;
+    pointer-events: auto;
+  }
+  .floating-contacts {
+    position: absolute;
+    right: 12px;
+    bottom: calc(100% + 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    max-height: calc(100dvh - 112px - env(safe-area-inset-bottom, 0px));
+    overflow: visible;
+    overscroll-behavior: contain;
+    padding: 4px;
+    border: 0;
+    border-radius: 0;
+    gap: 8px;
+    background: transparent;
+    box-shadow: none;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 230ms;
+  }
+  .floating-contact-shell.is-open .floating-contacts {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .floating-contacts > * {
+    opacity: 0;
+    transform: translateY(var(--contact-travel, 32px));
+    transition: none;
+  }
+  .floating-contact-shell.is-closing .floating-contacts > * {
+    transform: translateY(10px);
+    transition:
+      transform 140ms ease-in var(--contact-close-delay),
+      opacity 140ms ease-in var(--contact-close-delay);
+  }
+  .floating-contact-shell.is-open .floating-contacts > * {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      transform 180ms ease-out var(--contact-open-delay),
+      opacity 180ms ease-out var(--contact-open-delay);
+    pointer-events: auto;
+  }
+  .floating-contact {
+    flex: none;
+    justify-content: flex-start;
+    gap: 10px;
+    max-width: 100%;
+    padding: 6px 16px 6px 8px;
+    border: 1px solid #ffffff24;
+    border-radius: 999px;
+    background: #0c0f33;
+    box-shadow: 0 2px 4px #0003;
+    pointer-events: none;
+  }
+  .floating-contact:hover {
+    background: #1c2260;
+  }
+  .floating-contacts .contact-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .floating-registration {
+    flex: none;
+    min-width: 112px;
+    max-width: 100%;
+    padding: 12px 18px;
+    border-radius: 999px;
+    box-shadow: 0 2px 4px #0003;
+    pointer-events: none;
+  }
+  .floating-contact:active,
+  .floating-registration:active,
+  .floating-contact-toggle:active {
+    filter: brightness(1.15);
+  }
+}
+@media (max-width: 640px) and (max-height: 380px) {
+  .floating-contacts {
+    overflow-y: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-toggle-icon svg {
+    transition: none;
+  }
+  .floating-contact-shell .floating-contacts,
+  .floating-contact-shell .floating-contacts > *,
+  .floating-contact-shell.is-closing .floating-contacts > *,
+  .floating-contact-shell.is-open .floating-contacts > * {
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 import { node } from "../utils/dom.js";
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
@@ -30,11 +30,11 @@ export function renderAchievements(content, showImages) {
     button.setAttribute("aria-label", `View image: ${alt || caption || "Achievement"}`);
     button.setAttribute("aria-haspopup", "dialog");
     const image = node("img", "");
-    image.src = src;
     image.alt = alt || caption || "";
     image.style.objectPosition = imageFocusPosition(focusHeight);
     image.loading = "lazy";
     image.decoding = "async";
+    setResponsiveImage(image, src, className === "achievement-main-photo" ? "(max-width: 768px) calc(100vw - 40px), (max-width: 1240px) 46vw, 570px" : "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 46vw, 390px");
     const fallback = node("span", "achievement-photo-fallback", caption || alt || "Image unavailable");
     fallback.hidden = true;
     button.append(image, fallback);

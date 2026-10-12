@@ -2,17 +2,29 @@
   background: #0c0f33;
   color: white;
 }
-.achievements:focus-visible { outline-color: #f0c878; }
-.achievements .eyebrow { color: #f0c878; }
-.achievements .section-description { color: #ffffffbf; }
+.achievements:focus-visible {
+  outline-color: #f0c878;
+}
+.achievements .eyebrow {
+  color: #f0c878;
+}
+.achievements .section-description {
+  color: #ffffffbf;
+}
 .achievements-layout {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 64px;
   align-items: start;
 }
-.achievements-summary-only { grid-template-columns: 1fr; }
-.achievements-summary { display: grid; gap: 24px; min-width: 0; }
+.achievements-summary-only {
+  grid-template-columns: 1fr;
+}
+.achievements-summary {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
 .achievement-total {
   display: flex;
   align-items: flex-end;
@@ -21,7 +33,10 @@
   margin: 0;
 }
 .achievement-total-value {
-  font: 500 clamp(100px, 13vw, 170px)/1 "Playfair Display", Georgia, serif;
+  font:
+    500 clamp(100px, 13vw, 170px) / 1 "Playfair Display",
+    Georgia,
+    serif;
   color: #f0c878;
   overflow-wrap: anywhere;
   max-width: 100%;
@@ -53,9 +68,20 @@
   border-radius: 14px;
   overflow-wrap: anywhere;
 }
-.award-count dt { color: #ffffffb8; font-size: 13px; }
-.award-count dd { font-size: 30px; color: white; }
-.achievement-list { list-style: none; padding: 0; margin: 0; min-width: 0; }
+.award-count dt {
+  color: #ffffffb8;
+  font-size: 13px;
+}
+.award-count dd {
+  font-size: 30px;
+  color: white;
+}
+.achievement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
 .achievement-entry {
   display: grid;
   grid-template-columns: 60px minmax(0, 1fr);
@@ -63,16 +89,26 @@
   padding: 22px 0;
   border-bottom: 1px solid #ffffff24;
 }
-.achievement-entry:first-child { padding-top: 0; }
+.achievement-entry:first-child {
+  padding-top: 0;
+}
 .achievement-year {
-  font: italic 500 16px/1.5 "Playfair Display", Georgia, serif;
+  font:
+    italic 500 16px/1.5 "Playfair Display",
+    Georgia,
+    serif;
   color: #f0c878;
   overflow-wrap: anywhere;
 }
-.achievement-entry-copy { grid-column: 2; }
+.achievement-entry-copy {
+  grid-column: 2;
+}
 .achievement-entry h3 {
   margin: 0 0 8px;
-  font: 500 21px/1.4 "Playfair Display", Georgia, serif;
+  font:
+    500 21px/1.4 "Playfair Display",
+    Georgia,
+    serif;
   overflow-wrap: anywhere;
 }
 .achievement-entry p {
@@ -83,7 +119,11 @@
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
-.achievement-main-photo, .achievement-proof { margin: 0; min-width: 0; }
+.achievement-main-photo,
+.achievement-proof {
+  margin: 0;
+  min-width: 0;
+}
 .achievement-image-button {
   display: block;
   width: 100%;
@@ -96,11 +136,24 @@
   aspect-ratio: 4/3;
   cursor: zoom-in;
 }
-.achievement-main-photo .achievement-image-button { aspect-ratio: 16/9; }
-.achievement-image-button img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.achievement-image-button:disabled { cursor: default; }
-.achievement-photo-fallback { display: block; padding: 20px; }
-.achievement-main-photo figcaption, .achievement-proof figcaption {
+.achievement-main-photo .achievement-image-button {
+  aspect-ratio: 16/9;
+}
+.achievement-image-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.achievement-image-button:disabled {
+  cursor: default;
+}
+.achievement-photo-fallback {
+  display: block;
+  padding: 20px;
+}
+.achievement-main-photo figcaption,
+.achievement-proof figcaption {
   margin-top: 10px;
   font-size: 13.5px;
   line-height: 1.6;
@@ -113,6 +166,26 @@
   gap: 28px 20px;
   margin-top: 64px;
 }
-@media (max-width: 1024px) { .achievements-layout { gap: 32px; } .award-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 768px) { .achievements-layout { grid-template-columns: 1fr; gap: 40px; } }
-@media (max-width: 640px) { .achievement-gallery { margin-top: 40px; } .achievement-entry { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; } }
+@media (max-width: 1024px) {
+  .achievements-layout {
+    gap: 32px;
+  }
+  .award-counts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .achievements-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+@media (max-width: 640px) {
+  .achievement-gallery {
+    margin-top: 40px;
+  }
+  .achievement-entry {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 14px;
+  }
+}

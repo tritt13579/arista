@@ -1,4 +1,4 @@
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 
 export const heroTemplate = `
@@ -35,8 +35,7 @@ export function renderHero(root, hero, stats, action) {
     const img = root.querySelector(selector);
     const url = imageUrl(hero[field]);
     img.hidden = !url;
-    if (url && img.getAttribute("src") !== url) img.src = url;
-    if (!url) img.removeAttribute("src");
+    setResponsiveImage(img, hero[field], "100vw");
     img.alt = String(alt || "");
     img.style.objectPosition = imageFocusPosition(hero.imageFocusHeight, 40);
   }

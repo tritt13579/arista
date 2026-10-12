@@ -1,5 +1,5 @@
 import { node } from "../utils/dom.js";
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
@@ -29,7 +29,7 @@ export function renderStudentMoments(content, showImages) {
       fallback.hidden = false;
       button.disabled = true;
     }, { once: true });
-    image.src = item.src;
+    setResponsiveImage(image, item.src, index === 0 ? "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 94vw, (max-width: 1240px) 63vw, 790px" : "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 46vw, (max-width: 1240px) 31vw, 390px");
     button.append(image, fallback);
     button.onclick = () => showImages(images, index);
     card.append(button);

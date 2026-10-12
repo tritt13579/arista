@@ -11,10 +11,16 @@ const settings = { ...content.AristaSiteSettings[0] };
 const sections = content.AristaPageContent.map(item => ({ ...item }));
 const assetUrl = value => value ? new URL(`../${value}`, import.meta.url).href : '';
 settings.logo = assetUrl(settings.logo);
+settings.locationImage = assetUrl(settings.locationImage);
 for (const section of sections) section.image = assetUrl(section.image);
 const programs = content.AristaPrograms.map(item => ({ ...item, image: assetUrl(item.image) }));
 const teachers = content.AristaTeachers.map(item => ({ ...item, photo: assetUrl(item.photo) }));
 const achievementPhotos = content.AristaAchievementPhotos.map(item => ({ ...item, image: assetUrl(item.image) }));
 const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, image: assetUrl(item.image) }));
 element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq)));
-element.addEventListener('arista-action', event => console.info('ARISTA ACTION (sections pending):', event.detail));
+element.addEventListener('arista-action', event => console.info('ARISTA ACTION:', event.detail));
+// Local preview never writes personal information to Wix.
+element.addEventListener('arista-registration-submit', event => {
+  const { requestId } = event.detail;
+  setTimeout(() => element.setAttribute('registration-result', JSON.stringify({ requestId, ok: true, demo: true })), 500);
+});

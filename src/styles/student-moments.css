@@ -1,4 +1,6 @@
-.moments .section-description { max-width: none; }
+.moments .section-description {
+  max-width: none;
+}
 .moments-gallery {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -15,11 +17,15 @@
   border-radius: 16px;
   background: #1c2260;
 }
-.moment-card:nth-child(-n+2) {
+.moment-card:nth-child(-n + 2) {
   grid-row: span 2;
 }
-.moment-card:first-child { grid-column: span 4; }
-.moment-card:only-child { grid-column: 1 / -1; }
+.moment-card:first-child {
+  grid-column: span 4;
+}
+.moment-card:only-child {
+  grid-column: 1 / -1;
+}
 .moment-image-button {
   display: block;
   width: 100%;
@@ -37,11 +43,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
-.moment-image-button:hover img { transform: scale(1.03); }
-.moment-image-button:disabled { cursor: default; }
-.moment-image-fallback { display: block; padding: 24px; overflow-wrap: anywhere; }
+.moment-image-button:hover img {
+  transform: scale(1.03);
+}
+.moment-image-button:disabled {
+  cursor: default;
+}
+.moment-image-fallback {
+  display: block;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
 .moment-caption {
   position: absolute;
   left: 0;
@@ -74,9 +88,11 @@
   background: #1c2260;
   color: white;
   text-decoration: none;
-  transition: background .2s;
+  transition: background 0.2s;
 }
-.moment-social-link:hover { background: #141848; }
+.moment-social-link:hover {
+  background: #141848;
+}
 .moment-social-icon {
   flex: none;
   display: grid;
@@ -87,21 +103,60 @@
   background: #d9a441;
   color: #0c0f33;
 }
-.moment-social-copy { display: grid; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
-.moment-social-title { font-size: 15px; font-weight: 600; line-height: 1.5; }
-.moment-social-description { font-size: 13.5px; line-height: 1.6; color: #ffffffbf; }
+.moment-social-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.moment-social-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.moment-social-description {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #ffffffbf;
+}
 @media (max-width: 1024px) {
-  .moments-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .moment-card:nth-child(-n+2) { grid-column: span 2; }
+  .moments-gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .moment-card:nth-child(-n + 2) {
+    grid-column: span 2;
+  }
 }
 @media (max-width: 640px) {
-  .moments-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 180px; gap: 14px; margin-top: 30px; }
-  .moment-card, .moment-card:nth-child(-n+2) { grid-column: span 1; grid-row: span 1; }
-  .moment-card:first-child { grid-column: 1 / -1; }
-  .moment-caption { padding: 32px 12px 12px; font-size: 12px; }
-  .moment-social-link { padding: 18px 16px; gap: 14px; }
+  .moments-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 180px;
+    gap: 14px;
+    margin-top: 30px;
+  }
+  .moment-card,
+  .moment-card:nth-child(-n + 2) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .moment-card:first-child {
+    grid-column: 1 / -1;
+  }
+  .moment-caption {
+    padding: 32px 12px 12px;
+    font-size: 12px;
+  }
+  .moment-social-link {
+    padding: 18px 16px;
+    gap: 14px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .moment-image-button img, .moment-social-link { transition: none; }
-  .moment-image-button:hover img { transform: none; }
+  .moment-image-button img,
+  .moment-social-link {
+    transition: none;
+  }
+  .moment-image-button:hover img {
+    transform: none;
+  }
 }

@@ -71,7 +71,10 @@
 }
 .featured-teacher-name {
   margin: 0;
-  font: 500 clamp(30px, 3.6vw, 42px)/1.2 "Playfair Display", Georgia, serif;
+  font:
+    500 clamp(30px, 3.6vw, 42px) / 1.2 "Playfair Display",
+    Georgia,
+    serif;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }
@@ -81,7 +84,7 @@
   font-size: 14px;
   font-weight: 600;
   line-height: 1.6;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   white-space: pre-line;
 }
 .teacher-qualifications {
@@ -131,7 +134,10 @@
 }
 .teacher-name {
   margin: 14px 0 4px;
-  font: 500 20px/1.4 "Playfair Display", Georgia, serif;
+  font:
+    500 20px/1.4 "Playfair Display",
+    Georgia,
+    serif;
   overflow-wrap: anywhere;
 }
 .teacher-role,

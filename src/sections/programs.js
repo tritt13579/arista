@@ -1,5 +1,5 @@
 import { node } from "../utils/dom.js";
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
@@ -28,7 +28,7 @@ export function renderPrograms(content, buttonText, action) {
       image.loading = "lazy";
       image.decoding = "async";
       image.addEventListener("error", fallback, { once: true });
-      image.src = url;
+      setResponsiveImage(image, item.image, "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 46vw, 290px");
       media.append(image);
     } else fallback();
     const body = node("div", "program-copy");

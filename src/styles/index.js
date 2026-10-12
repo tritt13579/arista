@@ -10,6 +10,9 @@ import teachers from "./teachers.css";
 import achievements from "./achievements.css";
 import studentMoments from "./student-moments.css";
 import faq from "./faq.css";
+import registration from "./registration.css";
+import footer from "./footer.css";
+import floatingContacts from "./floating-contacts.css";
 import imageViewer from "./image-viewer.css";
 import animations from "./animations.css";
 import responsive from "./responsive.css";
@@ -28,6 +31,9 @@ export const styles = [
   achievements,
   studentMoments,
   faq,
+  registration,
+  footer,
+  floatingContacts,
   imageViewer,
   animations,
   responsive,

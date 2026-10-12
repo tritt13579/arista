@@ -1,4 +1,4 @@
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 
 export const headerTemplate = `
@@ -31,7 +31,7 @@ export function renderHeader(root, hero, menu, action) {
   const img = root.querySelector(".logo");
   const url = imageUrl(hero.logo);
   img.hidden = !url;
-  if (url && img.getAttribute("src") !== url) img.src = url;
+  if (url) setResponsiveImage(img, hero.logo, "152px", [160, 320, 480]);
   if (!url) img.removeAttribute("src");
   img.alt = "Arista Music Center";
   img.style.objectPosition = imageFocusPosition(hero.logoFocusHeight);
@@ -188,14 +188,40 @@ export function updateHeader(host) {
   host.style.setProperty("--header-height", `${height}px`);
 }
 
-export function closeMenu(host, restoreFocus = false) {
+export function closeMenu(host, restoreFocus = false, afterClose = null) {
   const dialog = host.shadowRoot.querySelector(".mobile-menu");
+  if (afterClose) host.menuAfterClose = afterClose;
+  const animate = dialog.open && host.isConnected && (restoreFocus || afterClose) &&
+    !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (animate) {
+    if (host.menuCloseAnimations) return;
+    dialog.classList.add("is-closing");
+    const timing = { duration: 180, easing: "ease-in", fill: "forwards" };
+    const fade = dialog.animate([{ opacity: getComputedStyle(dialog).opacity }, { opacity: 0 }], timing);
+    host.menuCloseAnimations = [fade, ...[...dialog.children].map(child =>
+      child.animate([{ transform: "translateY(0)" }, { transform: "translateY(8px)" }], timing))];
+    fade.finished.then(() => {
+      if (host.menuCloseAnimations?.[0] === fade) finishMenuClose(host, restoreFocus);
+    }).catch(() => {});
+    return;
+  }
+  finishMenuClose(host, restoreFocus);
+}
+
+function finishMenuClose(host, restoreFocus) {
+  const dialog = host.shadowRoot.querySelector(".mobile-menu");
+  const afterClose = host.menuAfterClose;
+  host.menuAfterClose = null;
+  const animations = host.menuCloseAnimations;
+  host.menuCloseAnimations = null;
   const session = host.menuScrollSession;
   const wasOpen = dialog.open;
   host.menuScrollSession = null;
   cancelAnimationFrame(host.menuScrollFrame);
   host.menuScrollFrame = 0;
   if (dialog.open) dialog.close();
+  animations?.forEach(animation => animation.cancel());
+  dialog.classList.remove("is-closing");
   host.shadowRoot
     .querySelector(".toggle")
     .setAttribute("aria-expanded", "false");
@@ -205,6 +231,7 @@ export function closeMenu(host, restoreFocus = false) {
   if (restoreFocus && wasOpen && host.isConnected)
     host.shadowRoot.querySelector(".toggle").focus({ preventScroll: true });
   if (session) restoreMenuScroll(session);
+  if (host.isConnected) afterClose?.();
 }
 
 function restoreMenuScroll(session) {

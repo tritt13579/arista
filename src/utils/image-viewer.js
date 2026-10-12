@@ -15,16 +15,32 @@ export function openImageViewer(host, images, initialIndex) {
     next.type = "button";
     next.setAttribute("aria-label", "Next image");
     const figure = node("figure", "viewer-figure");
-    const image = node("img", "");
+    const stage = node("div", "viewer-stage");
+    const message = node("p", "viewer-message");
+    message.setAttribute("role", "status");
+    stage.append(message);
     const caption = node("figcaption", "");
     caption.tabIndex = 0;
     caption.id = "image-viewer-caption";
     dialog.setAttribute("aria-describedby", caption.id);
     const status = node("p", "viewer-status");
     status.setAttribute("aria-live", "polite");
-    figure.append(image, caption);
+    figure.append(stage, caption);
     dialog.append(close, previous, figure, next, status);
-    const viewer = { dialog, items: [], index: 0, session: null, scrollFrame: 0 };
+    const viewer = { dialog, items: [], index: 0, session: null, scrollFrame: 0, generation: 0, prefetch: null };
+    const load = src => {
+      const image = new Image();
+      image.decoding = "async";
+      const ready = new Promise((resolve, reject) => {
+        image.onload = resolve;
+        image.onerror = () => reject(new Error("Image unavailable"));
+      }).then(async () => {
+        if (image.decode) await image.decode();
+        return image;
+      });
+      image.src = src;
+      return { src, ready };
+    };
     const canScrollCaption = (target, delta) => caption.contains(target) &&
       (delta < 0 ? caption.scrollTop > 0 : caption.scrollTop + caption.clientHeight < caption.scrollHeight - 1);
     dialog.addEventListener("wheel", event => {
@@ -40,22 +56,53 @@ export function openImageViewer(host, images, initialIndex) {
       if (!canScrollCaption(event.target, touchY - nextY)) event.preventDefault();
       touchY = nextY;
     }, { passive: false });
-    const render = () => {
+    const render = (direction = 0) => {
+      const generation = ++viewer.generation;
       const item = viewer.items[viewer.index];
-      image.src = item.src;
-      image.alt = item.alt || item.caption || "";
+      stage.querySelector("img")?.remove();
+      message.hidden = false;
+      message.textContent = "Đang tải ảnh…";
+      stage.setAttribute("aria-busy", "true");
       caption.textContent = item.caption || "";
+      caption.scrollTop = 0;
       status.textContent = `${viewer.index + 1} / ${viewer.items.length}`;
       previous.hidden = next.hidden = viewer.items.length < 2;
+      const request = viewer.prefetch?.src === item.src ? viewer.prefetch : load(item.src);
+      viewer.prefetch = null;
+      request.ready.then(image => {
+        if (generation !== viewer.generation) return;
+        image.alt = item.alt || item.caption || "";
+        image.style.setProperty("--viewer-enter-x", `${direction * 32}px`);
+        stage.append(image);
+        message.hidden = true;
+        stage.removeAttribute("aria-busy");
+        // Warm exactly one neighbour, only after the selected image is ready.
+        if (viewer.items.length > 1 && dialog.open) {
+          const nextItem = viewer.items[(viewer.index + 1) % viewer.items.length];
+          const warm = load(nextItem.src);
+          viewer.prefetch = warm;
+          warm.ready.catch(() => {
+            if (viewer.prefetch === warm) viewer.prefetch = null;
+          });
+        }
+      }).catch(() => {
+        if (generation !== viewer.generation) return;
+        stage.removeAttribute("aria-busy");
+        message.textContent = "Không tải được ảnh. Vui lòng chuyển ảnh khác hoặc mở lại để thử lại.";
+      });
     };
     const move = direction => {
       viewer.index = (viewer.index + direction + viewer.items.length) % viewer.items.length;
-      render();
+      render(direction);
     };
     viewer.close = () => {
       if (!viewer.session && !dialog.open) return;
       const session = viewer.session;
       viewer.session = null;
+      viewer.generation++;
+      viewer.prefetch = null;
+      stage.querySelector("img")?.remove();
+      stage.removeAttribute("aria-busy");
       cancelAnimationFrame(viewer.scrollFrame);
       viewer.scrollFrame = 0;
       if (dialog.open) dialog.close();

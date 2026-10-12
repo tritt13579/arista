@@ -6,8 +6,20 @@
 // Student Moments: studentMomentsDataset (Read, no sorts).
 // FAQ: faqDataset (Read, no sorts).
 import wixData from 'wix-data';
+import { submitTrialRegistration } from 'backend/trial-registration.web';
 
 $w.onReady(function () {
+  // Hide the mobile Wix bar on this page only. A missing bar must not block CMS loading.
+  try {
+    const quickActionBar = $w('#quickActionBar1');
+    if (typeof quickActionBar.hide === 'function') {
+      quickActionBar.hide().catch(error => {
+        console.warn('ARISTA: could not hide Quick Action Bar.', error);
+      });
+    }
+  } catch (error) {
+    console.warn('ARISTA: Quick Action Bar is unavailable on this view.', error);
+  }
   const element = $w('#aristaHome');
   let payload = { state: 'loading' };
   let lastSent = '';
@@ -20,8 +32,27 @@ $w.onReady(function () {
   element.on('arista-ready', send);
   element.on('arista-action', event => {
     // Rendered section navigation is handled inside the Custom Element.
-    // Registration events include programName for the future native Wix Form.
+    // Registration actions can preselect a program inside the Custom Element.
     console.info('ARISTA ACTION:', event.detail);
+  });
+
+  let submitting = false;
+  element.on('arista-registration-submit', async event => {
+    const { requestId, values } = event.detail || {};
+    if (typeof requestId !== 'string' || requestId.length > 100) return;
+    if (submitting) {
+      element.setAttribute('registration-result', JSON.stringify({ requestId, ok: false, message: 'Đăng ký trước vẫn đang được xử lý. Vui lòng chờ.' }));
+      return;
+    }
+    submitting = true;
+    try {
+      const result = await submitTrialRegistration(values);
+      element.setAttribute('registration-result', JSON.stringify({ ...result, requestId }));
+    } catch (_) {
+      element.setAttribute('registration-result', JSON.stringify({ requestId, ok: false, message: 'Chưa nhận được xác nhận. Vui lòng kiểm tra kết nối hoặc liên hệ hotline trước khi gửi lại.' }));
+    } finally {
+      submitting = false;
+    }
   });
 
   const sections = readDataset($w('#pageContentDataset'));
@@ -76,8 +107,16 @@ $w.onReady(function () {
       achievements: createAchievements(),
       moments: createMoments(),
       faq: createFaq(),
+      registration: createRegistration(),
+      footer: { logo: settings.logo, logoFocusHeight: settings.logoFocusHeight, brandName: settings.brandName || '', description: settings.footerDescription || '', copyright: settings.copyrightText || '' },
+      contacts: { phone: settings.primaryPhone || '', callLabel: settings.callButtonText || '', zaloUrl: settings.zaloUrl || '', zaloLabel: settings.zaloButtonText || '', messengerUrl: settings.messengerUrl || '', messengerLabel: settings.messengerButtonText || '', registrationLabel: settings.floatingRegistrationButtonText || '' },
       programButtonText: settings.programButtonText || ''
     };
+    function createRegistration() {
+      const section = visible.find(item => item.sectionKey === 'registration');
+      const keys = ['addressLabel', 'phoneLabel', 'hoursLabel', 'address', 'openingHours', 'primaryPhone', 'primaryPhoneLabel', 'secondaryPhone', 'secondaryPhoneLabel', 'locationImage', 'locationImageDescription', 'locationImageFocusHeight'];
+      return section ? { ...section, ...Object.fromEntries(keys.map(key => [key, settings[key]])), programs: programs.filter(item => item.show === true).map(item => item.title) } : null;
+    }
     function createFaq() {
       const section = createSection('faq', faq);
       return section ? { ...section, contactText: settings.faqContactText || '', phone: settings.primaryPhone || '', phoneLabel: settings.primaryPhoneLabel || '' } : null;
@@ -96,7 +135,7 @@ $w.onReady(function () {
       const section = visible.find(item => item.sectionKey === key);
       return section ? { ...section, items: items.filter(item => item.show === true) } : null;
     }
-    console.info('ARISTA CMS READY', { menu: payload.menu.length, highlights: payload.stats.length });
+    // console.info('ARISTA CMS READY', { menu: payload.menu.length, highlights: payload.stats.length });
     send();
   }).catch(error => {
     payload = { state: 'error', message: error.message || String(error) };

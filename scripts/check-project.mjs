@@ -5,6 +5,26 @@ import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
 import { createHomeContent } from '../src/content/home-content.js';
 import { imageFocusPosition } from '../src/utils/image-focus.js';
+import { contactHref } from '../src/sections/floating-contacts.js';
+import { responsiveImage } from '../src/utils/image-url.js';
+
+const mediaUrl = 'https://static.wixstatic.com/media/example~mv2.jpg';
+const responsive = responsiveImage(mediaUrl, '50vw');
+assert.equal(responsive.sizes, '50vw');
+assert.ok(responsive.srcset.includes('/v1/fit/w_640,h_5000/file.webp 640w'));
+assert.ok(!responsive.srcset.includes('/fill/'), 'Keep CMS focal position in CSS');
+const smallOriginal = responsiveImage('wix:image://v1/example~mv2.png/photo.png#originWidth=500&originHeight=1000');
+assert.ok(smallOriginal.srcset.endsWith('w_500,h_5000/file.webp 500w'), 'Do not upscale known originals');
+for (const url of ['https://example.com/image.jpg', 'http://127.0.0.1:5500/assets/image.jpg', mediaUrl + '/v1/fit/w_400,h_400/file.jpg', 'https://static.wixstatic.com/media/animated.gif', 'https://static.wixstatic.com/media/logo.svg']) {
+  assert.equal(responsiveImage(url).src, url);
+  assert.equal(responsiveImage(url).srcset, '');
+}
+assert.equal(responsiveImage('javascript:alert(1)').src, '');
+
+assert.equal(contactHref('093.567.2244', true), 'tel:0935672244');
+assert.equal(contactHref('+84 (935) 672-244', true), 'tel:+84935672244');
+for (const value of ['', 'javascript:alert(1)', 'http://example.com']) assert.equal(contactHref(value), '');
+assert.equal(contactHref('https://zalo.me/0935672244'), 'https://zalo.me/0935672244');
 
 assert.equal(imageFocusPosition(0), 'center 0%');
 assert.equal(imageFocusPosition(30), 'center 30%');
@@ -89,20 +109,22 @@ const customElements = { get: name => registry.get(name), define: (name, element
 const runtime = { HTMLElement: class {}, customElements };
 new vm.Script(bundle).runInNewContext(runtime);
 assert.equal(typeof registry.get('arista-home'), 'function');
-assert.deepEqual(Array.from(registry.get('arista-home').observedAttributes), ['content']);
+assert.deepEqual(Array.from(registry.get('arista-home').observedAttributes), ['content', 'registration-result']);
 const registeredElement = registry.get('arista-home');
 new vm.Script(bundle).runInNewContext(runtime);
 assert.equal(registry.get('arista-home'), registeredElement, 'Loading the bundle twice must not register twice');
 const reference=fs.readFileSync('reference/index.html','utf8');
 for(const match of reference.matchAll(/(?:\.\.\/)?assets\/images\/[A-Za-z0-9_./~-]+/g))assert.ok(fs.existsSync(match[0].replace(/^\.\.\//,'')),`Missing reference asset: ${match[0]}`);
 // Verify that the standalone Wix page code matches the local adapter contract.
-const events={};const ready=[];let wixPayload;let writes=0;
+const events={};const ready=[];let wixPayload;let writes=0;let registrationResult;
 const component={on(name,handler){events[name]=handler;},setAttribute(name,value){
+  if (name === 'registration-result') { registrationResult = JSON.parse(value); return; }
   assert.equal(name,'content');assert.ok(++writes<10,'Repeated ready feedback loop');
   wixPayload=JSON.parse(value);events['arista-ready']?.();
 }};
 function dataset(rows){return {onReady(handler){ready.push(handler);},getTotalCount(){return rows.length;},async getItems(start,count){return {items:rows.slice(start,start+count)};}};}
 const handles={
+  '#quickActionBar1': { async hide() {} },
   '#aristaHome':component,
   '#pageContentDataset':dataset(content.AristaPageContent),
   '#heroHighlightsDataset':dataset(swapped),
@@ -119,11 +141,18 @@ const handles={
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
 const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){return this;},async find(){return {items:content.AristaSiteSettings};}};}};
-vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace("import wixData from 'wix-data';",''),{$w,wixData,console:{info(){},error(){}}});
+vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace(/^import .*;$/gm, ''),{$w,wixData,submitTrialRegistration: async () => ({ok:true}),console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
 assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq))));
 assert.equal(wixPayload.faq.items.length, 4);
+assert.equal(wixPayload.registration.locationImage, content.AristaSiteSettings[0].locationImage);
+assert.deepEqual(wixPayload.registration.programs, content.AristaPrograms.filter(item => item.show).map(item => item.title));
+await events['arista-registration-submit']({detail:{requestId:'test-request',values:{}}});
+assert.deepEqual(registrationResult, {ok:true,requestId:'test-request'});
+assert.equal(wixPayload.footer.description, content.AristaSiteSettings[0].footerDescription);
+assert.equal(wixPayload.contacts.phone, content.AristaSiteSettings[0].primaryPhone);
+assert.equal(wixPayload.contacts.registrationLabel, content.AristaSiteSettings[0].floatingRegistrationButtonText);
 const reorderedFaq = [...content.AristaFaq].reverse().map((item, index) => ({ ...item, show: index !== 1 }));
 const faqPayload = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],[],[],[],[],reorderedFaq).faq;
 assert.deepEqual(faqPayload.items, reorderedFaq.filter(item => item.show));

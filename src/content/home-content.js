@@ -33,8 +33,16 @@ export function createHomeContent(settings, sections, highlights, philosophy = [
     achievements: createAchievements(),
     moments: createMoments(),
     faq: createFaq(),
+    registration: createRegistration(),
+    footer: { logo: settings.logo, logoFocusHeight: settings.logoFocusHeight, brandName: settings.brandName || '', description: settings.footerDescription || '', copyright: settings.copyrightText || '' },
+    contacts: { phone: settings.primaryPhone || '', callLabel: settings.callButtonText || '', zaloUrl: settings.zaloUrl || '', zaloLabel: settings.zaloButtonText || '', messengerUrl: settings.messengerUrl || '', messengerLabel: settings.messengerButtonText || '', registrationLabel: settings.floatingRegistrationButtonText || '' },
     programButtonText: settings.programButtonText || ''
   };
+  function createRegistration() {
+    const section = visible.find(item => item.sectionKey === 'registration');
+    const keys = ['addressLabel', 'phoneLabel', 'hoursLabel', 'address', 'openingHours', 'primaryPhone', 'primaryPhoneLabel', 'secondaryPhone', 'secondaryPhoneLabel', 'locationImage', 'locationImageDescription', 'locationImageFocusHeight'];
+    return section ? { ...section, ...Object.fromEntries(keys.map(key => [key, settings[key]])), programs: programs.filter(item => item.show === true).map(item => item.title) } : null;
+  }
   function createFaq() {
     const section = createSection('faq', faq);
     return section ? { ...section, contactText: settings.faqContactText || '', phone: settings.primaryPhone || '', phoneLabel: settings.primaryPhoneLabel || '' } : null;

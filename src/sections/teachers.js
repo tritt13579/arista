@@ -1,5 +1,5 @@
 import { node } from "../utils/dom.js";
-import { imageUrl } from "../utils/image-url.js";
+import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
@@ -15,7 +15,7 @@ function portrait(item, className) {
     image.loading = "lazy";
     image.decoding = "async";
     image.addEventListener("error", fallback, { once: true });
-    image.src = url;
+    setResponsiveImage(image, item.photo, className === "featured-teacher-photo" ? "(max-width: 768px) 480px, (max-width: 1240px) 46vw, 570px" : "(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 220px");
     media.append(image);
   }
   return media;

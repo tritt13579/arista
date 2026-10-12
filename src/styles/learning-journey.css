@@ -35,7 +35,10 @@
   border-radius: 50%;
   background: #141848;
   color: #f0c878;
-  font: 500 20px/1 "Playfair Display", Georgia, serif;
+  font:
+    500 20px/1 "Playfair Display",
+    Georgia,
+    serif;
   font-variant-numeric: lining-nums tabular-nums;
 }
 .journey-number-text {
