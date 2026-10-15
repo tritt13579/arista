@@ -125,6 +125,7 @@
   min-width: 0;
 }
 .achievement-image-button {
+  position: relative;
   display: block;
   width: 100%;
   padding: 0;

@@ -2,6 +2,9 @@ import { node } from "../utils/dom.js";
 import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
+import { addGalleryOverflow } from "../utils/gallery-overflow.js";
+
+const PREVIEW_LIMIT = 8;
 
 export function renderStudentMoments(content, showImages) {
   if (!content) return null;
@@ -11,10 +14,13 @@ export function renderStudentMoments(content, showImages) {
     src: imageUrl(item.image), caption: String(item.title || ""), alt: String(item.title || ""),
     position: imageFocusPosition(item.imageFocusHeight),
   })).filter(item => item.src);
-  images.forEach((item, index) => {
+  const previews = images.slice(0, PREVIEW_LIMIT);
+  previews.forEach((item, index) => {
+    const remaining = index === previews.length - 1 ? images.length - previews.length : 0;
     const card = node("figure", "moment-card reveal");
     const button = node("button", "moment-image-button");
     button.type = "button";
+    item.thumbnail = button;
     button.setAttribute("aria-label", `View image: ${item.caption || "Student moment"}`);
     button.setAttribute("aria-haspopup", "dialog");
     const image = node("img", "");
@@ -27,13 +33,17 @@ export function renderStudentMoments(content, showImages) {
     image.addEventListener("error", () => {
       image.hidden = true;
       fallback.hidden = false;
-      button.disabled = true;
+      button.disabled = remaining === 0;
     }, { once: true });
     setResponsiveImage(image, item.src, index === 0 ? "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 94vw, (max-width: 1240px) 63vw, 790px" : "(max-width: 640px) calc(100vw - 40px), (max-width: 1024px) 46vw, (max-width: 1240px) 31vw, 390px");
     button.append(image, fallback);
-    button.onclick = () => showImages(images, index);
+    addGalleryOverflow(button, remaining, images.length);
+    button.onclick = () => {
+      if (image.complete && image.naturalWidth) item.previewSrc = image.currentSrc || image.src;
+      showImages(images, index);
+    };
     card.append(button);
-    if (item.caption) card.append(node("figcaption", "moment-caption", item.caption));
+    if (item.caption && !remaining) card.append(node("figcaption", "moment-caption", item.caption));
     gallery.append(card);
   });
   if (gallery.childElementCount) inner.append(gallery);

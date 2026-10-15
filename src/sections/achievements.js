@@ -2,6 +2,9 @@ import { node } from "../utils/dom.js";
 import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
+import { addGalleryOverflow } from "../utils/gallery-overflow.js";
+
+const PHOTO_PREVIEW_LIMIT = 8;
 
 export function renderAchievements(content, showImages) {
   if (!content) return null;
@@ -22,11 +25,19 @@ export function renderAchievements(content, showImages) {
     counts.append(count);
   }
   if (counts.childElementCount) summary.append(counts);
-  const images = [];
-  const createPhoto = (src, caption, alt, className, focusHeight) => {
+  const mainImage = imageUrl(content.image);
+  const photos = (content.photos || []).map(item => ({
+    src: imageUrl(item.image), caption: item.title, alt: item.title, focusHeight: item.imageFocusHeight,
+  })).filter(item => item.src);
+  const images = [
+    ...(mainImage ? [{ src: mainImage, caption: content.caption, alt: content.imageDescription }] : []),
+    ...photos,
+  ];
+  const createPhoto = (src, caption, alt, className, focusHeight, index, remaining = 0) => {
     const figure = node("figure", className);
     const button = node("button", "achievement-image-button");
     button.type = "button";
+    images[index].thumbnail = button;
     button.setAttribute("aria-label", `View image: ${alt || caption || "Achievement"}`);
     button.setAttribute("aria-haspopup", "dialog");
     const image = node("img", "");
@@ -41,17 +52,18 @@ export function renderAchievements(content, showImages) {
     image.addEventListener("error", () => {
       image.hidden = true;
       fallback.hidden = false;
-      button.disabled = true;
+      button.disabled = remaining === 0;
     }, { once: true });
-    const index = images.length;
-    images.push({ src, caption, alt });
-    button.onclick = () => showImages(images, index);
+    addGalleryOverflow(button, remaining, images.length);
+    button.onclick = () => {
+      if (image.complete && image.naturalWidth) images[index].previewSrc = image.currentSrc || image.src;
+      showImages(images, index);
+    };
     figure.append(button);
     if (caption) figure.append(node("figcaption", "", caption));
     return figure;
   };
-  const mainImage = imageUrl(content.image);
-  if (mainImage) summary.append(createPhoto(mainImage, content.caption, content.imageDescription, "achievement-main-photo", content.imageFocusHeight));
+  if (mainImage) summary.append(createPhoto(mainImage, content.caption, content.imageDescription, "achievement-main-photo", content.imageFocusHeight, 0));
   const list = node("ul", "achievement-list");
   for (const item of content.items || []) {
     const entry = node("li", "achievement-entry reveal");
@@ -67,10 +79,11 @@ export function renderAchievements(content, showImages) {
   else layout.classList.add("achievements-summary-only");
   inner.append(layout);
   const gallery = node("div", "achievement-gallery");
-  for (const item of content.photos || []) {
-    const src = imageUrl(item.image);
-    if (src) gallery.append(createPhoto(src, item.title, item.title, "achievement-proof reveal", item.imageFocusHeight));
-  }
+  const previews = photos.slice(0, PHOTO_PREVIEW_LIMIT);
+  previews.forEach((item, index) => {
+    const remaining = index === previews.length - 1 ? photos.length - previews.length : 0;
+    gallery.append(createPhoto(item.src, item.caption, item.alt, "achievement-proof reveal", item.focusHeight, index + (mainImage ? 1 : 0), remaining));
+  });
   if (gallery.childElementCount) inner.append(gallery);
   section.append(inner);
   return section;

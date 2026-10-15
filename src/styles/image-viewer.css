@@ -9,7 +9,7 @@
   margin: 0;
   padding: 64px 72px 40px;
   border: 0;
-  background: #07091bf5;
+  background: transparent;
   color: white;
   overscroll-behavior: none;
 }
@@ -21,7 +21,41 @@
   gap: 12px;
 }
 .image-viewer::backdrop {
+  background: transparent;
+}
+.viewer-shade {
+  position: fixed;
+  inset: 0;
+  background: #07091bf5;
+  pointer-events: none;
+}
+.viewer-figure,
+.viewer-status {
+  position: relative;
+  z-index: 1;
+}
+.image-viewer.is-zooming .viewer-stage img {
+  visibility: hidden;
+  animation: none;
+}
+.image-viewer.is-closing > :not(.viewer-flight) {
+  pointer-events: none;
+}
+.image-viewer.is-zooming .viewer-message {
+  visibility: hidden;
+}
+.viewer-flight {
+  position: fixed;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
   background: #07091b;
+}
+.viewer-flight img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .viewer-figure {
   margin: 0;
@@ -75,6 +109,21 @@
   font-size: 15px;
   line-height: 1.6;
   color: #ffffffbf;
+  z-index: 1;
+  pointer-events: none;
+}
+.viewer-has-preview .viewer-message {
+  inset: auto 12px 12px;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin: 0 auto;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #0c0f33eb;
+  font-size: 13px;
+}
+.viewer-stage img.viewer-refined {
+  animation: none;
 }
 .viewer-figure figcaption {
   max-width: 800px;
@@ -91,6 +140,7 @@
 .viewer-previous,
 .viewer-next {
   position: absolute;
+  z-index: 3;
   display: grid;
   place-items: center;
   border: 1px solid #ffffff66;

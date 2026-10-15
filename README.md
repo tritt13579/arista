@@ -106,10 +106,20 @@ The Moments record in `AristaPageContent` supplies its intro, heading and descri
 Visible images follow mirrored CMS order. The responsive mosaic emphasizes the first photos without additional layout fields.
 YouTube/Facebook links, titles and descriptions come from `AristaSiteSettings`;
 empty or non-HTTPS links are omitted. Student moments reuse the same image viewer as achievements.
+The page previews up to 8 student moments and 8 achievement gallery photos (plus the main achievement photo).
+When there are more valid photos, the last preview becomes a stacked album card with a small `+N áº£nh` badge; every preview opens the full section gallery.
+The overlay brightens slightly on hover with a fine pointer; reduced-motion preferences disable the transition.
+Extra photos are not rendered as page thumbnails. CMS `show: false` items remain excluded from both previews and the viewer.
 Achievement lists, counts and photos preserve mirrored CMS order and respect `show`.
 Photos open in a shared image viewer with previous/next controls, arrow keys, Escape and focus restoration;
-switching clears the old photo and shows a loading message in a stable frame until the new image loads and decodes.
-Only the latest selection can update the viewer. Failed loads show a message, and each ready photo prefetches one next photo.
+Opening expands a temporary image from the clicked thumbnail to the contained full-image frame (480ms); closing via Close, Escape or backdrop returns to the current thumbnail (420ms).
+Both zoom directions use uniform transform scaling and an inset crop with gentle acceleration/deceleration and fixed frame dimensions. The resting thumbnail stays hidden until completion to avoid overlapping photos. Photos beyond the page preview limit have no thumbnail target and close with a stationary 200ms fade instead of returning to the eighth gallery thumbnail.
+The moving frame smoothly changes crop and corner radius; the source thumbnail is temporarily hidden on entry to avoid duplicate images. Controls fade in slightly later and fade out before the return finishes.
+This uses browser-native Web Animations, with no animation library. Reduced motion and missing image geometry skip zoom; resize cancels outdated geometry and programmatic closes clean up immediately.
+switching clears the old photo and shows the selected photo's decoded thumbnail while its original loads in a stable frame.
+Clicked photos reuse their loaded thumbnail URL; other public Wix photos request a 640px preview. When no separate preview is available, the loading message remains until the original is ready.
+Only the latest selection can update the viewer. Originals replace previews after decoding without replaying the slide animation.
+Failed originals retain the preview with a quality warning; if neither image loads, the viewer shows its normal error. Each ready original prefetches one next original.
 the viewer blocks wheel, single-touch and scroll-key input without changing the Wix page's root overflow or scrollbar width.
 Long captions can scroll inside the dialog. Focus/scroll are restored only when needed;
 updating section content or disconnecting the component closes the viewer and clears its pending frame.
@@ -135,7 +145,7 @@ empty or invalid phone numbers omit the contact line. No extra collection fields
 Every Image field has a companion Number field named `<imageFieldId>FocusHeight`:
 `imageFocusHeight`, `photoFocusHeight`, `logoFocusHeight` or `locationImageFocusHeight`.
 Use 0 for the top, 50 for the center and 100 for the bottom. The shared
-`src/utils/image-focus.js` helper clamps finite numbers to 0–100 and ignores invalid values.
+`src/utils/image-focus.js` helper clamps finite numbers to 0â€“100 and ignores invalid values.
 For existing content without the new fields, Hero retains 40 and teacher portraits retain 20;
 all other images default to 50. Explicit 0 is supported. Seed content preserves those defaults
 and the reference focal points for Student Moments.
@@ -165,7 +175,7 @@ delete, or modify the client's Wix site or collections automatically.
 media. Renderers set `srcset` and `sizes` for their layout; the browser chooses a
 candidate based on viewport and pixel density. Known original dimensions cap
 the candidates. The entire image is resized, preserving the CSS focal point.
-The image viewer retains the original URL and loads it when opened. SVG, GIF,
+The image viewer retains the original URL for full quality, using a separate preview when available. SVG, GIF,
 external URLs, already transformed URLs and local assets are left unchanged.
 A failed variant retries the original once, then uses the section error state.
 Hero keeps high fetch priority; section images keep native lazy loading.
