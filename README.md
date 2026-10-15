@@ -181,7 +181,42 @@ A failed variant retries the original once, then uses the section error state.
 Hero keeps high fetch priority; section images keep native lazy loading.
 This change does not add background prefetching or change any CMS fields/page code.
 
-## Trial registration
+## Scroll animations
+
+GSAP + ScrollTrigger are installed locally and bundled into `dist/arista-home.js`.
+No CDN script, Wix npm installation or new CMS field is required. `npm run build`
+minifies the production bundle; `npm run dev` keeps watch output readable.
+Section animation source is `src/utils/animations.js` with presentation rules in
+`src/styles/animations.css`. Hero choreography lives in
+`src/utils/hero-animation.js` and `src/styles/hero.css`.
+
+Hero text uses a 1.3-second stage opening: SplitText reveals actual heading lines
+110 ms apart, the slogan follows, description/actions enter together, then stats
+enter 70 ms apart. The background navy shade fades over one second only after
+the hero image loads and decode finishes. Text does not wait for the image.
+Cached images use the same decode gate; failed/missing images release the shade
+onto the existing fallback. Async callbacks are cancelled on rerender/disconnect.
+SplitText is bundled from the existing GSAP package, with accessible text and
+automatic font/width re-splitting. Mobile uses shorter movement; reduced motion
+shows the static hero. Keyboard focus completes the opening immediately.
+Desktop retains subtle background parallax. The quote
+brightens word by word with native scroll. Cards enter in staggered groups;
+Journey gold lines follow scroll; teacher and gallery images use masks; the
+award total counts up once; FAQ rules draw and the registration card enters gently.
+Footer content reveals without changing the page layout. There is no pinning,
+horizontal scroll or scroll interception. Menu, contacts and viewer retain their
+existing animations.
+
+Reduced motion restores static content. Responsive changes, CMS rerenders and
+disconnects revert component-owned animation contexts and temporary quote/line
+nodes. Font/image loads refresh trigger geometry. Keyboard focus immediately
+completes an entry animation containing the focused control.
+
+After building, replace the content of Wix's selected Velo File
+`public/custom-elements/arista-home.js` with `dist/arista-home.js` and test on Wix
+desktop/mobile before publishing. No page code or backend change is needed.
+
+## Trial registration setup
 
 The Registration record in `AristaPageContent` supplies visibility, intro, heading,
 description, optional caption and optional submit label (`primaryButtonText`).

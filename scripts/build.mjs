@@ -8,6 +8,7 @@ const options = {
   format: "iife",
   platform: "browser",
   target: ["es2020"],
+  minify: !process.argv.includes("--watch"),
   // Embed CSS strings in Shadow DOM: Wix only needs this one JavaScript URL.
   loader: { ".css": "text" },
   logLevel: "info",

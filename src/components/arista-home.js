@@ -1,6 +1,6 @@
 // Source entry point. Wix must load dist/arista-home.js, not this module.
 import { styles } from "../styles/index.js";
-import { observeReveals } from "../utils/animations.js";
+import { observeReveals, animateHero } from "../utils/animations.js";
 import { loadFonts } from "../utils/fonts.js";
 import {
   headerTemplate,
@@ -108,7 +108,9 @@ class AristaHome extends HTMLElement {
     this.shadowRoot.querySelector(".floating-contact-shell")?.dispose();
     this.imageViewer?.close();
     this.closeMenu();
-    this.revealObserver?.disconnect();
+    this.scrollEffects?.revert();
+    this.heroEffects?.revert();
+    cancelAnimationFrame(this.effectsFrame);
     this.headerObserver?.disconnect();
     window.removeEventListener("scroll", this.onViewportChange);
     window.removeEventListener("resize", this.onViewportChange);
@@ -154,7 +156,7 @@ class AristaHome extends HTMLElement {
       renderRegistration(data.registration, detail => this.emit("arista-registration-submit", detail)),
       renderFooter(data.footer, this.action.bind(this)),
     ].filter(Boolean);
-    this.revealObserver?.disconnect();
+    this.scrollEffects?.revert();
     this.shadowRoot.getElementById("registration")?.dispose();
     root.replaceChildren(...blocks);
     const previousContacts = this.shadowRoot.querySelector(".floating-contact-shell");
@@ -163,7 +165,14 @@ class AristaHome extends HTMLElement {
     const contacts = renderFloatingContacts(data.contacts, this.action.bind(this));
     if (contacts) this.shadowRoot.append(contacts);
     updateFloatingContacts(this);
-    observeReveals(this, root);
+    // Hero is rendered later in the same render() call. Creating triggers here
+    // synchronously measures sections while Hero is still hidden/has old content.
+    // Wait for the final page layout so once-only entries cannot fire offscreen.
+    cancelAnimationFrame(this.effectsFrame);
+    this.effectsFrame = requestAnimationFrame(() => {
+      this.effectsFrame = 0;
+      if (this.isConnected) observeReveals(this, root);
+    });
   }
   closeMenu() {
     closeMenu(this);
@@ -198,7 +207,12 @@ class AristaHome extends HTMLElement {
     root.querySelector(".shell").hidden = false;
     root.querySelector("header").hidden = false;
     const action = this.action.bind(this);
+    // Restore SplitText before replacing CMS text, otherwise revert restores
+    // the previous heading over the newly rendered content.
+    this.heroEffects?.revert();
+    this.heroEffects = null;
     renderHero(root, hero, stats, action);
+    animateHero(this);
     renderHeader(root, hero, menu, action);
     this.updateHeader();
   }

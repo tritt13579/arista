@@ -5,6 +5,7 @@ export const heroTemplate = `
 <div class="shell" hidden lang="vi">
   <img class="photo" alt="" fetchpriority="high">
   <div class="overlay" aria-hidden="true"></div>
+  <div class="hero-opening-shade" aria-hidden="true"></div>
   <main>
     <div class="copy">
       <p class="eyebrow"></p>

@@ -9,12 +9,49 @@
   transform: translateY(-4px);
   box-shadow: 0 24px 50px -28px #1c226066;
 }
-.reveal.waiting {
-  opacity: 0;
-  transform: translateY(18px);
+.scroll-enter-active {
+  transition: none;
 }
-.reveal {
-  transition:
-    opacity 0.6s,
-    transform 0.6s;
+.faq-item {
+  position: relative;
+}
+.faq-item::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #d9a441;
+  transform: scaleX(var(--scroll-rule, 1));
+  transform-origin: left;
+  pointer-events: none;
+}
+.journey-step {
+  position: relative;
+}
+.scroll-journey-line {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #f0c878;
+  transform-origin: left top;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .scroll-journey-line {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .journey-step:not(:last-child) .scroll-journey-line {
+    display: block;
+    top: 60px;
+    left: 26px;
+    bottom: 8px;
+    width: 2px;
+    height: auto;
+  }
 }
