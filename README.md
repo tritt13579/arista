@@ -88,9 +88,9 @@ to all Wix pages that load it, including published pages. Use local/tunnel devel
 for unfinished work and push to `main` when the update is ready to deploy.
 
 The current renderer implements menu, hero, quote, teaching philosophy, programs, learning journey, teachers, achievements and student moments.
-It requires eleven read-only datasets: `pageContentDataset`, `heroHighlightsDataset`,
+It requires twelve read-only datasets: `pageContentDataset`, `heroHighlightsDataset`,
 `philosophyDataset`, `programsDataset`, `learningJourneyDataset`, `teachersDataset`,
-`achievementsDataset`, `awardCountsDataset`, `achievementPhotosDataset`, `studentMomentsDataset` and `faqDataset`. Do not add dataset sorts when mirroring CMS order.
+`achievementsDataset`, `awardCountsDataset`, `achievementPhotosDataset`, `studentMomentsDataset`, `faqDataset` and `testimonialsDataset`. Do not add dataset sorts when mirroring CMS order.
 Connect `learningJourneyDataset` to `AristaLearningJourney`. Journey numbers follow the visible item order;
 edit the section heading and description in the Learning Journey record of `AristaPageContent`.
 Connect `teachersDataset` to `AristaTeachers`. Enable `featured` for one visible teacher to show the large profile;
@@ -183,6 +183,39 @@ This change does not add background prefetching or change any CMS fields/page co
 
 ## Scroll animations
 
+### Testimonials design
+
+The selected testimonial design is the spotlight layout (B); the A/C prototypes
+and design chooser have been removed. `src/sections/testimonials.js` renders the
+optional `content.testimonials` block between Moments and FAQ. Its CSS is in
+`src/styles/testimonials.css`; `src/utils/testimonial-animation.js` supplies
+GSAP/SplitText/ScrollTrigger entries owned by the existing motion context.
+
+The heading reveals by line, the quote card opens with a curtain mask, and desktop
+author choices enter in staggered steps. Focus completes entries immediately.
+Reduced motion restores static content. Full-text expansion refreshes scroll
+positions. Review selection uses a short fade, supports rapid input, and has no
+autoplay. Mobile provides previous/next controls and horizontal swipe.
+
+Local preview and Wix use the same adapter and CMS field contract. Sample content
+is in `cms/content.json`. Open `index.html?section=testimonials` for a direct local
+preview. The new `AristaTestimonials` collection uses `testimonialsDataset`.
+Import `cms/import/AristaTestimonials.csv` into that collection and the one-row
+`cms/import/AristaPageContent-testimonials-only.csv` into the existing Page Content
+collection. Existing sites should not re-import all of Page Content.
+See `docs/testimonials-wix-setup.vi.md` for field types, permissions, dataset setup
+and which code files to update. SVG arrow icons are centered independently of
+fonts. Full-text expansion/collapse animates height/opacity, respects reduced
+motion and handles rapid toggles; scroll positions refresh after height settles.
+
+### Shared effects
+
+FAQ answers use a vertical mask reveal with animated height (360 ms opening,
+300 ms closing). Native `details` remains open until the closing motion finishes.
+Rapid input reverses from the current pose. Multiple answers, keyboard controls,
+reduced motion and cleanup on CMS rerender/disconnect are supported. See
+`src/utils/faq-accordion.js`; no CMS or Wix page-code change is needed for this effect.
+
 GSAP + ScrollTrigger are installed locally and bundled into `dist/arista-home.js`.
 No CDN script, Wix npm installation or new CMS field is required. `npm run build`
 minifies the production bundle; `npm run dev` keeps watch output readable.
@@ -217,6 +250,13 @@ After building, replace the content of Wix's selected Velo File
 desktop/mobile before publishing. No page code or backend change is needed.
 
 ## Trial registration setup
+
+Student Type and Program use styled select-only comboboxes with cream popups,
+navy selected options and gold accents. Native selects remain hidden inside the
+form for FormData/reset. The comboboxes support keyboard navigation, typeahead,
+Escape cancellation, Tab commit, outside-click dismissal and program preselection.
+Popup placement adapts above/below the field; list scrolling stays inside the
+popup. No CMS, Wix page-code or backend field changes are required.
 
 The Registration record in `AristaPageContent` supplies visibility, intro, heading,
 description, optional caption and optional submit label (`primaryButtonText`).

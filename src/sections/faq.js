@@ -1,5 +1,6 @@
 import { node } from "../utils/dom.js";
 import { createSectionLayout } from "./section-layout.js";
+import { bindFaqAccordion } from "../utils/faq-accordion.js";
 
 export function renderFaq(content) {
   if (!content) return null;
@@ -21,10 +22,13 @@ export function renderFaq(content) {
     const icon = node("span", "faq-icon", "+");
     icon.setAttribute("aria-hidden", "true");
     summary.append(node("span", "", item.title), icon);
-    detail.append(summary, node("p", "faq-answer", item.answer || ""));
+    const panel = node("div", "faq-answer-panel");
+    panel.append(node("p", "faq-answer", item.answer || ""));
+    detail.append(summary, panel);
     list.append(detail);
   }
   inner.append(list);
   section.append(inner);
+  section.dispose = bindFaqAccordion(section);
   return section;
 }

@@ -184,6 +184,22 @@ Các câu hỏi và câu trả lời trong phần Hỏi đáp.
 | `answer` | Câu trả lời hiện ra khi khách bấm vào câu hỏi. Nhập văn bản dễ hiểu; có thể xuống dòng để chia ý. Không nhập mã HTML. |
 | `show` | Bật để hiện câu hỏi và câu trả lời này; tắt để ẩn tạm mà không xóa nội dung. |
 
+## Arista — Testimonials (`AristaTestimonials`)
+
+Những chia sẻ của học viên và phụ huynh, nằm sau Khoảnh khắc và trước Hỏi đáp.
+Mỗi hàng là một người chia sẻ. Có thể thêm hàng mới; số lượng trên trang tự cập nhật.
+Tiêu đề và mô tả section nằm ở Page Content, dòng Testimonials.
+
+| Field ID | Ghi chú để dán vào Wix |
+|---|---|
+| `title` | Tên người chia sẻ, hiện dưới lời đánh giá và trong danh sách chọn bên phải. Nhập tên muốn công khai, ví dụ Trúc Dương hoặc Chị Như. |
+| `role` | Thông tin dưới tên: ghi bộ môn của học viên hoặc tên con của phụ huynh, ví dụ Học viên · Piano hoặc Phụ huynh Nguyên Huy. |
+| `excerpt` | Đoạn chia sẻ ngắn hiện ngay khi xem đánh giá. Chọn những ý tiêu biểu, khoảng 40–60 từ. Để trống thì trang hiện toàn bộ nội dung ở Chia sẻ đầy đủ. |
+| `quote` | Nội dung chia sẻ đầy đủ, hiện khi khách bấm Đọc đầy đủ. Nhập văn bản thông thường, không nhập mã HTML. Nếu giống trích đoạn ngắn thì không có nút mở rộng. |
+| `photo` | Ảnh chân dung của người chia sẻ. Chọn ảnh trong Media Manager; để trống thì trang tự hiện chữ viết tắt của tên. |
+| `photoFocusHeight` | Căn chân dung trong hình tròn: nhập 0–100. 0 ưu tiên phía trên, 50 ở giữa, 100 phía dưới. Không cần sửa nếu không có ảnh. |
+| `show` | Bật để hiện lời chia sẻ; tắt để ẩn tạm. Danh sách và tổng số đánh giá trên trang tự cập nhật khi tải lại. |
+
 ## Lưu ý chung khi hướng dẫn client
 
 - Chỉ sửa nội dung, ảnh và các công tắc hiển thị; không đổi Field ID, Collection ID, Section Key hoặc kiểu dữ liệu.

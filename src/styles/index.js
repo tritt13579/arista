@@ -9,6 +9,7 @@ import learningJourney from "./learning-journey.css";
 import teachers from "./teachers.css";
 import achievements from "./achievements.css";
 import studentMoments from "./student-moments.css";
+import testimonials from "./testimonials.css";
 import faq from "./faq.css";
 import registration from "./registration.css";
 import footer from "./footer.css";
@@ -30,6 +31,7 @@ export const styles = [
   teachers,
   achievements,
   studentMoments,
+  testimonials,
   faq,
   registration,
   footer,

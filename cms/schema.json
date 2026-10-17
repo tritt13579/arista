@@ -648,6 +648,55 @@
           "hidden": false
         }
       ]
+    },
+    {
+      "id": "AristaTestimonials",
+      "name": "Arista — Testimonials",
+      "datasetId": "testimonialsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên người chia sẻ",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "role",
+          "name": "Vai trò / Bộ môn",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "excerpt",
+          "name": "Trích đoạn ngắn",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "quote",
+          "name": "Chia sẻ đầy đủ",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "photo",
+          "name": "Ảnh chân dung",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "photoFocusHeight",
+          "name": "Căn ảnh chân dung",
+          "type": "Number",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
     }
   ]
 }

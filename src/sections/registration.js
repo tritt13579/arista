@@ -3,6 +3,7 @@ import { createSectionLayout } from "./section-layout.js";
 import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { contactHref } from "./floating-contacts.js";
+import { enhanceRegistrationSelect } from "../utils/registration-select.js";
 
 export function renderRegistration(content, submit) {
   if (!content) return null;
@@ -56,8 +57,10 @@ export function renderRegistration(content, submit) {
   const grid = node("div", "registration-field-grid");
   const controls = {};
   const field = (key, labelText, tag, options = []) => {
-    const label = node("label", `registration-field registration-field-${key}`);
-    label.append(node("span", "", labelText));
+    const label = node(tag === "select" ? "div" : "label", `registration-field registration-field-${key}`);
+    const text = node("span", "", labelText);
+    text.id = `registration-${key}-label`;
+    label.append(text);
     const control = node(tag, "");
     control.name = key;
     control.id = `registration-${key}`;
@@ -110,6 +113,7 @@ export function renderRegistration(content, submit) {
   success.append(node("h3", "", "Cảm ơn bạn!"), successText, reset);
   let pending = null;
   let timeout;
+  let dropdowns = [];
   const finish = result => {
     if (!pending || result?.requestId !== pending) return;
     clearTimeout(timeout);
@@ -135,6 +139,7 @@ export function renderRegistration(content, submit) {
     pending = crypto.randomUUID();
     const requestId = pending;
     const values = Object.fromEntries(new FormData(form));
+    dropdowns.forEach(dropdown => dropdown.close());
     fields.disabled = true;
     form.setAttribute("aria-busy", "true");
     button.textContent = "Đang gửi…";
@@ -154,11 +159,13 @@ export function renderRegistration(content, submit) {
     if (!pending && [...controls.program.options].some(option => option.value === name)) {
       if (!success.hidden) reset.click();
       controls.program.value = name;
+      dropdowns.forEach(dropdown => dropdown.sync());
     }
   };
-  section.dispose = () => clearTimeout(timeout);
+  section.dispose = () => { clearTimeout(timeout); dropdowns.forEach(dropdown => dropdown.dispose()); };
   card.append(form, success);
   inner.replaceChildren(copy, card);
   section.append(inner);
+  dropdowns = ['student_type', 'program'].map(key => enhanceRegistrationSelect(controls[key], section.querySelector(`#registration-${key}-label`)));
   return section;
 }

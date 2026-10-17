@@ -1,5 +1,5 @@
 // Shared data adapter for local preview and the Wix component payload contract.
-export function createHomeContent(settings, sections, highlights, philosophy = [], programs = [], learningJourney = [], teachers = [], achievements = [], awardCounts = [], achievementPhotos = [], studentMoments = [], faq = []) {
+export function createHomeContent(settings, sections, highlights, philosophy = [], programs = [], learningJourney = [], teachers = [], achievements = [], awardCounts = [], achievementPhotos = [], studentMoments = [], faq = [], testimonials = []) {
   const visible = sections.filter(section => section.showSection === true);
   const hero = visible.find(section => section.sectionKey === 'hero');
   return {
@@ -32,6 +32,7 @@ export function createHomeContent(settings, sections, highlights, philosophy = [
     teachers: createSection('teachers', teachers),
     achievements: createAchievements(),
     moments: createMoments(),
+    testimonials: createSection('testimonials', testimonials),
     faq: createFaq(),
     registration: createRegistration(),
     footer: { logo: settings.logo, logoFocusHeight: settings.logoFocusHeight, brandName: settings.brandName || '', description: settings.footerDescription || '', copyright: settings.copyrightText || '' },

@@ -38,7 +38,7 @@ assert.equal(imageFocusPosition(150), 'center 100%');
 
 const schema = JSON.parse(fs.readFileSync('cms/schema.json','utf8'));
 const content = JSON.parse(fs.readFileSync('cms/content.json','utf8'));
-assert.equal(schema.collections.length,12);
+assert.equal(schema.collections.length,13);
 const ids = new Set();
 const datasets = new Set();
 function readCsv(text) {
@@ -84,10 +84,10 @@ for(const collection of schema.collections) {
     collection.fields.forEach((field,column)=>assert.equal(row[column],field.type==='Image'?'':String(rows[index][field.id]??'')));
   });
 }
-assert.equal(datasets.size,11);
+assert.equal(datasets.size,12);
 assert.equal(content.AristaSiteSettings.length,1);
 assert.equal(content.AristaTeachers.filter(item=>item.featured && item.show).length,1);
-assert.equal(new Set(content.AristaPageContent.map(item=>item.sectionKey)).size,10);
+assert.equal(new Set(content.AristaPageContent.map(item=>item.sectionKey)).size,11);
 const home=createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,content.AristaHeroHighlights);
 assert.equal(home.menu.length,6);assert.equal(home.stats.length,4);
 const swapped=[content.AristaHeroHighlights[1],content.AristaHeroHighlights[0],...content.AristaHeroHighlights.slice(2)];
@@ -136,7 +136,8 @@ const handles={
   '#awardCountsDataset':dataset(content.AristaAwardCounts),
   '#achievementPhotosDataset':dataset(content.AristaAchievementPhotos),
   '#studentMomentsDataset':dataset(content.AristaStudentMoments),
-  '#faqDataset':dataset(content.AristaFaq)
+  '#faqDataset':dataset(content.AristaFaq),
+  '#testimonialsDataset':dataset(content.AristaTestimonials)
 };
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
@@ -144,7 +145,16 @@ const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){r
 vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace(/^import .*;$/gm, ''),{$w,wixData,submitTrialRegistration: async () => ({ok:true}),console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
-assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq))));
+assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq,content.AristaTestimonials))));
+assert.equal(wixPayload.testimonials.items.length, 6);
+const reorderedTestimonials = [...content.AristaTestimonials].reverse().map((item,index)=>({...item,show:index!==1}));
+const testimonialPayload = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],[],[],[],[],[],reorderedTestimonials).testimonials;
+assert.deepEqual(testimonialPayload.items,reorderedTestimonials.filter(item=>item.show));
+assert.equal(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent.map(item=>({...item,showSection:item.sectionKey!=='testimonials'})),[],[],[],[],[],[],[],[],[],[],reorderedTestimonials).testimonials,null);
+const testimonialDelta = readCsv(fs.readFileSync('cms/import/AristaPageContent-testimonials-only.csv','utf8'));
+const pageFields = schema.collections.find(collection=>collection.id==='AristaPageContent').fields.map(field=>field.id);
+assert.equal(testimonialDelta.length,2,'Delta import must contain only one new section');
+assert.equal(testimonialDelta[1][pageFields.indexOf('sectionKey')],'testimonials');
 assert.equal(wixPayload.faq.items.length, 4);
 assert.equal(wixPayload.registration.locationImage, content.AristaSiteSettings[0].locationImage);
 assert.deepEqual(wixPayload.registration.programs, content.AristaPrograms.filter(item => item.show).map(item => item.title));
@@ -189,4 +199,4 @@ const hiddenSections = content.AristaPageContent.map(item=>({...item,showSection
 const changed = createHomeContent(content.AristaSiteSettings[0],hiddenSections,[],[],changedPrograms);
 assert.equal(changed.quote,null);assert.equal(changed.philosophy,null);
 assert.deepEqual(changed.programs.items.map(item=>item.title),changedPrograms.filter(item=>item.show).map(item=>item.title));
-console.log('PASS: 12 schemas/CSVs, 11 dataset IDs, sample data, image paths, multiline CSV round-trip, ordered home adapter, mocked Wix payload parity and JavaScript syntax. Wix runtime and visual layout require Preview verification.');
+console.log('PASS: 13 schemas/CSVs, 12 dataset IDs, testimonial delta CSV, sample data, image paths, multiline CSV round-trip, ordered home adapter, mocked Wix payload parity and JavaScript syntax. Wix runtime and visual layout require Preview verification.');

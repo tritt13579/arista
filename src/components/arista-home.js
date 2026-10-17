@@ -17,6 +17,7 @@ import { renderLearningJourney } from "../sections/learning-journey.js";
 import { renderTeachers } from "../sections/teachers.js";
 import { renderAchievements } from "../sections/achievements.js";
 import { renderStudentMoments } from "../sections/student-moments.js";
+import { renderTestimonials } from "../sections/testimonials.js";
 import { renderFaq } from "../sections/faq.js";
 import { renderRegistration } from "../sections/registration.js";
 import { renderFooter } from "../sections/footer.js";
@@ -104,6 +105,8 @@ class AristaHome extends HTMLElement {
     this.closeMenu();
   }
   disconnectedCallback() {
+    this.shadowRoot.getElementById("faq")?.dispose();
+    this.shadowRoot.getElementById("testimonials")?.dispose();
     this.shadowRoot.getElementById("registration")?.dispose();
     this.shadowRoot.querySelector(".floating-contact-shell")?.dispose();
     this.imageViewer?.close();
@@ -131,6 +134,7 @@ class AristaHome extends HTMLElement {
       data.teachers,
       data.achievements,
       data.moments,
+      data.testimonials,
       data.faq,
       data.registration,
       data.footer,
@@ -152,12 +156,15 @@ class AristaHome extends HTMLElement {
       renderTeachers(data.teachers, this.action.bind(this)),
       renderAchievements(data.achievements, (images, index) => openImageViewer(this, images, index)),
       renderStudentMoments(data.moments, (images, index) => openImageViewer(this, images, index)),
+      renderTestimonials(data.testimonials),
       renderFaq(data.faq),
       renderRegistration(data.registration, detail => this.emit("arista-registration-submit", detail)),
       renderFooter(data.footer, this.action.bind(this)),
     ].filter(Boolean);
     this.scrollEffects?.revert();
     this.shadowRoot.getElementById("registration")?.dispose();
+    this.shadowRoot.getElementById("testimonials")?.dispose();
+    this.shadowRoot.getElementById("faq")?.dispose();
     root.replaceChildren(...blocks);
     const previousContacts = this.shadowRoot.querySelector(".floating-contact-shell");
     previousContacts?.dispose();

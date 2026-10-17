@@ -5,6 +5,7 @@
 // Also required: achievementsDataset, awardCountsDataset, achievementPhotosDataset (Read, no sorts).
 // Student Moments: studentMomentsDataset (Read, no sorts).
 // FAQ: faqDataset (Read, no sorts).
+// Testimonials: testimonialsDataset (Read, no sorts), connected to AristaTestimonials.
 import wixData from 'wix-data';
 import { submitTrialRegistration } from 'backend/trial-registration.web';
 
@@ -66,6 +67,7 @@ $w.onReady(function () {
   const achievementPhotos = readDataset($w('#achievementPhotosDataset'));
   const studentMoments = readDataset($w('#studentMomentsDataset'));
   const faq = readDataset($w('#faqDataset'));
+  const testimonials = readDataset($w('#testimonialsDataset'));
   send();
   Promise.all([
     wixData.query('AristaSiteSettings').limit(2).find({ consistentRead: true }),
@@ -79,8 +81,9 @@ $w.onReady(function () {
     awardCounts,
     achievementPhotos,
     studentMoments,
-    faq
-  ]).then(([settingsResult, sections, highlights, philosophy, programs, learningJourney, teachers, achievements, awardCounts, achievementPhotos, studentMoments, faq]) => {
+    faq,
+    testimonials
+  ]).then(([settingsResult, sections, highlights, philosophy, programs, learningJourney, teachers, achievements, awardCounts, achievementPhotos, studentMoments, faq, testimonials]) => {
     if (settingsResult.items.length !== 1) throw new Error('Site Settings must contain exactly one visible record.');
     const settings = settingsResult.items[0];
     const visible = sections.filter(item => item.showSection === true);
@@ -106,6 +109,7 @@ $w.onReady(function () {
       teachers: createSection('teachers', teachers),
       achievements: createAchievements(),
       moments: createMoments(),
+      testimonials: createSection('testimonials', testimonials),
       faq: createFaq(),
       registration: createRegistration(),
       footer: { logo: settings.logo, logoFocusHeight: settings.logoFocusHeight, brandName: settings.brandName || '', description: settings.footerDescription || '', copyright: settings.copyrightText || '' },

@@ -17,7 +17,12 @@ const programs = content.AristaPrograms.map(item => ({ ...item, image: assetUrl(
 const teachers = content.AristaTeachers.map(item => ({ ...item, photo: assetUrl(item.photo) }));
 const achievementPhotos = content.AristaAchievementPhotos.map(item => ({ ...item, image: assetUrl(item.image) }));
 const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, image: assetUrl(item.image) }));
-element.setAttribute('content', JSON.stringify(createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq)));
+const testimonials = (content.AristaTestimonials || []).map(item => ({ ...item, photo: assetUrl(item.photo) }));
+const home = createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq, testimonials);
+element.setAttribute('content', JSON.stringify(home));
+if (new URL(location.href).searchParams.get('section') === 'testimonials') {
+  requestAnimationFrame(() => element.shadowRoot.getElementById('testimonials')?.scrollIntoView({ block: 'start' }));
+}
 element.addEventListener('arista-action', event => console.info('ARISTA ACTION:', event.detail));
 // Local preview never writes personal information to Wix.
 element.addEventListener('arista-registration-submit', event => {

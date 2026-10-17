@@ -25,4 +25,11 @@ for (const collection of schema.collections) {
   fs.writeFileSync(path.join(output, `${collection.id}.csv`), csv([fields.map(field => field.id), ...values]));
 }
 fs.writeFileSync(path.join(root, 'cms/image-map.csv'), csv(images));
+// Existing Wix sites import only this new Page Content row, preserving all edits.
+const pageFields = schema.collections.find(collection => collection.id === 'AristaPageContent').fields;
+const testimonialSection = content.AristaPageContent.filter(row => row.sectionKey === 'testimonials');
+fs.writeFileSync(path.join(output, 'AristaPageContent-testimonials-only.csv'), csv([
+  pageFields.map(field => field.id),
+  ...testimonialSection.map(row => pageFields.map(field => field.type === 'Image' ? '' : row[field.id] ?? '')),
+]));
 console.log(`Exported ${schema.collections.length} collection CSV files and an image checklist.`);

@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { animateTestimonials } from "./testimonial-animation.js";
 export { animateHero } from "./hero-animation.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -125,6 +126,7 @@ export function observeReveals(host, root) {
     enter(root.querySelector(".registration-details"), { opacity: 0, y: 16 });
     enter(root.querySelector(".registration-card"), { opacity: 0, y: 24 }, 0.12);
     all(".footer-inner > *").forEach(item => enter(item, { opacity: 0, y: 12 }));
+    const disposeTestimonials = animateTestimonials(root.querySelector(".testimonials"), desktop);
 
     // Font/image loading can change section geometry after first render.
     let disposed = false;
@@ -144,6 +146,7 @@ export function observeReveals(host, root) {
     document.fonts?.ready.then(refresh);
     refresh();
     return () => {
+      disposeTestimonials();
       disposed = true;
       cancelAnimationFrame(frame);
       root.removeEventListener("load", refresh, true);
