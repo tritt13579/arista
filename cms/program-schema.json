@@ -1,0 +1,245 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "id": "AristaProgramDetails",
+      "name": "Thông tin trang bộ môn",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên dòng",
+          "type": "Text",
+          "description": "Tên để nhận biết dòng trong CMS. Ở bảng giảng viên và ảnh/video, tên này dùng để quản lý; tên giảng viên hiển thị lấy từ name."
+        },
+        {
+          "id": "programKey",
+          "name": "Mã bộ môn",
+          "type": "Text",
+          "description": "Dùng piano, violin, guitar, saxophone, drum, dan-bau, vocal hoặc my-thuat. Phải giống mã ở bảng AristaProgramDetails. Guitar bao gồm Classic và Lead/Bass. Không đổi sau khi đã tạo URL."
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "description": "Bật để hiển thị, tắt để ẩn. Các trang, chặng học và hồ sơ đã có tên đang bật; ảnh/video trống đang tắt, cần bổ sung dữ liệu rồi bật."
+        },
+        {
+          "id": "kicker",
+          "name": "Dòng nhỏ đầu trang",
+          "type": "Text",
+          "description": "Dòng chữ phía trên tên bộ môn trong hero."
+        },
+        {
+          "id": "headline",
+          "name": "Slogan dòng đầu",
+          "type": "Text",
+          "description": "Phần đầu câu slogan dưới tên bộ môn. Nên viết ngắn."
+        },
+        {
+          "id": "headlineAccent",
+          "name": "Slogan dòng nhấn",
+          "type": "Text",
+          "description": "Phần chữ nhấn của slogan trong hero. Nên viết ngắn."
+        },
+        {
+          "id": "intro",
+          "name": "Giới thiệu ngắn",
+          "type": "Text",
+          "description": "Đoạn giới thiệu trong hero. Khoảng 1–2 câu để vừa màn hình. Đây là bản nháp cần duyệt."
+        },
+        {
+          "id": "tags",
+          "name": "Nhãn giới thiệu",
+          "type": "Text",
+          "description": "Các nhãn nhỏ dưới nút đăng ký. Mỗi nhãn một dòng, nên dùng tối đa 3 nhãn ngắn."
+        },
+        {
+          "id": "heroImage",
+          "name": "Ảnh đầu trang",
+          "type": "Image",
+          "description": "Chọn ảnh chính đúng bộ môn trong Media Manager. Nên dùng ảnh dọc, rõ mặt người; đây là ảnh lớn ở hero."
+        },
+        {
+          "id": "heroImageFocusHeight",
+          "name": "Vị trí ảnh đầu trang",
+          "type": "Number",
+          "description": "0 lấy phần trên, 50 ở giữa, 100 lấy phần dưới khi ảnh bị cắt khung."
+        },
+        {
+          "id": "heroCaption",
+          "name": "Chú thích ảnh đầu trang",
+          "type": "Text",
+          "description": "Dòng chữ dưới ảnh hero; cũng là mô tả ảnh cho người dùng trình đọc màn hình. Điền sau khi chọn ảnh."
+        },
+        {
+          "id": "mediaLayout",
+          "name": "Kiểu bố cục ảnh",
+          "type": "Text",
+          "description": "editorial: bố cục ảnh xen kẽ; portraits: bố cục phù hợp ảnh dọc. Chỉ dùng một trong hai giá trị này."
+        }
+      ]
+    },
+    {
+      "id": "AristaProgramJourney",
+      "name": "Hành trình học bộ môn",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên dòng",
+          "type": "Text",
+          "description": "Tên để nhận biết dòng trong CMS. Ở bảng giảng viên và ảnh/video, tên này dùng để quản lý; tên giảng viên hiển thị lấy từ name."
+        },
+        {
+          "id": "programKey",
+          "name": "Mã bộ môn",
+          "type": "Text",
+          "description": "Dùng piano, violin, guitar, saxophone, drum, dan-bau, vocal hoặc my-thuat. Phải giống mã ở bảng AristaProgramDetails. Guitar bao gồm Classic và Lead/Bass. Không đổi sau khi đã tạo URL."
+        },
+        {
+          "id": "description",
+          "name": "Mô tả chặng học",
+          "type": "Text",
+          "description": "Đoạn mô tả dưới tên chặng ở phần Hành trình học. Nội dung mẫu cần giảng viên duyệt."
+        },
+        {
+          "id": "sortOrder",
+          "name": "Thứ tự",
+          "type": "Number",
+          "description": "Số nhỏ hiển thị trước. Dùng 1, 2, 3… trong từng bộ môn; ảnh và video được xếp riêng."
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "description": "Bật để hiển thị, tắt để ẩn. Các trang, chặng học và hồ sơ đã có tên đang bật; ảnh/video trống đang tắt, cần bổ sung dữ liệu rồi bật."
+        }
+      ]
+    },
+    {
+      "id": "AristaProgramTeachers",
+      "name": "Giảng viên bộ môn",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên dòng",
+          "type": "Text",
+          "description": "Tên để nhận biết dòng trong CMS. Ở bảng giảng viên và ảnh/video, tên này dùng để quản lý; tên giảng viên hiển thị lấy từ name."
+        },
+        {
+          "id": "programKey",
+          "name": "Mã bộ môn",
+          "type": "Text",
+          "description": "Dùng piano, violin, guitar, saxophone, drum, dan-bau, vocal hoặc my-thuat. Phải giống mã ở bảng AristaProgramDetails. Guitar bao gồm Classic và Lead/Bass. Không đổi sau khi đã tạo URL."
+        },
+        {
+          "id": "name",
+          "name": "Tên giảng viên hiển thị",
+          "type": "Text",
+          "description": "Tên thật hiển thị trên thẻ Giảng viên, ví dụ Thầy/Cô + họ tên. Để trống thì hồ sơ không hiển thị."
+        },
+        {
+          "id": "role",
+          "name": "Vai trò",
+          "type": "Text",
+          "description": "Dòng nhỏ phía trên tên, ví dụ Giảng viên Piano. Chỉ điền thông tin đã xác nhận."
+        },
+        {
+          "id": "credential",
+          "name": "Học vị / chuyên môn",
+          "type": "Text",
+          "description": "Dòng nổi bật dưới tên giảng viên. Chỉ điền học vị/chuyên môn đã được xác nhận. Có thể để trống."
+        },
+        {
+          "id": "qualifications",
+          "name": "Thông tin chuyên môn",
+          "type": "Text",
+          "description": "Mỗi thông tin một dòng: trường đào tạo, kinh nghiệm… Chỉ điền dữ kiện đã xác nhận."
+        },
+        {
+          "id": "photo",
+          "name": "Ảnh giảng viên",
+          "type": "Image",
+          "description": "Chọn chân dung giảng viên đúng hồ sơ. Nếu có tên nhưng chưa có ảnh, giao diện dùng chữ cái đầu của tên."
+        },
+        {
+          "id": "photoFocusHeight",
+          "name": "Vị trí chân dung",
+          "type": "Number",
+          "description": "0 phần trên, 50 giữa, 100 phần dưới; chỉnh để mặt không bị cắt."
+        },
+        {
+          "id": "sortOrder",
+          "name": "Thứ tự",
+          "type": "Number",
+          "description": "Số nhỏ hiển thị trước. Dùng 1, 2, 3… trong từng bộ môn; ảnh và video được xếp riêng."
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "description": "Bật để hiển thị, tắt để ẩn. Các trang, chặng học và hồ sơ đã có tên đang bật; ảnh/video trống đang tắt, cần bổ sung dữ liệu rồi bật."
+        }
+      ]
+    },
+    {
+      "id": "AristaProgramMedia",
+      "name": "Ảnh và video bộ môn",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên dòng",
+          "type": "Text",
+          "description": "Tên để nhận biết dòng trong CMS. Ở bảng giảng viên và ảnh/video, tên này dùng để quản lý; tên giảng viên hiển thị lấy từ name."
+        },
+        {
+          "id": "programKey",
+          "name": "Mã bộ môn",
+          "type": "Text",
+          "description": "Dùng piano, violin, guitar, saxophone, drum, dan-bau, vocal hoặc my-thuat. Phải giống mã ở bảng AristaProgramDetails. Guitar bao gồm Classic và Lead/Bass. Không đổi sau khi đã tạo URL."
+        },
+        {
+          "id": "kind",
+          "name": "Loại nội dung",
+          "type": "Text",
+          "description": "image cho ảnh, video cho video YouTube. Viết đúng tiếng Anh chữ thường."
+        },
+        {
+          "id": "image",
+          "name": "Ảnh / bìa video",
+          "type": "Image",
+          "description": "Với image: ảnh trong mục Khoảnh khắc. Với video: ảnh bìa của video. Thêm từ Media Manager."
+        },
+        {
+          "id": "imageFocusHeight",
+          "name": "Vị trí ảnh / bìa",
+          "type": "Number",
+          "description": "0 phần trên, 50 giữa, 100 phần dưới trong khung ảnh."
+        },
+        {
+          "id": "youtubeUrl",
+          "name": "Link YouTube",
+          "type": "Text",
+          "description": "Chỉ điền cho kind = video. Dán link thật, ví dụ https://www.youtube.com/watch?v=… hoặc https://youtu.be/…; không dán mã iframe."
+        },
+        {
+          "id": "caption",
+          "name": "Chú thích ảnh / video",
+          "type": "Text",
+          "description": "Mô tả ngắn nội dung thực tế. Với ảnh, đây là chú thích trong khung xem ảnh."
+        },
+        {
+          "id": "sortOrder",
+          "name": "Thứ tự",
+          "type": "Number",
+          "description": "Số nhỏ hiển thị trước. Dùng 1, 2, 3… trong từng bộ môn; ảnh và video được xếp riêng."
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "description": "Bật để hiển thị, tắt để ẩn. Các trang, chặng học và hồ sơ đã có tên đang bật; ảnh/video trống đang tắt, cần bổ sung dữ liệu rồi bật."
+        }
+      ]
+    }
+  ]
+}

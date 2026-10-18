@@ -20,8 +20,20 @@ const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, imag
 const testimonials = (content.AristaTestimonials || []).map(item => ({ ...item, photo: assetUrl(item.photo) }));
 const home = createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq, testimonials);
 element.setAttribute('content', JSON.stringify(home));
-if (new URL(location.href).searchParams.get('section') === 'testimonials') {
-  requestAnimationFrame(() => element.shadowRoot.getElementById('testimonials')?.scrollIntoView({ block: 'start' }));
+// Local-only links to the two detail prototypes. Production cards stay intact.
+element.shadowRoot.querySelectorAll('.program').forEach(card => {
+  const title = card.querySelector('h3')?.textContent;
+  if (!['Piano', 'Violin'].includes(title)) return;
+  const link = document.createElement('a');
+  link.className = 'program-action';
+  link.textContent = 'Khám phá bộ môn →';
+  link.href = `./${title.toLowerCase()}.html`;
+  link.style.cssText = 'display:block;text-decoration:none;margin-top:16px';
+  card.querySelector('.program-copy').append(link);
+});
+const initialSection = new URL(location.href).searchParams.get('section');
+if (['programs', 'testimonials'].includes(initialSection)) {
+  requestAnimationFrame(() => element.shadowRoot.getElementById(initialSection)?.scrollIntoView({ block: 'start' }));
 }
 element.addEventListener('arista-action', event => console.info('ARISTA ACTION:', event.detail));
 // Local preview never writes personal information to Wix.

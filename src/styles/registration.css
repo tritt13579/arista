@@ -54,6 +54,7 @@
   text-decoration: none;
 }
 .registration-card {
+  box-shadow: 0 0 0 1px rgba(217, 164, 65, var(--pd-invitation-outline, 0.35));
   min-width: 0;
   padding: 36px;
   border-radius: 24px;
@@ -285,6 +286,7 @@
 @media (max-width: 1024px) {
   .registration .section-inner {
     gap: 32px;
+    padding-block: 80px;
   }
   .registration-card {
     padding: 28px;
@@ -301,6 +303,18 @@
   }
 }
 @media (max-width: 640px) {
+  .registration .eyebrow {
+    font-size: 11px;
+  }
+  .registration .section-inner {
+    padding: 60px 20px;
+  }
+  .registration .section-description {
+    font-size: 15px;
+  }
+  .registration .section-heading {
+    gap: 16px;
+  }
   .registration-card {
     padding: 24px 20px;
   }

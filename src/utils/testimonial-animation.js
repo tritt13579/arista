@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
+import { createScrollRefresh } from './scroll-refresh.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -59,17 +60,16 @@ export function animateTestimonials(section, desktop) {
   };
   section.addEventListener('focusin', finish);
   // Reading full text or changing a longer review must refresh following sections.
-  let refreshTimer;
+  const refreshQueue = createScrollRefresh();
   const resize = new ResizeObserver(() => {
     // Height expansion produces a resize each frame. Refresh only when settled,
     // avoiding a whole-page ScrollTrigger layout pass on every animation frame.
-    clearTimeout(refreshTimer);
-    refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120);
+    refreshQueue.request();
   });
   resize.observe(section);
   return () => {
     resize.disconnect();
-    clearTimeout(refreshTimer);
+    refreshQueue.dispose();
     section.removeEventListener('focusin', finish);
     split.revert();
   };

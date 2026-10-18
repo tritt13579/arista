@@ -310,7 +310,8 @@
       "description": "Từ vỡ lòng đến luyện thi trong nước và quốc tế.",
       "image": "assets/images/07_1658160102975822.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/piano"
     },
     {
       "title": "Violin",
@@ -318,7 +319,8 @@
       "description": "Lớp cá nhân và hòa tấu cùng dàn dây của trung tâm.",
       "image": "assets/images/v3s/student-violin.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/violin"
     },
     {
       "title": "Guitar",
@@ -326,7 +328,8 @@
       "description": "Classic, lead và bass.",
       "image": "assets/images/v3s/teacher-guitar.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/guitar"
     },
     {
       "title": "Saxophone",
@@ -334,7 +337,8 @@
       "description": "Hơi thở, khẩu hình, màu âm và biểu diễn.",
       "image": "assets/images/v3s/gala-sax.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/saxophone"
     },
     {
       "title": "Trống",
@@ -342,7 +346,8 @@
       "description": "Nhịp điệu, kỹ thuật và chơi cùng ban nhạc.",
       "image": "assets/images/v3s/student-drum.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/drum"
     },
     {
       "title": "Đàn bầu",
@@ -350,7 +355,8 @@
       "description": "Âm sắc truyền thống Việt, độc tấu và hòa tấu.",
       "image": "assets/images/v3s/danbau-hands.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/dan-bau"
     },
     {
       "title": "Thanh nhạc",
@@ -358,7 +364,8 @@
       "description": "Lớp thiếu nhi và người lớn.",
       "image": "",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/vocal"
     },
     {
       "title": "Mỹ thuật",
@@ -366,7 +373,8 @@
       "description": "Vẽ thiếu nhi, minh họa, màu nước, ký họa.",
       "image": "assets/images/17_1591101263015040.jpg",
       "show": true,
-      "imageFocusHeight": 50
+      "imageFocusHeight": 50,
+      "detailUrl": "/bo-mon/my-thuat"
     }
   ],
   "AristaLearningJourney": [

@@ -50,6 +50,8 @@
   font-weight: 600;
 }
 .program-action {
+  display: block;
+  text-decoration: none;
   margin-top: auto;
   padding: 20px 0 0;
   border: 0;

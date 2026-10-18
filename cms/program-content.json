@@ -1,0 +1,1194 @@
+{
+  "AristaProgramDetails": [
+    {
+      "title": "Piano",
+      "programKey": "piano",
+      "show": true,
+      "kicker": "Bộ môn phím · Arista Music Center",
+      "headline": "Từng phím đàn,",
+      "headlineAccent": "một thế giới mới.",
+      "intro": "Từ những nốt nhạc đầu tiên đến câu chuyện của riêng bạn. Khám phá Piano tại Arista, nơi kỹ thuật và cảm xúc cùng lớn lên qua từng buổi học.",
+      "tags": "Trẻ em & người lớn\nTừ những bước đầu\nĐộc tấu & biểu diễn",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "editorial"
+    },
+    {
+      "title": "Violin",
+      "programKey": "violin",
+      "show": true,
+      "kicker": "Bộ môn dây · Arista Music Center",
+      "headline": "Một cây vĩ,",
+      "headlineAccent": "ngàn sắc thái.",
+      "intro": "Lắng nghe, cảm nhận và để âm nhạc cất lời. Khám phá Violin tại Arista qua những giờ học cá nhân và trải nghiệm hòa tấu cùng nhau.",
+      "tags": "Trẻ em & người lớn\nTừ những bước đầu\nCá nhân & hòa tấu",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "portraits"
+    },
+    {
+      "title": "Guitar",
+      "programKey": "guitar",
+      "show": true,
+      "kicker": "Bộ môn dây · Arista Music Center",
+      "headline": "Từ những dây đàn,",
+      "headlineAccent": "kết nối giai điệu.",
+      "intro": "Khám phá Guitar Classic, Lead và Bass theo sở thích của bạn. Từng buổi học kết hợp kỹ thuật, cảm nhận tiết tấu và thực hành trên những bản nhạc phù hợp.",
+      "tags": "Classic · Lead · Bass\nTừ những bước đầu\nĐộc tấu & chơi nhóm",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "editorial"
+    },
+    {
+      "title": "Saxophone",
+      "programKey": "saxophone",
+      "show": true,
+      "kicker": "Bộ môn kèn hơi · Arista Music Center",
+      "headline": "Từ một hơi thở,",
+      "headlineAccent": "ngân lên cá tính.",
+      "intro": "Làm quen với Saxophone qua hơi thở, khẩu hình và những giai điệu đầu tiên. Cùng giảng viên khám phá màu âm và cách diễn đạt phù hợp với khả năng của bạn.",
+      "tags": "Hơi thở & màu âm\nTừ những bước đầu\nĐộc tấu & hòa tấu",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "portraits"
+    },
+    {
+      "title": "Trống",
+      "programKey": "drum",
+      "show": true,
+      "kicker": "Bộ môn tiết tấu · Arista Music Center",
+      "headline": "Giữ nhịp vững vàng,",
+      "headlineAccent": "chơi theo cá tính.",
+      "intro": "Bắt đầu từ những nhịp cơ bản, khám phá cách phối hợp tay chân và lắng nghe ban nhạc. Học Trống tại Arista qua bài tập kỹ thuật và thực hành trên nền nhạc.",
+      "tags": "Phối hợp tay & chân\nTiết tấu & cảm âm\nChơi cùng ban nhạc",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "editorial"
+    },
+    {
+      "title": "Đàn bầu",
+      "programKey": "dan-bau",
+      "show": true,
+      "kicker": "Nhạc cụ dân tộc · Arista Music Center",
+      "headline": "Một dây đàn,",
+      "headlineAccent": "hồn Việt ngân vang.",
+      "intro": "Khám phá âm sắc Đàn bầu qua kỹ thuật gảy, cảm nhận cao độ và cách luyến láy. Từng bước làm quen với những giai điệu mang màu sắc âm nhạc Việt Nam.",
+      "tags": "Âm sắc truyền thống\nKỹ thuật & cảm xúc\nĐộc tấu & hòa tấu",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "portraits"
+    },
+    {
+      "title": "Thanh nhạc",
+      "programKey": "vocal",
+      "show": true,
+      "kicker": "Bộ môn giọng hát · Arista Music Center",
+      "headline": "Lắng nghe giọng hát,",
+      "headlineAccent": "tìm thấy chính mình.",
+      "intro": "Khám phá giọng hát của bạn qua hơi thở, cách phát âm và cảm xúc trong từng câu nhạc. Nội dung học được trao đổi cùng giảng viên theo nền tảng và sở thích của người học.",
+      "tags": "Trẻ em & người lớn\nHơi thở & giọng hát\nTự tin thể hiện",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "portraits"
+    },
+    {
+      "title": "Mỹ thuật",
+      "programKey": "my-thuat",
+      "show": true,
+      "kicker": "Bộ môn sáng tạo · Arista Music Center",
+      "headline": "Từ một nét vẽ,",
+      "headlineAccent": "mở ra thế giới.",
+      "intro": "Quan sát, thử nghiệm và kể câu chuyện của riêng bạn bằng đường nét, hình khối và màu sắc. Khám phá Mỹ thuật tại Arista qua những bài thực hành phù hợp với độ tuổi và sở thích.",
+      "tags": "Quan sát & sáng tạo\nĐường nét & màu sắc\nThực hành qua tác phẩm",
+      "heroImage": "",
+      "heroImageFocusHeight": 50,
+      "heroCaption": "",
+      "mediaLayout": "editorial"
+    }
+  ],
+  "AristaProgramJourney": [
+    {
+      "title": "Làm quen",
+      "programKey": "piano",
+      "description": "Tìm hiểu nhạc cụ, tư thế ngồi, nốt nhạc và những giai điệu đầu tiên.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Xây nền tảng",
+      "programKey": "piano",
+      "description": "Luyện phối hợp hai tay, đọc nhạc và hình thành thói quen tập luyện.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Phát triển",
+      "programKey": "piano",
+      "description": "Khám phá tác phẩm, kỹ thuật và cách diễn đạt phù hợp với khả năng.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Tự tin thể hiện",
+      "programKey": "piano",
+      "description": "Thực hành trình bày tác phẩm; trao đổi cùng giảng viên về mục tiêu biểu diễn hoặc luyện thi nếu phù hợp.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Làm quen",
+      "programKey": "violin",
+      "description": "Cầm đàn, cầm vĩ và tìm cảm giác thoải mái khi chơi.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Tạo âm thanh",
+      "programKey": "violin",
+      "description": "Luyện dây buông, đặt ngón và cảm nhận cao độ.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Chơi giai điệu",
+      "programKey": "violin",
+      "description": "Kết nối kỹ thuật với những bản nhạc vừa sức.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Chơi cùng nhau",
+      "programKey": "violin",
+      "description": "Khám phá hòa tấu và làm quen trải nghiệm biểu diễn.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Chọn hướng đi",
+      "programKey": "guitar",
+      "description": "Làm quen với đàn, tư thế chơi và trao đổi mục tiêu học Classic, Lead hoặc Bass.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Xây nền tảng",
+      "programKey": "guitar",
+      "description": "Luyện đặt tay, gảy dây, đọc ký hiệu nhạc và giữ nhịp qua các bài tập phù hợp.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Kết nối giai điệu",
+      "programKey": "guitar",
+      "description": "Thực hành hợp âm, giai điệu hoặc đường bass theo hướng học đã chọn.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Chơi trọn bản nhạc",
+      "programKey": "guitar",
+      "description": "Kết hợp kỹ thuật với cách diễn đạt; khám phá độc tấu, đệm hát hoặc chơi cùng nhóm.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Làm quen với kèn",
+      "programKey": "saxophone",
+      "description": "Tìm hiểu nhạc cụ, tư thế cầm kèn, cách lắp ráp và vệ sinh sau khi tập.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Tìm hơi và tiếng",
+      "programKey": "saxophone",
+      "description": "Luyện hơi thở, khẩu hình, phát âm và giữ tiếng qua các bài tập vừa sức.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Kết nối câu nhạc",
+      "programKey": "saxophone",
+      "description": "Thực hành bấm nốt, đọc nhạc, tiết tấu và cách nối các câu giai điệu.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Thể hiện màu âm",
+      "programKey": "saxophone",
+      "description": "Khám phá sắc thái, cách xử lý tác phẩm và trải nghiệm chơi cùng nhạc đệm hoặc hòa tấu.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Làm quen bộ trống",
+      "programKey": "drum",
+      "description": "Tìm hiểu các thành phần của bộ trống, tư thế ngồi và cách cầm dùi.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Giữ nhịp cơ bản",
+      "programKey": "drum",
+      "description": "Luyện đếm nhịp, các mẫu tiết tấu và phối hợp tay chân từng bước.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Phát triển groove",
+      "programKey": "drum",
+      "description": "Thực hành groove, fill và chuyển đoạn trên các bài nhạc phù hợp.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Kết nối ban nhạc",
+      "programKey": "drum",
+      "description": "Luyện nghe, giữ tempo và phối hợp với nhạc đệm hoặc các nhạc cụ khác.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Làm quen nhạc cụ",
+      "programKey": "dan-bau",
+      "description": "Tìm hiểu cấu tạo đàn, tư thế ngồi, cách cầm que gảy và cần đàn.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Tìm tiếng đàn",
+      "programKey": "dan-bau",
+      "description": "Luyện gảy âm bồi, vị trí tay và cảm nhận cao độ qua các bài tập cơ bản.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Khám phá luyến láy",
+      "programKey": "dan-bau",
+      "description": "Thực hành nhấn, rung và nối các câu nhạc phù hợp với nền tảng người học.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Kể chuyện bằng âm thanh",
+      "programKey": "dan-bau",
+      "description": "Kết hợp kỹ thuật với sắc thái trong tác phẩm; khám phá độc tấu và hòa tấu.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Lắng nghe giọng hát",
+      "programKey": "vocal",
+      "description": "Trao đổi mục tiêu, làm quen tư thế và những bài khởi động phù hợp.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Xây nền tảng",
+      "programKey": "vocal",
+      "description": "Luyện hơi thở, phát âm và cảm nhận cao độ theo hướng dẫn của giảng viên.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Hát thành câu chuyện",
+      "programKey": "vocal",
+      "description": "Thực hành bài hát vừa sức, kết hợp tiết tấu, lời ca và cách diễn đạt.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Tự tin trình bày",
+      "programKey": "vocal",
+      "description": "Luyện hát cùng nhạc đệm, sử dụng micro và thể hiện bài hát theo mục tiêu cá nhân.",
+      "sortOrder": 4,
+      "show": true
+    },
+    {
+      "title": "Khơi gợi quan sát",
+      "programKey": "my-thuat",
+      "description": "Làm quen dụng cụ, thử các nét vẽ và quan sát hình dáng từ những sự vật gần gũi.",
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Xây nền tảng tạo hình",
+      "programKey": "my-thuat",
+      "description": "Khám phá đường nét, hình khối, bố cục và cách phối màu qua bài tập thực hành.",
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Thử nghiệm chất liệu",
+      "programKey": "my-thuat",
+      "description": "Tìm hiểu chất liệu và cách thể hiện phù hợp với sở thích, độ tuổi và nền tảng.",
+      "sortOrder": 3,
+      "show": true
+    },
+    {
+      "title": "Hoàn thiện tác phẩm",
+      "programKey": "my-thuat",
+      "description": "Phát triển một ý tưởng thành bài vẽ, chia sẻ câu chuyện và nhìn lại quá trình sáng tạo.",
+      "sortOrder": 4,
+      "show": true
+    }
+  ],
+  "AristaProgramTeachers": [
+    {
+      "title": "Piano — Trần Hữu Nhật Hoàng",
+      "programKey": "piano",
+      "name": "Trần Hữu Nhật Hoàng",
+      "role": "Giảng viên Piano",
+      "credential": "Thạc sĩ Biểu diễn Piano",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Piano — Trần Hoàng Ái Mỹ",
+      "programKey": "piano",
+      "name": "Trần Hoàng Ái Mỹ",
+      "role": "Giảng viên Piano",
+      "credential": "Thạc sĩ Biểu diễn Piano",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Violin — Võ Thị Huyền Trân",
+      "programKey": "violin",
+      "name": "Võ Thị Huyền Trân",
+      "role": "Giảng viên Violin",
+      "credential": "Cử nhân Violin",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Guitar — Trần Duy Toàn",
+      "programKey": "guitar",
+      "name": "Trần Duy Toàn",
+      "role": "Giảng viên Guitar",
+      "credential": "Cử nhân Guitar",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Guitar — Lê Hồng Cơ",
+      "programKey": "guitar",
+      "name": "Lê Hồng Cơ",
+      "role": "Giảng viên Guitar",
+      "credential": "Cử nhân",
+      "qualifications": "Đại học Khánh Hòa",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Saxophone — Phạm Văn Duy",
+      "programKey": "saxophone",
+      "name": "Phạm Văn Duy",
+      "role": "Giảng viên Saxophone",
+      "credential": "Cử nhân Clarinette/Saxophone",
+      "qualifications": "Học viện Âm nhạc Quốc gia Việt Nam",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Trống — Nguyễn Đình Khoa",
+      "programKey": "drum",
+      "name": "Nguyễn Đình Khoa",
+      "role": "Giảng viên Trống",
+      "credential": "Drummer",
+      "qualifications": "Grade 5 RLS\nGrade 7 LCM",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Đàn bầu — Trần Anh Túc",
+      "programKey": "dan-bau",
+      "name": "Trần Anh Túc",
+      "role": "Giảng viên Đàn bầu",
+      "credential": "Thạc sĩ Âm nhạc",
+      "qualifications": "Nhạc viện TP. Hồ Chí Minh",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Thanh nhạc — Hà Thị Diệp Anh",
+      "programKey": "vocal",
+      "name": "Hà Thị Diệp Anh",
+      "role": "Giảng viên Thanh nhạc",
+      "credential": "Thạc sĩ Thanh nhạc",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Thanh nhạc — Nguyễn Văn Tài",
+      "programKey": "vocal",
+      "name": "Nguyễn Văn Tài",
+      "role": "Giảng viên Thanh nhạc",
+      "credential": "Thạc sĩ Thanh nhạc",
+      "qualifications": "Học viện Âm nhạc Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 2,
+      "show": true
+    },
+    {
+      "title": "Mỹ thuật — Đinh Thanh Hải",
+      "programKey": "my-thuat",
+      "name": "Đinh Thanh Hải",
+      "role": "Giảng viên Mỹ thuật",
+      "credential": "Thạc sĩ Mỹ thuật",
+      "qualifications": "Đại học Nghệ thuật Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 1,
+      "show": true
+    },
+    {
+      "title": "Mỹ thuật — Hà Trúc Thảo",
+      "programKey": "my-thuat",
+      "name": "Hà Trúc Thảo",
+      "role": "Giảng viên Mỹ thuật",
+      "credential": "Cử nhân Mỹ thuật",
+      "qualifications": "Đại học Nghệ thuật Huế",
+      "photo": "",
+      "photoFocusHeight": 30,
+      "sortOrder": 2,
+      "show": true
+    }
+  ],
+  "AristaProgramMedia": [
+    {
+      "title": "Piano — Ảnh 1",
+      "programKey": "piano",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Piano — Ảnh 2",
+      "programKey": "piano",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Piano — Ảnh 3",
+      "programKey": "piano",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Piano — Ảnh 4",
+      "programKey": "piano",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Piano — Ảnh 5",
+      "programKey": "piano",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Piano — Video 1",
+      "programKey": "piano",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Piano — Video 2",
+      "programKey": "piano",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Piano — Video 3",
+      "programKey": "piano",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Piano — Video 4",
+      "programKey": "piano",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 1",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 2",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 3",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 4",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 5",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Violin — Ảnh 6",
+      "programKey": "violin",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 6,
+      "show": false
+    },
+    {
+      "title": "Violin — Video 1",
+      "programKey": "violin",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Violin — Video 2",
+      "programKey": "violin",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Violin — Video 3",
+      "programKey": "violin",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Violin — Video 4",
+      "programKey": "violin",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Guitar — Ảnh 1",
+      "programKey": "guitar",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Guitar — Ảnh 2",
+      "programKey": "guitar",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Guitar — Ảnh 3",
+      "programKey": "guitar",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Guitar — Ảnh 4",
+      "programKey": "guitar",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Guitar — Ảnh 5",
+      "programKey": "guitar",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Guitar — Classic — Video 1",
+      "programKey": "guitar",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Guitar — Classic — Video 2",
+      "programKey": "guitar",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Guitar — Lead/Bass — Video 1",
+      "programKey": "guitar",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Guitar — Lead/Bass — Video 2",
+      "programKey": "guitar",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Ảnh 1",
+      "programKey": "saxophone",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Ảnh 2",
+      "programKey": "saxophone",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Ảnh 3",
+      "programKey": "saxophone",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Ảnh 4",
+      "programKey": "saxophone",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Ảnh 5",
+      "programKey": "saxophone",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Video 1",
+      "programKey": "saxophone",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Saxophone — Video 2",
+      "programKey": "saxophone",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 1",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 2",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 3",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 4",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 5",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Trống — Ảnh 6",
+      "programKey": "drum",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 6,
+      "show": false
+    },
+    {
+      "title": "Trống — Video 1",
+      "programKey": "drum",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Trống — Video 2",
+      "programKey": "drum",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Đàn bầu — Ảnh 1",
+      "programKey": "dan-bau",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Đàn bầu — Ảnh 2",
+      "programKey": "dan-bau",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Đàn bầu — Ảnh 3",
+      "programKey": "dan-bau",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 1",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 2",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 3",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 4",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 5",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 6",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 6,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 7",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 7,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Ảnh 8",
+      "programKey": "vocal",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 8,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Video 1",
+      "programKey": "vocal",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Thanh nhạc — Video 2",
+      "programKey": "vocal",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 1",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 2",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 3",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 3,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 4",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 4,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 5",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 5,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Ảnh 6",
+      "programKey": "my-thuat",
+      "kind": "image",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 6,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Video 1",
+      "programKey": "my-thuat",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 1,
+      "show": false
+    },
+    {
+      "title": "Mỹ thuật — Video 2",
+      "programKey": "my-thuat",
+      "kind": "video",
+      "image": "",
+      "imageFocusHeight": 50,
+      "youtubeUrl": "",
+      "caption": "",
+      "sortOrder": 2,
+      "show": false
+    }
+  ]
+}

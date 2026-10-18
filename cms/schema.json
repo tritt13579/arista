@@ -417,6 +417,12 @@
           "name": "Show Item",
           "type": "Boolean",
           "hidden": false
+        },
+        {
+          "id": "detailUrl",
+          "name": "Đường dẫn trang bộ môn",
+          "type": "Text",
+          "hidden": false
         }
       ]
     },

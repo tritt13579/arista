@@ -1,0 +1,59 @@
+.pd-sk-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.pd-skeleton { min-height: 734px; }
+.pd-skeleton .pd-header, .pd-skeleton .pd-subnav { position: static; }
+.pd-skeleton .pd-hero-copy > :is(.pd-eyebrow, h1, .pd-slogan, .pd-intro, .pd-tags) { width: 100%; }
+.pd-sk-block {
+  display: block;
+  background: #e3dccf;
+  border-radius: 5px;
+  animation: pd-skeleton-pulse 2.2s ease-in-out infinite;
+}
+.pd-sk-logo { width: calc(48px * 731 / 609); height: 48px; margin-right: auto; }
+.pd-sk-header-link { width: 90px; height: 12px; }
+.pd-sk-header-button { color: transparent; }
+.pd-sk-eyebrow { width: 65%; max-width: 280px; height: 1.6em; }
+.pd-sk-title { width: 65%; height: 1.02em; }
+.pd-sk-slogan, .pd-sk-slogan-accent { width: 85%; height: 1em; margin-bottom: .35em; }
+.pd-sk-slogan-accent { width: 75%; }
+.pd-sk-line { width: 100%; height: .85em; margin-block: .45em; }
+.pd-sk-line-short { width: 70%; }
+.pd-sk-button { width: 170px; height: 48px; border-radius: 30px; }
+.pd-sk-link { width: 100px; height: 12px; }
+.pd-sk-tag { width: 90px; max-width: 28%; height: 12px; }
+.pd-sk-photo {
+  width: 100%;
+  aspect-ratio: 4 / 4.8;
+  border-radius: 160px 160px 12px 12px;
+}
+.pd-sk-caption { width: 65%; height: 10px; margin-top: 28px; }
+.pd-sk-nav { width: 95px; max-width: 25%; height: 12px; }
+@keyframes pd-skeleton-pulse { 0%, 100% { opacity: .55; } 50% { opacity: .95; } }
+@media (max-width: 768px) {
+  .pd-skeleton { min-height: 0; }
+  .pd-sk-header-link { width: 65px; }
+  .pd-sk-button { width: 150px; height: 44px; }
+  .pd-sk-photo { aspect-ratio: 4 / 3.8; border-radius: 110px 110px 10px 10px; }
+  .pd-sk-caption { margin-top: 24px; height: 8px; }
+}
+
+
+
+@media (max-width: 640px) {
+  .pd-sk-logo { width: calc(44px * 731 / 609); height: 44px; }
+}
+@media (max-width: 360px) {
+  .pd-sk-header-link { width: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-sk-block { animation: none; }
+}

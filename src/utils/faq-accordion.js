@@ -1,15 +1,14 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { createScrollRefresh } from './scroll-refresh.js';
 
 export function bindFaqAccordion(section) {
   const controller = new AbortController();
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const states = [];
   let disposed = false;
-  let frame;
+  const refreshQueue = createScrollRefresh();
   const refresh = () => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => { if (!disposed) ScrollTrigger.refresh(); });
+    if (!disposed) refreshQueue.request();
   };
   const setIntent = state => {
     state.detail.dataset.expanded = String(state.expanded);
@@ -78,7 +77,7 @@ export function bindFaqAccordion(section) {
   return () => {
     disposed = true;
     controller.abort();
-    cancelAnimationFrame(frame);
+    refreshQueue.dispose();
     states.forEach(settle);
   };
 }

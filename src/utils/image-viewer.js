@@ -2,7 +2,7 @@ import { node } from "./dom.js";
 import { responsiveImage } from "./image-url.js";
 import { thumbnailTransition, thumbnailTiming } from "./thumbnail-transition.js";
 
-export function openImageViewer(host, images, initialIndex) {
+export function openImageViewer(host, images, initialIndex, options = {}) {
   host.closeMenu();
   if (!host.imageViewer) {
     const dialog = node("dialog", "image-viewer");
@@ -100,10 +100,14 @@ export function openImageViewer(host, images, initialIndex) {
       const item = viewer.items[viewer.index];
       stage.querySelector("img")?.remove();
       stage.classList.remove("viewer-has-preview");
-      message.hidden = false;
-      message.textContent = "Đang tải ảnh…";
+      const quietLoading = viewer.options.quietLoading === true;
+      message.hidden = quietLoading;
+      message.textContent = quietLoading ? "" : "Đang tải ảnh…";
       stage.setAttribute("aria-busy", "true");
       caption.textContent = item.caption || "";
+      caption.hidden = viewer.options.showCaption === false;
+      if (caption.hidden) dialog.removeAttribute("aria-describedby");
+      else dialog.setAttribute("aria-describedby", caption.id);
       caption.scrollTop = 0;
       status.textContent = `${viewer.index + 1} / ${viewer.items.length}`;
       previous.hidden = next.hidden = viewer.items.length < 2;
@@ -122,7 +126,8 @@ export function openImageViewer(host, images, initialIndex) {
           image.classList.add("viewer-preview");
           stage.append(image);
           stage.classList.add("viewer-has-preview");
-          message.textContent = fullFailed ? "Chưa tải được ảnh chất lượng cao." : "Đang tải ảnh chất lượng cao…";
+          message.hidden = quietLoading;
+          message.textContent = quietLoading ? "" : fullFailed ? "Chưa tải được ảnh chất lượng cao." : "Đang tải ảnh chất lượng cao…";
         }).catch(() => {
           // A failed thumbnail must not interrupt the original image request.
         });
@@ -156,8 +161,10 @@ export function openImageViewer(host, images, initialIndex) {
         if (generation !== viewer.generation) return;
         fullFailed = true;
         stage.removeAttribute("aria-busy");
-        message.textContent = stage.querySelector("img")
-          ? "Chưa tải được ảnh chất lượng cao."
+        const hasPreview = !!stage.querySelector("img");
+        message.hidden = quietLoading && hasPreview;
+        message.textContent = hasPreview
+          ? quietLoading ? "" : "Chưa tải được ảnh chất lượng cao."
           : "Không tải được ảnh. Vui lòng chuyển ảnh khác hoặc mở lại để thử lại.";
       });
     };
@@ -248,6 +255,7 @@ export function openImageViewer(host, images, initialIndex) {
   const viewer = host.imageViewer;
   if (viewer.closing || viewer.opening) viewer.close();
   viewer.items = images;
+  viewer.options = options;
   viewer.index = initialIndex;
   viewer.render();
   if (!viewer.dialog.open) {

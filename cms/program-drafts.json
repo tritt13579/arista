@@ -1,0 +1,366 @@
+[
+  {
+    "programKey": "piano",
+    "title": "Piano",
+    "kicker": "Bộ môn phím · Arista Music Center",
+    "headline": [
+      "Từng phím đàn,",
+      "một thế giới mới."
+    ],
+    "intro": "Từ những nốt nhạc đầu tiên đến câu chuyện của riêng bạn. Khám phá Piano tại Arista, nơi kỹ thuật và cảm xúc cùng lớn lên qua từng buổi học.",
+    "tags": [
+      "Trẻ em & người lớn",
+      "Từ những bước đầu",
+      "Độc tấu & biểu diễn"
+    ],
+    "mediaLayout": "editorial",
+    "photos": 5,
+    "videos": 4,
+    "teachers": [
+      [
+        "Trần Hữu Nhật Hoàng",
+        "Thạc sĩ Biểu diễn Piano",
+        "Học viện Âm nhạc Huế"
+      ],
+      [
+        "Trần Hoàng Ái Mỹ",
+        "Thạc sĩ Biểu diễn Piano",
+        "Học viện Âm nhạc Huế"
+      ]
+    ],
+    "journey": [
+      [
+        "Làm quen",
+        "Tìm hiểu nhạc cụ, tư thế ngồi, nốt nhạc và những giai điệu đầu tiên."
+      ],
+      [
+        "Xây nền tảng",
+        "Luyện phối hợp hai tay, đọc nhạc và hình thành thói quen tập luyện."
+      ],
+      [
+        "Phát triển",
+        "Khám phá tác phẩm, kỹ thuật và cách diễn đạt phù hợp với khả năng."
+      ],
+      [
+        "Tự tin thể hiện",
+        "Thực hành trình bày tác phẩm; trao đổi cùng giảng viên về mục tiêu biểu diễn hoặc luyện thi nếu phù hợp."
+      ]
+    ]
+  },
+  {
+    "programKey": "violin",
+    "title": "Violin",
+    "kicker": "Bộ môn dây · Arista Music Center",
+    "headline": [
+      "Một cây vĩ,",
+      "ngàn sắc thái."
+    ],
+    "intro": "Lắng nghe, cảm nhận và để âm nhạc cất lời. Khám phá Violin tại Arista qua những giờ học cá nhân và trải nghiệm hòa tấu cùng nhau.",
+    "tags": [
+      "Trẻ em & người lớn",
+      "Từ những bước đầu",
+      "Cá nhân & hòa tấu"
+    ],
+    "mediaLayout": "portraits",
+    "photos": 6,
+    "videos": 4,
+    "teachers": [
+      [
+        "Võ Thị Huyền Trân",
+        "Cử nhân Violin",
+        "Học viện Âm nhạc Huế"
+      ]
+    ],
+    "journey": [
+      [
+        "Làm quen",
+        "Cầm đàn, cầm vĩ và tìm cảm giác thoải mái khi chơi."
+      ],
+      [
+        "Tạo âm thanh",
+        "Luyện dây buông, đặt ngón và cảm nhận cao độ."
+      ],
+      [
+        "Chơi giai điệu",
+        "Kết nối kỹ thuật với những bản nhạc vừa sức."
+      ],
+      [
+        "Chơi cùng nhau",
+        "Khám phá hòa tấu và làm quen trải nghiệm biểu diễn."
+      ]
+    ]
+  },
+  {
+    "programKey": "guitar",
+    "title": "Guitar",
+    "kicker": "Bộ môn dây · Arista Music Center",
+    "headline": [
+      "Từ những dây đàn,",
+      "kết nối giai điệu."
+    ],
+    "intro": "Khám phá Guitar Classic, Lead và Bass theo sở thích của bạn. Từng buổi học kết hợp kỹ thuật, cảm nhận tiết tấu và thực hành trên những bản nhạc phù hợp.",
+    "tags": [
+      "Classic · Lead · Bass",
+      "Từ những bước đầu",
+      "Độc tấu & chơi nhóm"
+    ],
+    "mediaLayout": "editorial",
+    "photos": 5,
+    "videos": 4,
+    "teachers": [
+      [
+        "Trần Duy Toàn",
+        "Cử nhân Guitar",
+        "Học viện Âm nhạc Huế"
+      ],
+      [
+        "Lê Hồng Cơ",
+        "Cử nhân",
+        "Đại học Khánh Hòa"
+      ]
+    ],
+    "journey": [
+      [
+        "Chọn hướng đi",
+        "Làm quen với đàn, tư thế chơi và trao đổi mục tiêu học Classic, Lead hoặc Bass."
+      ],
+      [
+        "Xây nền tảng",
+        "Luyện đặt tay, gảy dây, đọc ký hiệu nhạc và giữ nhịp qua các bài tập phù hợp."
+      ],
+      [
+        "Kết nối giai điệu",
+        "Thực hành hợp âm, giai điệu hoặc đường bass theo hướng học đã chọn."
+      ],
+      [
+        "Chơi trọn bản nhạc",
+        "Kết hợp kỹ thuật với cách diễn đạt; khám phá độc tấu, đệm hát hoặc chơi cùng nhóm."
+      ]
+    ]
+  },
+  {
+    "programKey": "saxophone",
+    "title": "Saxophone",
+    "kicker": "Bộ môn kèn hơi · Arista Music Center",
+    "headline": [
+      "Từ một hơi thở,",
+      "ngân lên cá tính."
+    ],
+    "intro": "Làm quen với Saxophone qua hơi thở, khẩu hình và những giai điệu đầu tiên. Cùng giảng viên khám phá màu âm và cách diễn đạt phù hợp với khả năng của bạn.",
+    "tags": [
+      "Hơi thở & màu âm",
+      "Từ những bước đầu",
+      "Độc tấu & hòa tấu"
+    ],
+    "mediaLayout": "portraits",
+    "photos": 5,
+    "videos": 2,
+    "teachers": [
+      [
+        "Phạm Văn Duy",
+        "Cử nhân Clarinette/Saxophone",
+        "Học viện Âm nhạc Quốc gia Việt Nam"
+      ]
+    ],
+    "journey": [
+      [
+        "Làm quen với kèn",
+        "Tìm hiểu nhạc cụ, tư thế cầm kèn, cách lắp ráp và vệ sinh sau khi tập."
+      ],
+      [
+        "Tìm hơi và tiếng",
+        "Luyện hơi thở, khẩu hình, phát âm và giữ tiếng qua các bài tập vừa sức."
+      ],
+      [
+        "Kết nối câu nhạc",
+        "Thực hành bấm nốt, đọc nhạc, tiết tấu và cách nối các câu giai điệu."
+      ],
+      [
+        "Thể hiện màu âm",
+        "Khám phá sắc thái, cách xử lý tác phẩm và trải nghiệm chơi cùng nhạc đệm hoặc hòa tấu."
+      ]
+    ]
+  },
+  {
+    "programKey": "drum",
+    "title": "Trống",
+    "kicker": "Bộ môn tiết tấu · Arista Music Center",
+    "headline": [
+      "Giữ nhịp vững vàng,",
+      "chơi theo cá tính."
+    ],
+    "intro": "Bắt đầu từ những nhịp cơ bản, khám phá cách phối hợp tay chân và lắng nghe ban nhạc. Học Trống tại Arista qua bài tập kỹ thuật và thực hành trên nền nhạc.",
+    "tags": [
+      "Phối hợp tay & chân",
+      "Tiết tấu & cảm âm",
+      "Chơi cùng ban nhạc"
+    ],
+    "mediaLayout": "editorial",
+    "photos": 6,
+    "videos": 2,
+    "teachers": [
+      [
+        "Nguyễn Đình Khoa",
+        "Drummer",
+        "Grade 5 RLS\nGrade 7 LCM"
+      ]
+    ],
+    "journey": [
+      [
+        "Làm quen bộ trống",
+        "Tìm hiểu các thành phần của bộ trống, tư thế ngồi và cách cầm dùi."
+      ],
+      [
+        "Giữ nhịp cơ bản",
+        "Luyện đếm nhịp, các mẫu tiết tấu và phối hợp tay chân từng bước."
+      ],
+      [
+        "Phát triển groove",
+        "Thực hành groove, fill và chuyển đoạn trên các bài nhạc phù hợp."
+      ],
+      [
+        "Kết nối ban nhạc",
+        "Luyện nghe, giữ tempo và phối hợp với nhạc đệm hoặc các nhạc cụ khác."
+      ]
+    ]
+  },
+  {
+    "programKey": "dan-bau",
+    "title": "Đàn bầu",
+    "kicker": "Nhạc cụ dân tộc · Arista Music Center",
+    "headline": [
+      "Một dây đàn,",
+      "hồn Việt ngân vang."
+    ],
+    "intro": "Khám phá âm sắc Đàn bầu qua kỹ thuật gảy, cảm nhận cao độ và cách luyến láy. Từng bước làm quen với những giai điệu mang màu sắc âm nhạc Việt Nam.",
+    "tags": [
+      "Âm sắc truyền thống",
+      "Kỹ thuật & cảm xúc",
+      "Độc tấu & hòa tấu"
+    ],
+    "mediaLayout": "portraits",
+    "photos": 3,
+    "videos": 0,
+    "teachers": [
+      [
+        "Trần Anh Túc",
+        "Thạc sĩ Âm nhạc",
+        "Nhạc viện TP. Hồ Chí Minh"
+      ]
+    ],
+    "journey": [
+      [
+        "Làm quen nhạc cụ",
+        "Tìm hiểu cấu tạo đàn, tư thế ngồi, cách cầm que gảy và cần đàn."
+      ],
+      [
+        "Tìm tiếng đàn",
+        "Luyện gảy âm bồi, vị trí tay và cảm nhận cao độ qua các bài tập cơ bản."
+      ],
+      [
+        "Khám phá luyến láy",
+        "Thực hành nhấn, rung và nối các câu nhạc phù hợp với nền tảng người học."
+      ],
+      [
+        "Kể chuyện bằng âm thanh",
+        "Kết hợp kỹ thuật với sắc thái trong tác phẩm; khám phá độc tấu và hòa tấu."
+      ]
+    ]
+  },
+  {
+    "programKey": "vocal",
+    "title": "Thanh nhạc",
+    "kicker": "Bộ môn giọng hát · Arista Music Center",
+    "headline": [
+      "Lắng nghe giọng hát,",
+      "tìm thấy chính mình."
+    ],
+    "intro": "Khám phá giọng hát của bạn qua hơi thở, cách phát âm và cảm xúc trong từng câu nhạc. Nội dung học được trao đổi cùng giảng viên theo nền tảng và sở thích của người học.",
+    "tags": [
+      "Trẻ em & người lớn",
+      "Hơi thở & giọng hát",
+      "Tự tin thể hiện"
+    ],
+    "mediaLayout": "portraits",
+    "photos": 8,
+    "videos": 2,
+    "teachers": [
+      [
+        "Hà Thị Diệp Anh",
+        "Thạc sĩ Thanh nhạc",
+        "Học viện Âm nhạc Huế"
+      ],
+      [
+        "Nguyễn Văn Tài",
+        "Thạc sĩ Thanh nhạc",
+        "Học viện Âm nhạc Huế"
+      ]
+    ],
+    "journey": [
+      [
+        "Lắng nghe giọng hát",
+        "Trao đổi mục tiêu, làm quen tư thế và những bài khởi động phù hợp."
+      ],
+      [
+        "Xây nền tảng",
+        "Luyện hơi thở, phát âm và cảm nhận cao độ theo hướng dẫn của giảng viên."
+      ],
+      [
+        "Hát thành câu chuyện",
+        "Thực hành bài hát vừa sức, kết hợp tiết tấu, lời ca và cách diễn đạt."
+      ],
+      [
+        "Tự tin trình bày",
+        "Luyện hát cùng nhạc đệm, sử dụng micro và thể hiện bài hát theo mục tiêu cá nhân."
+      ]
+    ]
+  },
+  {
+    "programKey": "my-thuat",
+    "title": "Mỹ thuật",
+    "kicker": "Bộ môn sáng tạo · Arista Music Center",
+    "headline": [
+      "Từ một nét vẽ,",
+      "mở ra thế giới."
+    ],
+    "intro": "Quan sát, thử nghiệm và kể câu chuyện của riêng bạn bằng đường nét, hình khối và màu sắc. Khám phá Mỹ thuật tại Arista qua những bài thực hành phù hợp với độ tuổi và sở thích.",
+    "tags": [
+      "Quan sát & sáng tạo",
+      "Đường nét & màu sắc",
+      "Thực hành qua tác phẩm"
+    ],
+    "mediaLayout": "editorial",
+    "photos": 6,
+    "videos": 2,
+    "teachers": [
+      [
+        "Đinh Thanh Hải",
+        "Thạc sĩ Mỹ thuật",
+        "Đại học Nghệ thuật Huế"
+      ],
+      [
+        "Hà Trúc Thảo",
+        "Cử nhân Mỹ thuật",
+        "Đại học Nghệ thuật Huế"
+      ]
+    ],
+    "journey": [
+      [
+        "Khơi gợi quan sát",
+        "Làm quen dụng cụ, thử các nét vẽ và quan sát hình dáng từ những sự vật gần gũi."
+      ],
+      [
+        "Xây nền tảng tạo hình",
+        "Khám phá đường nét, hình khối, bố cục và cách phối màu qua bài tập thực hành."
+      ],
+      [
+        "Thử nghiệm chất liệu",
+        "Tìm hiểu chất liệu và cách thể hiện phù hợp với sở thích, độ tuổi và nền tảng."
+      ],
+      [
+        "Hoàn thiện tác phẩm",
+        "Phát triển một ý tưởng thành bài vẽ, chia sẻ câu chuyện và nhìn lại quá trình sáng tạo."
+      ]
+    ]
+  }
+]

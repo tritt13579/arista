@@ -3,7 +3,7 @@ import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 import { createSectionLayout } from "./section-layout.js";
 
-export function renderPrograms(content, buttonText, action) {
+export function renderPrograms(content, buttonText) {
   if (!content) return null;
   const { section, inner, heading } = createSectionLayout("programs", content);
   if (content.labels) {
@@ -35,16 +35,13 @@ export function renderPrograms(content, buttonText, action) {
     if (item.categoryLabel)
       body.append(node("span", "category", item.categoryLabel));
     body.append(node("h3", "", item.title), node("p", "", item.description));
-    if (buttonText) {
-      const button = node("button", "program-action", buttonText);
-      button.type = "button";
-      button.setAttribute("aria-label", `${buttonText} — ${item.title || ""}`);
-      button.addEventListener("click", () =>
-        action("registration", buttonText, {
-          programName: String(item.title || ""),
-        }),
-      );
-      body.append(button);
+    // Use one CMS-labelled link to the subject page instead of a registration action.
+    const detailUrl = String(item.detailUrl || '').trim();
+    if (/^\/(?!\/)/.test(detailUrl) || /^https:\/\//i.test(detailUrl)) {
+      const details = node('a', 'program-action', buttonText || 'Khám phá bộ môn →');
+      details.href = detailUrl;
+      details.setAttribute('aria-label', `${buttonText || 'Khám phá bộ môn →'} — ${item.title || ''}`);
+      body.append(details);
     }
     card.append(media, body);
     grid.append(card);

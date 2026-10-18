@@ -2,6 +2,7 @@
 import { styles } from "../styles/index.js";
 import { observeReveals, animateHero } from "../utils/animations.js";
 import { loadFonts } from "../utils/fonts.js";
+import { beginSectionNavigation } from "../utils/scroll-refresh.js";
 import {
   headerTemplate,
   renderHeader,
@@ -82,6 +83,7 @@ class AristaHome extends HTMLElement {
     // Release the modal's scroll lock before navigating to a section.
     this.closeMenu();
     if (target === "top") {
+      beginSectionNavigation();
       window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       this.shadowRoot.querySelector("h1")?.focus({ preventScroll: true });
       this.emit("arista-action", { target, label, ...extra });
@@ -93,6 +95,7 @@ class AristaHome extends HTMLElement {
       const inner = section.querySelector(".section-inner");
       const contentInset = inner ? parseFloat(getComputedStyle(inner).paddingTop) || 0 : 0;
       section.style.setProperty("--section-content-inset", `${contentInset}px`);
+      beginSectionNavigation();
       section.scrollIntoView({
         behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "auto"
@@ -150,7 +153,6 @@ class AristaHome extends HTMLElement {
       renderPrograms(
         data.programs,
         data.programButtonText,
-        this.action.bind(this),
       ),
       renderLearningJourney(data.learningJourney),
       renderTeachers(data.teachers, this.action.bind(this)),
@@ -179,6 +181,10 @@ class AristaHome extends HTMLElement {
     this.effectsFrame = requestAnimationFrame(() => {
       this.effectsFrame = 0;
       if (this.isConnected) observeReveals(this, root);
+      if (this.isConnected && !this.initialProgramNavigationDone && new URL(location.href).searchParams.get('section') === 'programs') {
+        this.initialProgramNavigationDone = true;
+        this.action('programs', 'Các bộ môn');
+      }
     });
   }
   closeMenu() {

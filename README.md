@@ -242,12 +242,27 @@ existing animations.
 
 Reduced motion restores static content. Responsive changes, CMS rerenders and
 disconnects revert component-owned animation contexts and temporary quote/line
-nodes. Font/image loads refresh trigger geometry. Keyboard focus immediately
+nodes. Font/image loads refresh trigger geometry through the shared queue in
+`src/utils/scroll-refresh.js`. Image loads, FAQ changes and testimonial resizes
+are batched; refresh waits until native menu navigation and user scrolling
+have settled so its measurement pass cannot interrupt smooth scrolling.
+Keyboard focus immediately
 completes an entry animation containing the focused control.
 
 After building, replace the content of Wix's selected Velo File
 `public/custom-elements/arista-home.js` with `dist/arista-home.js` and test on Wix
 desktop/mobile before publishing. No page code or backend change is needed.
+
+## Program detail prototypes (local review)
+
+`piano.html` and `violin.html` preview a shared detail layout with draft copy,
+two/three teacher profiles and a preselected registration form. Program awards
+are currently commented out, with sample data retained for a future restore.
+`src/components/arista-program.js` builds separately to `dist/arista-program.js`.
+Local home cards link to both prototypes; these links are not added to Wix home.
+Forms simulate success locally and never submit to Wix. See
+`docs/program-detail-preview.vi.md` for sample content, media configuration and
+the later Wix integration steps.
 
 ## Trial registration setup
 
@@ -269,6 +284,34 @@ panel and copy `src/wix/backend/trial-registration.web.js` into it. Replace the 
 page code with `src/wix/arista-preview.page.js`, then rebuild/deploy the component.
 Keep the native Wix Form in Forms & Submissions; it does not need to be placed on
 the canvas. Its layout and confirmation settings do not style this custom UI.
+
+### Wix program detail pages
+
+Follow [the Vietnamese Wix setup guide](docs/program-wix-setup.vi.md) to create one
+dynamic item template for all eight programs (Guitar includes Classic and Lead/Bass). Import the four CSVs under
+`cms/program-import/`; field types and Vietnamese explanations are in
+`cms/program-schema.json` and `docs/program-cms-field-notes.vi.md`.
+`npm run cms:export` regenerates these draft exports as well as the home exports.
+Draft copy, supplied teacher identities and exact initial media counts are maintained in `cms/program-drafts.json`.
+The exports include 8 pages, 32 journey steps, 12 named teacher profiles and 44 photo/20 video slots.
+Images and YouTube URLs are blank; media slots are disabled. Named teachers are enabled, with initials until photos are added.
+The home `AristaPrograms.csv` now includes all eight `detailUrl` links. Preserve existing home CMS edits/images by updating only those links when possible.
+Do not reimport over client edits; the setup guide explains replacing only the four program collections.
+Program awards are temporarily commented out (renderer, navigation, query and
+adapter). Their draft CSV is retained in `cms/program-archive/`, not for import.
+The detail schema omits award image fields; home awards are unchanged.
+
+Build outputs to copy into Velo:
+- `dist/arista-program.js` → `public/custom-elements/arista-program.js` (element source).
+- `dist/arista-program-content.js` → `public/arista-program-content.js` (pure ESM adapter).
+- `src/wix/arista-program.page.js` → dynamic item page code.
+- `dist/arista-home.js` → existing home custom element file, to enable optional
+  `AristaPrograms.detailUrl` links. Populate this optional Text field manually.
+
+Production content uses `preview: false` and the existing registration backend;
+the local prototype keeps `preview: true` and never writes a real submission.
+Automated checks mock Wix APIs; final Editor layout, Live CMS permissions,
+Submissions and notification delivery still require Test Site verification.
 
 The backend targets form `1a3ca13f-0752-41c7-94ab-776889eec506` with keys
 `full_name`, `phone`, `student_type`, `program`, `message`. Verify these are the

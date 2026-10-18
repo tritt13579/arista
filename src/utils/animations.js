@@ -1,6 +1,8 @@
 import { gsap } from "gsap";
+import { animateRegistrationFooter } from "./registration-footer-animation.js";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { animateTestimonials } from "./testimonial-animation.js";
+import { createScrollRefresh } from "./scroll-refresh.js";
 export { animateHero } from "./hero-animation.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -41,7 +43,7 @@ export function observeReveals(host, root) {
       };
       return enter(element, { clipPath: edges[direction] }, delay);
     };
-    all(".section-heading").forEach(heading => {
+    all(".section-heading").filter(heading => !heading.closest(".registration")).forEach(heading => {
       enter(heading.querySelector(".eyebrow"), { opacity: 0, x: -12 });
       mask(heading.querySelector("h2"));
       enter(heading.querySelector(".section-description"), { opacity: 0, y: 12 }, 0.1);
@@ -123,18 +125,19 @@ export function observeReveals(host, root) {
         scrollTrigger: { trigger: item, start: "top 92%", once: true },
       });
     });
-    enter(root.querySelector(".registration-details"), { opacity: 0, y: 16 });
-    enter(root.querySelector(".registration-card"), { opacity: 0, y: 24 }, 0.12);
-    all(".footer-inner > *").forEach(item => enter(item, { opacity: 0, y: 12 }));
+    animateRegistrationFooter(root, desktop, (element, animation) => {
+      if (element.closest('[hidden]')) return;
+      ScrollTrigger.create({ trigger: element, start: 'top 92%', once: true, animation });
+      entries.push([element, animation]);
+    });
     const disposeTestimonials = animateTestimonials(root.querySelector(".testimonials"), desktop);
 
     // Font/image loading can change section geometry after first render.
     let disposed = false;
-    let frame;
+    const refreshQueue = createScrollRefresh();
     const refresh = () => {
       if (disposed) return;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => { if (!disposed) ScrollTrigger.refresh(); });
+      refreshQueue.request();
     };
     const focus = event => {
       entries.forEach(([element, tween]) => {
@@ -143,14 +146,16 @@ export function observeReveals(host, root) {
     };
     root.addEventListener("load", refresh, true);
     root.addEventListener("focusin", focus);
+    root.addEventListener("pointerdown", focus, true);
     document.fonts?.ready.then(refresh);
     refresh();
     return () => {
       disposeTestimonials();
       disposed = true;
-      cancelAnimationFrame(frame);
+      refreshQueue.dispose();
       root.removeEventListener("load", refresh, true);
       root.removeEventListener("focusin", focus);
+      root.removeEventListener("pointerdown", focus, true);
       restores.forEach(restore => restore());
       all(".scroll-journey-line").forEach(line => line.remove());
     };
