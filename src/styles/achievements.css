@@ -50,8 +50,10 @@
   overflow-wrap: anywhere;
 }
 .award-counts {
+  display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
+  margin: 0;
   border: 0;
   background: transparent;
   border-radius: 0;
@@ -71,9 +73,12 @@
 .award-count dt {
   color: #ffffffb8;
   font-size: 13px;
+  line-height: 1.5;
 }
 .award-count dd {
-  font-size: 30px;
+  order: -1;
+  margin: 0;
+  font: 500 30px/1 "Playfair Display", Georgia, serif;
   color: white;
 }
 .achievement-list {

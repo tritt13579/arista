@@ -7,6 +7,34 @@ import { createHomeContent } from '../src/content/home-content.js';
 import { imageFocusPosition } from '../src/utils/image-focus.js';
 import { contactHref } from '../src/sections/floating-contacts.js';
 import { responsiveImage } from '../src/utils/image-url.js';
+import { thumbnailImageRect } from '../src/utils/thumbnail-transition.js';
+import { heroCollageItems, heroArcCoordinates, heroArcPosition } from '../src/sections/hero-collage.js';
+
+const heroSources = {
+  heroImages: [{ title: 'Selected', image: 'https://example.com/a.jpg', show: true },
+    { title: 'Hidden', image: 'https://example.com/hidden.jpg', show: false },
+    { title: 'No image', image: '', show: true },
+    { title: 'Next', image: 'https://example.com/b.jpg', show: true }],
+  recognitions: { items: [{ title: 'Unselected', image: 'https://example.com/c.jpg', show: true }] },
+};
+assert.deepEqual(heroCollageItems(heroSources).map(item => item.title), ['Selected', 'Next']);
+assert.deepEqual(heroCollageItems({ heroImages: [...heroSources.heroImages].reverse() }).map(item => item.title), ['Next', 'Selected']);
+assert.equal(heroCollageItems({}).length, 0);
+assert.equal(heroCollageItems({ heroImages: [], recognitions: heroSources.recognitions }).length, 0);
+assert.equal(heroCollageItems({ heroImages: Array.from({ length: 125 }, (_, i) => ({ image: `https://example.com/${i}.jpg`, show: true })) }).length, 125);
+for (const count of [1, 2, 5, 10, 11, 25, 125]) {
+  const points = Array.from({ length: count }, (_, i) => heroArcPosition(i, count));
+  assert.equal(new Set(points.map(p => p.join(','))).size, count, 'Each image has its own position');
+  assert.ok(points.every(([left, top, width, ...turns]) => left >= 0 && top >= 0 && 100 - left - width >= 0 && turns.every(Number.isFinite)));
+}
+assert.deepEqual(heroArcPosition(0, 10), heroArcCoordinates[0]);
+assert.deepEqual(heroArcPosition(9, 10), heroArcCoordinates[9]);
+
+const thumbnailBox = { left: 10, top: 20, width: 420, height: 320 };
+const thumbnailStyle = { objectFit: 'contain', objectPosition: '50% 50%', paddingLeft: '10px', paddingRight: '10px', paddingTop: '10px', paddingBottom: '10px' };
+assert.deepEqual(thumbnailImageRect(thumbnailBox, thumbnailStyle, 200, 400), { left: 145, top: 30, width: 150, height: 300 });
+assert.deepEqual(thumbnailImageRect(thumbnailBox, thumbnailStyle, 400, 200), { left: 20, top: 80, width: 400, height: 200 });
+assert.deepEqual(thumbnailImageRect(thumbnailBox, { ...thumbnailStyle, objectFit: 'cover' }, 200, 400), { left: 20, top: 30, width: 400, height: 300 });
 
 const mediaUrl = 'https://static.wixstatic.com/media/example~mv2.jpg';
 const responsive = responsiveImage(mediaUrl, '50vw');
@@ -38,7 +66,7 @@ assert.equal(imageFocusPosition(150), 'center 100%');
 
 const schema = JSON.parse(fs.readFileSync('cms/schema.json','utf8'));
 const content = JSON.parse(fs.readFileSync('cms/content.json','utf8'));
-assert.equal(schema.collections.length,13);
+assert.equal(schema.collections.length,15);
 const ids = new Set();
 const datasets = new Set();
 function readCsv(text) {
@@ -84,10 +112,10 @@ for(const collection of schema.collections) {
     collection.fields.forEach((field,column)=>assert.equal(row[column],field.type==='Image'?'':String(rows[index][field.id]??'')));
   });
 }
-assert.equal(datasets.size,12);
+assert.equal(datasets.size,14);
 assert.equal(content.AristaSiteSettings.length,1);
 assert.equal(content.AristaTeachers.filter(item=>item.featured && item.show).length,1);
-assert.equal(new Set(content.AristaPageContent.map(item=>item.sectionKey)).size,11);
+assert.equal(new Set(content.AristaPageContent.map(item=>item.sectionKey)).size,12);
 const home=createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,content.AristaHeroHighlights);
 assert.equal(home.menu.length,6);assert.equal(home.stats.length,4);
 const swapped=[content.AristaHeroHighlights[1],content.AristaHeroHighlights[0],...content.AristaHeroHighlights.slice(2)];
@@ -104,6 +132,9 @@ function checkJs(dir) {
 checkJs('src');checkJs('scripts');
 // The Wix URL must be a standalone classic script, with CSS embedded and no module loader.
 const bundle = fs.readFileSync('dist/arista-home.js', 'utf8');
+for (const filename of ['dist/arista-home.js', 'dist/arista-program.js']) {
+  assert.ok(!/\bglobalThis\b/.test(fs.readFileSync(filename, 'utf8')), `${filename}: avoid globalThis, which Wix publish lint does not recognize`);
+}
 const registry = new Map();
 const customElements = { get: name => registry.get(name), define: (name, element) => registry.set(name, element) };
 const runtime = { HTMLElement: class {}, customElements };
@@ -115,6 +146,11 @@ new vm.Script(bundle).runInNewContext(runtime);
 assert.equal(registry.get('arista-home'), registeredElement, 'Loading the bundle twice must not register twice');
 const reference=fs.readFileSync('reference/index.html','utf8');
 for(const match of reference.matchAll(/(?:\.\.\/)?assets\/images\/[A-Za-z0-9_./~-]+/g))assert.ok(fs.existsSync(match[0].replace(/^\.\.\//,'')),`Missing reference asset: ${match[0]}`);
+// A missing/misidentified dataset should name the exact selector, not throw onReady.
+const datasetReaderSource = fs.readFileSync('src/wix/arista-preview.page.js', 'utf8').split('function readDataset(dataset, selector)')[1];
+const readWixDataset = vm.runInNewContext('(function(dataset, selector)' + datasetReaderSource + ')');
+await assert.rejects(readWixDataset({}, '#heroImagesDataset'), /#heroImagesDataset.*không phải dataset/);
+await assert.rejects(readWixDataset(undefined, '#heroImagesDataset'), /Element ID heroImagesDataset/);
 // Verify that the standalone Wix page code matches the local adapter contract.
 const events={};const ready=[];let wixPayload;let writes=0;let registrationResult;
 const component={on(name,handler){events[name]=handler;},setAttribute(name,value){
@@ -137,7 +173,9 @@ const handles={
   '#achievementPhotosDataset':dataset(content.AristaAchievementPhotos),
   '#studentMomentsDataset':dataset(content.AristaStudentMoments),
   '#faqDataset':dataset(content.AristaFaq),
-  '#testimonialsDataset':dataset(content.AristaTestimonials)
+  '#testimonialsDataset':dataset(content.AristaTestimonials),
+  '#recognitionsDataset':dataset(content.AristaRecognitions),
+  '#heroImagesDataset':dataset(content.AristaHeroImages)
 };
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
@@ -145,7 +183,8 @@ const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){r
 vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace(/^import .*;$/gm, ''),{$w,wixData,submitTrialRegistration: async () => ({ok:true}),console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
-assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq,content.AristaTestimonials))));
+assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq,content.AristaTestimonials,content.AristaRecognitions,content.AristaHeroImages))));
+assert.deepEqual(wixPayload.heroImages, content.AristaHeroImages.filter(item => item.show));
 assert.equal(wixPayload.testimonials.items.length, 6);
 const reorderedTestimonials = [...content.AristaTestimonials].reverse().map((item,index)=>({...item,show:index!==1}));
 const testimonialPayload = createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,[],[],[],[],[],[],[],[],[],[],reorderedTestimonials).testimonials;
@@ -199,4 +238,14 @@ const hiddenSections = content.AristaPageContent.map(item=>({...item,showSection
 const changed = createHomeContent(content.AristaSiteSettings[0],hiddenSections,[],[],changedPrograms);
 assert.equal(changed.quote,null);assert.equal(changed.philosophy,null);
 assert.deepEqual(changed.programs.items.map(item=>item.title),changedPrograms.filter(item=>item.show).map(item=>item.title));
-console.log('PASS: 13 schemas/CSVs, 12 dataset IDs, testimonial delta CSV, sample data, image paths, multiline CSV round-trip, ordered home adapter, mocked Wix payload parity and JavaScript syntax. Wix runtime and visual layout require Preview verification.');
+
+
+assert.equal(wixPayload.recognitions.items.length, 7);
+assert.equal(wixPayload.recognitions.items[0].category, 'Trung tâm');
+assert.equal(new Set(wixPayload.recognitions.items.map(item => item.image)).size, 7);
+const recognitionDelta = readCsv(fs.readFileSync('cms/import/AristaPageContent-recognitions-only.csv', 'utf8'));
+assert.equal(recognitionDelta.length, 2);
+assert.equal(recognitionDelta[1][pageFields.indexOf('sectionKey')], 'recognitions');
+
+console.log('PASS: 15 schemas/CSVs, 14 dataset IDs, section delta CSVs, sample data, image paths, CSV round-trip, home adapter, Wix payload parity and JavaScript syntax.');
+

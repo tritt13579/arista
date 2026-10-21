@@ -33,3 +33,9 @@ fs.writeFileSync(path.join(output, 'AristaPageContent-testimonials-only.csv'), c
   ...testimonialSection.map(row => pageFields.map(field => field.type === 'Image' ? '' : row[field.id] ?? '')),
 ]));
 console.log(`Exported ${schema.collections.length} collection CSV files and an image checklist.`);
+
+const recognitionSection = content.AristaPageContent.filter(row => row.sectionKey === 'recognitions');
+fs.writeFileSync(path.join(output, 'AristaPageContent-recognitions-only.csv'), csv([
+  pageFields.map(field => field.id),
+  ...recognitionSection.map(row => pageFields.map(field => field.type === 'Image' ? '' : row[field.id] ?? '')),
+]));

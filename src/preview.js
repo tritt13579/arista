@@ -18,7 +18,9 @@ const teachers = content.AristaTeachers.map(item => ({ ...item, photo: assetUrl(
 const achievementPhotos = content.AristaAchievementPhotos.map(item => ({ ...item, image: assetUrl(item.image) }));
 const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, image: assetUrl(item.image) }));
 const testimonials = (content.AristaTestimonials || []).map(item => ({ ...item, photo: assetUrl(item.photo) }));
-const home = createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq, testimonials);
+const recognitions = (content.AristaRecognitions || []).map(item => ({ ...item, image: assetUrl(item.image) }));
+const heroImages = (content.AristaHeroImages || []).map(item => ({ ...item, image: assetUrl(item.image) }));
+const home = createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq, testimonials, recognitions, heroImages);
 element.setAttribute('content', JSON.stringify(home));
 // Local-only links to the two detail prototypes. Production cards stay intact.
 element.shadowRoot.querySelectorAll('.program').forEach(card => {

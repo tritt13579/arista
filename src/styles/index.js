@@ -7,6 +7,7 @@ import philosophy from "./philosophy.css";
 import programs from "./programs.css";
 import learningJourney from "./learning-journey.css";
 import teachers from "./teachers.css";
+import recognitions from "./recognitions.css";
 import achievements from "./achievements.css";
 import studentMoments from "./student-moments.css";
 import testimonials from "./testimonials.css";
@@ -29,6 +30,7 @@ export const styles = [
   programs,
   learningJourney,
   teachers,
+  recognitions,
   achievements,
   studentMoments,
   testimonials,

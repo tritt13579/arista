@@ -2,9 +2,36 @@
 // transforms and cropping, so the photo never stretches or fades into a copy.
 export const thumbnailTiming = { open: 480, close: 420 };
 
+// Return the painted image rectangle, excluding borders, padding and letterboxing.
+export function thumbnailImageRect(box, style, naturalWidth, naturalHeight) {
+  const px = value => parseFloat(value) || 0;
+  const leftInset = px(style.borderLeftWidth) + px(style.paddingLeft);
+  const topInset = px(style.borderTopWidth) + px(style.paddingTop);
+  const width = box.width - leftInset - px(style.borderRightWidth) - px(style.paddingRight);
+  const height = box.height - topInset - px(style.borderBottomWidth) - px(style.paddingBottom);
+  const rect = { left: box.left + leftInset, top: box.top + topInset, width, height };
+  if (style.objectFit !== 'contain' || !naturalWidth || !naturalHeight) return rect;
+  const scale = Math.min(width / naturalWidth, height / naturalHeight);
+  const position = style.objectPosition.split(' ');
+  const fraction = value => value?.endsWith('%') ? Math.min(1, Math.max(0, parseFloat(value) / 100)) : 0.5;
+  const paintedWidth = naturalWidth * scale;
+  const paintedHeight = naturalHeight * scale;
+  return {
+    left: rect.left + (width - paintedWidth) * fraction(position[0]),
+    top: rect.top + (height - paintedHeight) * fraction(position[1]),
+    width: paintedWidth, height: paintedHeight,
+  };
+}
+
 export function thumbnailTransition(dialog, stage, image, thumbnail, opening, interrupted = {}) {
   if (!image?.naturalWidth || !thumbnail?.isConnected) return null;
-  const small = thumbnail.getBoundingClientRect();
+  const thumbnailImage = thumbnail.querySelector('img');
+  const target = thumbnailImage || thumbnail;
+  const targetStyle = getComputedStyle(target);
+  const contained = targetStyle.objectFit === 'contain';
+  const small = thumbnailImage
+    ? thumbnailImageRect(target.getBoundingClientRect(), targetStyle, target.naturalWidth, target.naturalHeight)
+    : thumbnail.getBoundingClientRect();
   const area = stage.getBoundingClientRect();
   if (!small.width || !small.height || !area.width || !area.height) return null;
   const scale = Math.min(area.width / image.naturalWidth, area.height / image.naturalHeight);
@@ -12,8 +39,8 @@ export function thumbnailTransition(dialog, stage, image, thumbnail, opening, in
   large.left = area.left + (area.width - large.width) / 2;
   large.top = area.top + (area.height - large.height) / 2;
   const base = interrupted.frame || large;
-  const radius = parseFloat(getComputedStyle(thumbnail).borderRadius) || 0;
-  const focus = getComputedStyle(thumbnail.querySelector("img") || thumbnail).objectPosition.split(" ");
+  const radius = contained ? 0 : parseFloat(getComputedStyle(thumbnail).borderRadius) || 0;
+  const focus = targetStyle.objectPosition.split(" ");
   const fraction = value => value?.endsWith("%") ? Math.min(1, Math.max(0, parseFloat(value) / 100)) : 0.5;
   const ratio = Math.max(small.width / base.width, small.height / base.height);
   const cropX = (base.width * ratio - small.width) * fraction(focus[0]);
@@ -48,14 +75,16 @@ export function thumbnailTransition(dialog, stage, image, thumbnail, opening, in
     flight.animate([{ transform: fromTransform }, { transform: opening ? fullTransform : smallTransform }], timing),
     flight.animate([{ clipPath: fromCrop }, { clipPath: opening ? fullCrop : smallCrop }], timing),
   ];
-  const previousVisibility = thumbnail.style.visibility;
-  thumbnail.style.visibility = "hidden";
+  // Contained images leave their surrounding frame in place throughout the flight.
+  const hiddenTarget = contained ? target : thumbnail;
+  const previousVisibility = hiddenTarget.style.visibility;
+  hiddenTarget.style.visibility = "hidden";
   return {
     finished: Promise.all(animations.map(animation => animation.finished)).then(() => true, () => false),
     cancel() {
       animations.forEach(animation => animation.cancel());
       flight.remove();
-      thumbnail.style.visibility = previousVisibility;
+      hiddenTarget.style.visibility = previousVisibility;
     },
   };
 }

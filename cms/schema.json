@@ -703,6 +703,98 @@
           "hidden": false
         }
       ]
+    },
+    {
+      "id": "AristaRecognitions",
+      "name": "Arista — Ghi nhận & dấu ấn",
+      "datasetId": "recognitionsDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên ghi nhận",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "category",
+          "name": "Nhóm: Trung tâm / Giảng viên",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "recipient",
+          "name": "Người hoặc đơn vị nhận",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "issuer",
+          "name": "Đơn vị trao / Sự kiện",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "year",
+          "name": "Năm ghi nhận",
+          "type": "Number",
+          "hidden": false
+        },
+        {
+          "id": "description",
+          "name": "Mô tả ngắn",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Ảnh ghi nhận",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "imageFocusHeight",
+          "name": "Căn ảnh (section này luôn hiện đầy đủ ảnh)",
+          "type": "Number",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "AristaHeroImages",
+      "name": "Arista — Ảnh cung C đầu trang",
+      "datasetId": "heroImagesDataset",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Tên ảnh (mô tả ngắn nội dung ảnh)",
+          "type": "Text",
+          "hidden": false
+        },
+        {
+          "id": "image",
+          "name": "Ảnh hiển thị trên cung C",
+          "type": "Image",
+          "hidden": false
+        },
+        {
+          "id": "imageFocusHeight",
+          "name": "Giữ 50 — ảnh luôn hiển thị đầy đủ",
+          "type": "Number",
+          "hidden": false
+        },
+        {
+          "id": "show",
+          "name": "Hiển thị ảnh ở đầu trang",
+          "type": "Boolean",
+          "hidden": false
+        }
+      ]
     }
   ]
 }

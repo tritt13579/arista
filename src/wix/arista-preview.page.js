@@ -5,6 +5,8 @@
 // Also required: achievementsDataset, awardCountsDataset, achievementPhotosDataset (Read, no sorts).
 // Student Moments: studentMomentsDataset (Read, no sorts).
 // FAQ: faqDataset (Read, no sorts).
+// Hero images: heroImagesDataset (Read, no sorts), connected to AristaHeroImages.
+// Recognitions: recognitionsDataset (Read, no sorts), connected to AristaRecognitions.
 // Testimonials: testimonialsDataset (Read, no sorts), connected to AristaTestimonials.
 import wixData from 'wix-data';
 import { submitTrialRegistration } from 'backend/trial-registration.web';
@@ -56,18 +58,20 @@ $w.onReady(function () {
     }
   });
 
-  const sections = readDataset($w('#pageContentDataset'));
-  const highlights = readDataset($w('#heroHighlightsDataset'));
-  const philosophy = readDataset($w('#philosophyDataset'));
-  const programs = readDataset($w('#programsDataset'));
-  const learningJourney = readDataset($w('#learningJourneyDataset'));
-  const teachers = readDataset($w('#teachersDataset'));
-  const achievements = readDataset($w('#achievementsDataset'));
-  const awardCounts = readDataset($w('#awardCountsDataset'));
-  const achievementPhotos = readDataset($w('#achievementPhotosDataset'));
-  const studentMoments = readDataset($w('#studentMomentsDataset'));
-  const faq = readDataset($w('#faqDataset'));
-  const testimonials = readDataset($w('#testimonialsDataset'));
+  const sections = readDataset($w('#pageContentDataset'), '#pageContentDataset');
+  const highlights = readDataset($w('#heroHighlightsDataset'), '#heroHighlightsDataset');
+  const philosophy = readDataset($w('#philosophyDataset'), '#philosophyDataset');
+  const programs = readDataset($w('#programsDataset'), '#programsDataset');
+  const learningJourney = readDataset($w('#learningJourneyDataset'), '#learningJourneyDataset');
+  const teachers = readDataset($w('#teachersDataset'), '#teachersDataset');
+  const achievements = readDataset($w('#achievementsDataset'), '#achievementsDataset');
+  const awardCounts = readDataset($w('#awardCountsDataset'), '#awardCountsDataset');
+  const achievementPhotos = readDataset($w('#achievementPhotosDataset'), '#achievementPhotosDataset');
+  const studentMoments = readDataset($w('#studentMomentsDataset'), '#studentMomentsDataset');
+  const faq = readDataset($w('#faqDataset'), '#faqDataset');
+  const testimonials = readDataset($w('#testimonialsDataset'), '#testimonialsDataset');
+  const heroImages = readDataset($w('#heroImagesDataset'), '#heroImagesDataset');
+  const recognitions = readDataset($w('#recognitionsDataset'), '#recognitionsDataset');
   send();
   Promise.all([
     wixData.query('AristaSiteSettings').limit(2).find({ consistentRead: true }),
@@ -82,8 +86,10 @@ $w.onReady(function () {
     achievementPhotos,
     studentMoments,
     faq,
-    testimonials
-  ]).then(([settingsResult, sections, highlights, philosophy, programs, learningJourney, teachers, achievements, awardCounts, achievementPhotos, studentMoments, faq, testimonials]) => {
+    testimonials,
+    recognitions,
+    heroImages
+  ]).then(([settingsResult, sections, highlights, philosophy, programs, learningJourney, teachers, achievements, awardCounts, achievementPhotos, studentMoments, faq, testimonials, recognitions, heroImages]) => {
     if (settingsResult.items.length !== 1) throw new Error('Site Settings must contain exactly one visible record.');
     const settings = settingsResult.items[0];
     const visible = sections.filter(item => item.showSection === true);
@@ -101,12 +107,14 @@ $w.onReady(function () {
         secondaryLabel: hero.secondaryButtonText, secondaryTarget: 'learning-journey'
       } : null,
       menu: visible.filter(item => item.showInMenu === true).map(item => ({ title: item.menuLabel || '', target: item.sectionKey })),
+      heroImages: heroImages.filter(item => item.show === true),
       stats: highlights.filter(item => item.show === true).map(item => ({ title: item.title || '', value: String(item.value ?? '') })),
       quote: visible.find(item => item.sectionKey === 'quote') || null,
       philosophy: createSection('philosophy', philosophy),
       programs: createSection('programs', programs),
       learningJourney: createSection('learning-journey', learningJourney),
       teachers: createSection('teachers', teachers),
+      recognitions: createSection('recognitions', recognitions),
       achievements: createAchievements(),
       moments: createMoments(),
       testimonials: createSection('testimonials', testimonials),
@@ -148,7 +156,11 @@ $w.onReady(function () {
   });
 });
 
-function readDataset(dataset) {
+function readDataset(dataset, selector) {
+  if (!dataset || typeof dataset.onReady !== 'function' ||
+      typeof dataset.getTotalCount !== 'function' || typeof dataset.getItems !== 'function') {
+    return Promise.reject(new Error(`ARISTA: ${selector} không phải dataset hợp lệ. Trong Wix Editor, thêm dataset Read, nối đúng collection và đặt Element ID ${selector.replace('#', '')}. Collection ID không phải Element ID của dataset.`));
+  }
   return new Promise((resolve, reject) => {
     dataset.onReady(async () => {
       try {

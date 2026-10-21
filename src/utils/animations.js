@@ -117,6 +117,9 @@ export function observeReveals(host, root) {
     });
     all(".award-count, .achievement-entry").forEach((item, index) => enter(item, { opacity: 0, x: desktop ? 20 : 0, y: desktop ? 0 : 14 }, (index % 4) * 0.06));
     all(".achievement-main-photo, .achievement-proof").forEach((item, index) => mask(item, index % 2 ? "left" : "bottom", (index % 3) * 0.05));
+    mask(root.querySelector(".recognition-stage"), "left");
+    enter(root.querySelector(".recognition-copy"), { opacity: 0, x: desktop ? 18 : 0, y: desktop ? 0 : 12 }, 0.12);
+    all(".recognition-thumb").forEach((item, index) => enter(item, { opacity: 0, y: 10 }, index * 0.05));
     all(".moment-card").forEach((item, index) => mask(item, index === 0 ? "center" : index % 2 ? "bottom" : "left", (index % 3) * 0.06));
     all(".faq-item").forEach((item, index) => {
       enter(item, { opacity: 0, y: 12 }, (index % 4) * 0.04);

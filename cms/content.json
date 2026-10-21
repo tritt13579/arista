@@ -159,6 +159,26 @@
       "imageFocusHeight": 50
     },
     {
+      "title": "Ghi nhận & dấu ấn",
+      "sectionKey": "recognitions",
+      "introText": "GHI NHẬN & DẤU ẤN",
+      "heading": "Những ghi nhận trên hành trình nuôi dưỡng tài năng",
+      "tagline": "",
+      "description": "Những bằng khen, chứng nhận và kỷ niệm chương ghi dấu sự đóng góp của Arista cùng đội ngũ giảng viên trong giảng dạy và đồng hành với các hoạt động âm nhạc.",
+      "image": "",
+      "imageDescription": "",
+      "primaryButtonText": "",
+      "secondaryButtonText": "",
+      "menuLabel": "Ghi nhận",
+      "showInMenu": false,
+      "showSection": true,
+      "labels": "",
+      "featuredValue": "",
+      "featuredLabel": "",
+      "caption": "",
+      "imageFocusHeight": 0
+    },
+    {
       "title": "Achievements",
       "sectionKey": "achievements",
       "introText": "Thành tích",
@@ -695,6 +715,147 @@
       "quote": "Con học ở trung tâm được 1,5 năm. Cảm nhận của con khi học tại Arista là các Thầy Cô rất tận tâm, luôn theo sát học viên, môi trường lành mạnh và thân thiện.",
       "photo": "",
       "photoFocusHeight": 50,
+      "show": true
+    }
+  ],
+  "AristaRecognitions": [
+    {
+      "title": "Giấy khen dành cho Trung tâm Arista Music Center",
+      "category": "Trung tâm",
+      "recipient": "Arista Music Center",
+      "issuer": "Sở Văn hóa, Thể thao và Du lịch tỉnh Khánh Hòa",
+      "year": 2026,
+      "description": "Ghi nhận thành tích xuất sắc trong tổ chức và tham gia Cuộc thi Tìm kiếm Tài năng Piano Việt Nam năm 2026.",
+      "image": "assets/images/chung-chi-cua-trung-tam/736c6344-1f73-4626-8653-573e58852406.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Đơn vị đồng hành Festival Piano Talent toàn quốc",
+      "category": "Trung tâm",
+      "recipient": "Arista Music Center",
+      "issuer": "Festival Piano Talent toàn quốc",
+      "year": 2026,
+      "description": "Ghi nhận sự đồng hành và đóng góp trong công tác tổ chức cuộc thi năm 2026.",
+      "image": "assets/images/chung-chi-cua-trung-tam/637ecaa4-be44-4a9f-9a6c-475bc54a70b7.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Kỷ niệm chương tri ân nhà tài trợ",
+      "category": "Trung tâm",
+      "recipient": "Arista Music Center",
+      "issuer": "Vietnam’s Piano Got Talent — Season 3",
+      "year": 2026,
+      "description": "Kỷ niệm chương tri ân Arista Music Center trong vai trò nhà tài trợ.",
+      "image": "assets/images/chung-chi-cua-trung-tam/860f9ec2-3943-4ead-88b3-92399cfc48f2.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Kiến Tạo Tài Năng — Empowering Talent",
+      "category": "Giảng viên",
+      "recipient": "Trần Hữu Nhật Hoàng",
+      "issuer": "Cuộc thi Tìm kiếm Tài năng Piano Việt Nam",
+      "year": 2026,
+      "description": "Giấy khen dành cho giáo viên Trần Hữu Nhật Hoàng với danh hiệu “Kiến Tạo Tài Năng”.",
+      "image": "assets/images/chung-chi-cua-trung-tam/a7c28699-af6a-49a4-8163-58ce6ac78176.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Teacher Appreciation — Crescendo 2025",
+      "category": "Giảng viên",
+      "recipient": "Trần Hữu Nhật Hoàng",
+      "issuer": "Crescendo International Music Festival & Competition",
+      "year": 2025,
+      "description": "Chứng nhận tri ân sự tận tâm và đóng góp của giáo viên.",
+      "image": "assets/images/chung-chi-cua-trung-tam/caabc819-1437-4cd2-8bf1-2867916463ff.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Award of Best Performing Teacher",
+      "category": "Giảng viên",
+      "recipient": "Trần Hữu Nhật Hoàng",
+      "issuer": "TSP × Crescendo — Singapore Edition",
+      "year": 2024,
+      "description": "Ghi nhận dành cho giáo viên tại sự kiện biểu diễn quốc tế ở Singapore tháng 8 năm 2024.",
+      "image": "assets/images/chung-chi-cua-trung-tam/04e075bf-7ed8-49f0-990e-d876f649eb8a.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Teacher Appreciation — Crescendo 2024",
+      "category": "Giảng viên",
+      "recipient": "Trần Hữu Nhật Hoàng",
+      "issuer": "Crescendo International Music Festival & Competition",
+      "year": 2024,
+      "description": "Chứng nhận tri ân sự tận tâm và đóng góp của giáo viên.",
+      "image": "assets/images/chung-chi-cua-trung-tam/026447fb-caa4-413f-adb8-e99f60c8188f.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    }
+  ],
+  "AristaHeroImages": [
+    {
+      "title": "Giấy khen dành cho Trung tâm Arista Music Center",
+      "image": "assets/images/chung-chi-cua-trung-tam/736c6344-1f73-4626-8653-573e58852406.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Nhận Diploma tại Crescendo 2025",
+      "image": "assets/images/v3s/crescendo-diploma.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Đơn vị đồng hành Festival Piano Talent toàn quốc",
+      "image": "assets/images/chung-chi-cua-trung-tam/637ecaa4-be44-4a9f-9a6c-475bc54a70b7.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Học bổng 5.000 SGD · Crescendo",
+      "image": "assets/images/v3s/scholarship.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Kỷ niệm chương tri ân nhà tài trợ",
+      "image": "assets/images/chung-chi-cua-trung-tam/860f9ec2-3943-4ead-88b3-92399cfc48f2.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Gold Prize · TSP 2025 Thượng Hải",
+      "image": "assets/images/v3s/tsp-2025.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Kiến Tạo Tài Năng — Empowering Talent",
+      "image": "assets/images/chung-chi-cua-trung-tam/a7c28699-af6a-49a4-8163-58ce6ac78176.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Festival Piano Talent Toàn Quốc 2026",
+      "image": "assets/images/v3s/festival-2026.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Teacher Appreciation — Crescendo 2025",
+      "image": "assets/images/chung-chi-cua-trung-tam/caabc819-1437-4cd2-8bf1-2867916463ff.jpg",
+      "imageFocusHeight": 50,
+      "show": true
+    },
+    {
+      "title": "Tài Năng Piano Việt Nam 2026",
+      "image": "assets/images/v3s/pianovn-2026.jpg",
+      "imageFocusHeight": 50,
       "show": true
     }
   ]

@@ -4,7 +4,7 @@ import { animateRegistrationFooter } from './registration-footer-animation.js';
 export function animateProgramScroll(root) {
   const media = gsap.matchMedia();
   media.add({ motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 769px)' }, context => {
-    if (!context.conditions.motion || !globalThis.IntersectionObserver) return;
+    if (!context.conditions.motion || !window.IntersectionObserver) return;
     const desktop = context.conditions.desktop;
     const entries = new Map();
     const heading = element => {

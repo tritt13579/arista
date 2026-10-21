@@ -11,11 +11,13 @@ import {
   closeMenu,
 } from "../sections/header.js";
 import { heroTemplate, renderHero } from "../sections/hero.js";
+import { heroCollageItems } from '../sections/hero-collage.js';
 import { renderQuote } from "../sections/quote.js";
 import { renderPhilosophy } from "../sections/philosophy.js";
 import { renderPrograms } from "../sections/programs.js";
 import { renderLearningJourney } from "../sections/learning-journey.js";
 import { renderTeachers } from "../sections/teachers.js";
+import { renderRecognitions } from "../sections/recognitions.js";
 import { renderAchievements } from "../sections/achievements.js";
 import { renderStudentMoments } from "../sections/student-moments.js";
 import { renderTestimonials } from "../sections/testimonials.js";
@@ -38,6 +40,7 @@ class AristaHome extends HTMLElement {
   connectedCallback() {
     loadFonts();
     this.lastSectionsKey = "";
+    this.lastDisplayKey = "";
     this.onViewportChange = () => {
       if (this.viewportFrame) return;
       this.viewportFrame = requestAnimationFrame(() => {
@@ -108,6 +111,8 @@ class AristaHome extends HTMLElement {
     this.closeMenu();
   }
   disconnectedCallback() {
+    this.shadowRoot.querySelector('.hero-visual')?.dispose?.();
+    this.shadowRoot.getElementById("recognitions")?.dispose();
     this.shadowRoot.getElementById("faq")?.dispose();
     this.shadowRoot.getElementById("testimonials")?.dispose();
     this.shadowRoot.getElementById("registration")?.dispose();
@@ -135,6 +140,7 @@ class AristaHome extends HTMLElement {
       data.programButtonText,
       data.learningJourney,
       data.teachers,
+      data.recognitions,
       data.achievements,
       data.moments,
       data.testimonials,
@@ -145,6 +151,7 @@ class AristaHome extends HTMLElement {
     ]);
     if (key === this.lastSectionsKey) return;
     this.lastSectionsKey = key;
+    this.shadowRoot.getElementById("recognitions")?.dispose();
     this.imageViewer?.close();
     const root = this.shadowRoot.querySelector(".sections");
     const blocks = [
@@ -156,6 +163,7 @@ class AristaHome extends HTMLElement {
       ),
       renderLearningJourney(data.learningJourney),
       renderTeachers(data.teachers, this.action.bind(this)),
+      renderRecognitions(data.recognitions, (images, index) => openImageViewer(this, images, index)),
       renderAchievements(data.achievements, (images, index) => openImageViewer(this, images, index)),
       renderStudentMoments(data.moments, (images, index) => openImageViewer(this, images, index)),
       renderTestimonials(data.testimonials),
@@ -213,8 +221,8 @@ class AristaHome extends HTMLElement {
     if (!data.hero) return; // A reload error keeps the last good content visible.
     const hero = data.hero;
     const menu = Array.isArray(data.menu) ? data.menu : [];
-    const stats = Array.isArray(data.stats) ? data.stats : [];
-    const displayKey = JSON.stringify({ hero, menu, stats });
+    const collage = heroCollageItems(data);
+    const displayKey = JSON.stringify({ hero, menu, collage });
     if (displayKey === this.lastDisplayKey) return;
     this.lastDisplayKey = displayKey;
     root.querySelector(".shell").hidden = false;
@@ -224,7 +232,8 @@ class AristaHome extends HTMLElement {
     // the previous heading over the newly rendered content.
     this.heroEffects?.revert();
     this.heroEffects = null;
-    renderHero(root, hero, stats, action);
+    renderHero(root, hero, collage, action, (images, index) =>
+      openImageViewer(this, images, index, { showCaption: false, quietLoading: true }));
     animateHero(this);
     renderHeader(root, hero, menu, action);
     this.updateHeader();
