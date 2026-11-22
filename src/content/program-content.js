@@ -13,7 +13,7 @@ export function createProgramContent(detail, tables, settings, sections, program
   const registration = { ...home.registration, programs: [...new Set([...home.registration.programs, detail.title])] };
   return {
     state: 'ready', preview: false, slug: detail.programKey, title: detail.title,
-    homeUrl: '/arista', programsUrl: '/arista?section=programs', logo: settings.logo || '',
+    homeUrl: '/', programsUrl: '/?section=programs', logo: settings.logo || '',
     kicker: detail.kicker || '', headline: [detail.headline || '', detail.headlineAccent || ''], intro: detail.intro || '',
     hero: detail.heroImage || '', heroFocusHeight: detail.heroImageFocusHeight ?? 50, heroCaption: detail.heroCaption || '',
     tags: lines(detail.tags), mediaLayout: detail.mediaLayout === 'portraits' ? 'portraits' : 'editorial',
@@ -27,6 +27,6 @@ export function createProgramContent(detail, tables, settings, sections, program
     // Program awards are paused; no collection or image fields are required.
     // awards: rows('AristaProgramAwards').filter(row => row.title), awardImage: detail.awardImage || '', awardImageFocusHeight: detail.awardImageFocusHeight ?? 50,
     awards: [],
-    registration, footer: home.footer,
+    registration, footer: home.footer, contacts: home.contacts,
   };
 }

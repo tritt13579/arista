@@ -1,3 +1,5 @@
+> **Trạng thái hiện tại (22/10/2026):** khôi phục nền ảnh + gradient navy của hero và header theo commit `13d2488`. Chữ trắng/vàng, header navy đậm khi cuộn. Giữ cung C, collection AristaHeroImages và toàn bộ hover/viewer hiện tại. Các mô tả nền kem bên dưới là lịch sử phương án trước. Ảnh nền lấy lại từ AristaPageContent → dòng hero → image, căn bằng imageFocusHeight. Xem hướng dẫn cập nhật ở docs/hero-images-wix-setup.vi.md.
+
 > Cập nhật mới: cung C dùng collection riêng `AristaHeroImages`, không còn tự lấy từ Recognitions/AchievementPhotos và không giới hạn 10 ảnh. Xem [hướng dẫn hiện tại](../../hero-images-wix-setup.vi.md). Các mô tả nguồn ảnh/giới hạn cũ bên dưới là lịch sử các phương án trước.
 
 # Implement plan — phân tích cụm ảnh tham khảo cho hero Arista

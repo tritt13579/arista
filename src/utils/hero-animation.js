@@ -13,6 +13,24 @@ export function animateHero(host) {
     const desktop = context.conditions.desktop;
     let split, raf = 0, disposed = false;
     if (!context.conditions.motion) return;
+    const photo = shell.querySelector('.photo');
+    const background = gsap.fromTo(shell.querySelector('.hero-opening-shade'), { opacity: 1 }, {
+      opacity: 0, duration: 1, ease: 'power2.inOut', clearProps: 'opacity', paused: true,
+    });
+    let imageRequest = 0;
+    const revealPhoto = async () => {
+      const request = ++imageRequest;
+      const source = photo.currentSrc || photo.src;
+      try { await photo.decode(); } catch (_) { /* Keep static navy on image failure. */ }
+      if (!disposed && request === imageRequest && source === (photo.currentSrc || photo.src)) background.play();
+    };
+    const imageError = () => { imageRequest++; if (!disposed) background.play(); };
+    photo.addEventListener('load', revealPhoto);
+    photo.addEventListener('error', imageError);
+    if (photo.hidden) imageError();
+    else if (photo.complete) {
+      if (photo.naturalWidth) revealPhoto(); else imageError();
+    }
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     const rise = (selector, at) => {
       const elements = [...shell.querySelectorAll(selector)].filter(el => !el.hidden);
@@ -64,6 +82,9 @@ export function animateHero(host) {
     update();
     return () => {
       disposed = true; cancelAnimationFrame(raf);
+      imageRequest++;
+      photo.removeEventListener('load', revealPhoto);
+      photo.removeEventListener('error', imageError);
       window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule);
       shell.removeEventListener('focusin', finishEntrance); shell.removeEventListener('pointerdown', finishEntrance, true);
       cards.forEach(card => card.style.removeProperty('--hero-progress'));

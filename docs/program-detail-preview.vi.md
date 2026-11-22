@@ -7,7 +7,7 @@ Chạy `npm run build`, mở thư mục dự án bằng Live Server rồi vào:
 - `http://127.0.0.1:5500/piano.html`
 - `http://127.0.0.1:5500/violin.html`
 
-Trang chủ local có thêm liên kết **Khám phá bộ môn →** trong card Piano/Violin.
+Trên trang chủ local, click toàn bộ card Piano/Violin để mở trang mẫu tương ứng; dòng **Khám phá bộ môn →** là lời gợi ý bên trong card, không tạo link lồng nhau.
 Thanh đầu trang mẫu có liên kết chuyển giữa hai bộ môn. Liên kết **Các bộ môn**
 đưa về section bộ môn trên trang chủ local.
 

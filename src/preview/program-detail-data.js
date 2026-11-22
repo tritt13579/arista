@@ -30,7 +30,7 @@ export function createProgramPreview(cms, slug) {
     ? ['Khi những phím đàn cất lời', 'Một buổi học Piano tại Arista', 'Tự tin trên sân khấu']
     : ['Lắng nghe những tiếng vĩ đầu tiên', 'Hòa tấu cùng nhau', 'Một buổi học Violin', 'Từ phòng tập đến sân khấu', 'Những giai điệu yêu thích', 'Kết nối bằng âm nhạc', 'Câu chuyện sau mỗi buổi tập', 'Thêm một khoảnh khắc đáng nhớ'];
   return {
-    slug, title, preview: true, logo: settings.logo,
+    slug, title, preview: true, logo: settings.logo, contacts: home.contacts,
     kicker: piano ? 'Bộ môn phím · Arista Music Center' : 'Bộ môn dây · Arista Music Center',
     headline: piano ? ['Từng phím đàn,', 'một thế giới mới.'] : ['Một cây vĩ,', 'ngàn sắc thái.'],
     intro: piano

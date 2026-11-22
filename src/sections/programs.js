@@ -17,7 +17,13 @@ export function renderPrograms(content, buttonText) {
   }
   const grid = node("div", "card-grid");
   (content.items || []).forEach((item) => {
-    const card = node("article", "program reveal");
+    const detailUrl = String(item.detailUrl || '').trim();
+    const hasDetail = /^\/(?!\/)/.test(detailUrl) || /^https:\/\//i.test(detailUrl);
+    const card = node(hasDetail ? 'a' : 'article', 'program reveal');
+    if (hasDetail) {
+      card.href = detailUrl;
+      card.setAttribute('aria-label', `Khám phá bộ môn ${item.title || ''}`);
+    }
     const media = node("div", "program-media");
     const url = imageUrl(item.image);
     const fallback = () => media.replaceChildren(node("span", "", item.title));
@@ -35,12 +41,9 @@ export function renderPrograms(content, buttonText) {
     if (item.categoryLabel)
       body.append(node("span", "category", item.categoryLabel));
     body.append(node("h3", "", item.title), node("p", "", item.description));
-    // Use one CMS-labelled link to the subject page instead of a registration action.
-    const detailUrl = String(item.detailUrl || '').trim();
-    if (/^\/(?!\/)/.test(detailUrl) || /^https:\/\//i.test(detailUrl)) {
-      const details = node('a', 'program-action', buttonText || 'Khám phá bộ môn →');
-      details.href = detailUrl;
-      details.setAttribute('aria-label', `${buttonText || 'Khám phá bộ môn →'} — ${item.title || ''}`);
+    // One native link covers the whole card; its CTA is text, not a nested link.
+    if (hasDetail) {
+      const details = node('span', 'program-action', buttonText || 'Khám phá bộ môn →');
       body.append(details);
     }
     card.append(media, body);

@@ -1,7 +1,12 @@
 import { renderHeroCollage } from './hero-collage.js';
+import { imageUrl, setResponsiveImage } from '../utils/image-url.js';
+import { imageFocusPosition } from '../utils/image-focus.js';
 
 export const heroTemplate = `
 <div class="shell" hidden lang="vi">
+  <img class="photo" alt="" fetchpriority="high" decoding="async">
+  <div class="overlay" aria-hidden="true"></div>
+  <div class="hero-opening-shade" aria-hidden="true"></div>
   <main>
     <div class="copy">
       <p class="eyebrow"></p>
@@ -19,6 +24,12 @@ export const heroTemplate = `
 `;
 
 export function renderHero(root, hero, items, action, openViewer) {
+  const photo = root.querySelector('.shell > .photo');
+  photo.hidden = !imageUrl(hero.image);
+  photo.alt = String(hero.imageAlt || '');
+  photo.style.objectPosition = imageFocusPosition(hero.imageFocusHeight, 40);
+  photo.onerror = () => { photo.hidden = true; };
+  setResponsiveImage(photo, hero.image, '100vw');
   for (const [selector, field] of Object.entries({
     ".eyebrow": "eyebrow",
     h1: "heading",

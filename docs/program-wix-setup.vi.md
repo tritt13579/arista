@@ -1,5 +1,17 @@
 # Đưa 8 trang bộ môn vào Wix
 
+## Cập nhật logo và liên hệ nổi (03/11/2026)
+
+Logo ở header trang bộ môn về trang chủ `/`; nút lên đầu trang ở footer vẫn cuộn lên đầu bộ môn. Thanh liên hệ nổi dùng chung component, CSS và dữ liệu liên hệ của trang chủ, xuất hiện sau khi cuộn khoảng 70% chiều cao màn hình. Trên mobile có nút mở/đóng; Đăng ký cuộn tới form đang chọn sẵn bộ môn hiện tại.
+
+Để cập nhật site đã thiết lập, chạy `npm run check`, rồi:
+
+1. Cập nhật nguồn Custom Element trang bộ môn bằng `dist/arista-program.js` theo cách upload/hosting hiện dùng.
+2. Thay nội dung **Public/arista-program-content.js** trong Wix bằng `dist/arista-program-content.js` mới để truyền cấu hình liên hệ hiện tại từ CMS.
+3. Preview một trang bộ môn, kiểm tra logo, thanh liên hệ trên desktop/mobile và Đăng ký; sau đó Publish.
+
+Không cần thay page code, cập nhật bundle trang chủ hoặc import lại CMS cho thay đổi này.
+
 Code và CSV đã được chuẩn bị trong repo. Chưa thay đổi hoặc publish site qua kết nối Wix: connector không truy cập được site hiện tại. Thực hiện các bước Editor dưới đây, tương tự cách đã gắn arista-home.
 
 **Bản hiện tại tạm ẩn Thành tích trên trang bộ môn.** Renderer, mục menu, truy vấn và ánh xạ dữ liệu thành tích đã được comment; không cần tạo collection AristaProgramAwards hoặc các field awardImage/awardImageFocusHeight. CSV cũ được giữ trong `cms/program-archive/`, không import. Thành tích trang chủ không thay đổi.
@@ -84,7 +96,7 @@ Trong collection **AristaPrograms đang có**, thêm **một field Text** với 
 - Dòng Violin: dự kiến `/bo-mon/violin`.
 - Sáu môn còn lại: dùng URL theo bảng trên. `cms/import/AristaPrograms.csv` đã có đủ detailUrl cho 8 card; nếu bảng trang chủ hiện đã có ảnh và chỉnh sửa của client, nên chỉ thêm/sửa cột detailUrl trực tiếp trên 8 dòng hiện có, không xóa dữ liệu đó để import lại. CSV xuất các ô Image trống: nếu thay toàn bộ AristaPrograms bằng CSV, cần chọn lại ảnh card.
 
-Cập nhật file Velo **public/custom-elements/arista-home.js** bằng bundle **dist/arista-home.js** mới. Trang chủ sẽ có link “Khám phá bộ môn →” khi detailUrl hợp lệ; nút đăng ký vẫn chọn sẵn môn như trước. Page code trang chủ hiện dùng nguyên item từ AristaPrograms nên không cần thay đổi.
+Cập nhật file Velo **public/custom-elements/arista-home.js** bằng bundle **dist/arista-home.js** mới. Khi detailUrl hợp lệ, toàn bộ card bộ môn là một liên kết tới trang chi tiết (ảnh, tên, mô tả và dòng “Khám phá bộ môn →”). Mỗi card chỉ có một link, dùng được bàn phím và mở tab mới. Card thiếu URL hợp lệ giữ dạng nội dung thường. Form trên trang bộ môn vẫn chọn sẵn môn như trước. Page code trang chủ hiện dùng nguyên item từ AristaPrograms nên không cần thay đổi.
 
 Đường quay về trong payload hiện là `/arista` và `/arista?section=programs`. Nếu đổi URL trang chủ, chỉnh hai giá trị homeUrl/programsUrl trong `src/content/program-content.js`, build và cập nhật public module. `?section=programs` được component trang chủ hỗ trợ để đến section Bộ môn.
 
@@ -123,3 +135,6 @@ Debug nhanh trong Console của trang bộ môn (đúng frame chứa custom elem
 ```
 
 `state=ready`, `preview=false`, đúng programKey là CMS đã vào component. Có dữ liệu mà không hiển thị thì kiểm tra show, name/image/youtubeUrl và bộ lọc programKey.
+
+
+Logo ở header trang bộ môn cuộn lên đầu chính trang đó, đưa focus về tiêu đề và không điều hướng về trang chủ. Logo footer cũng cuộn lên đầu. Liên kết “← Các bộ môn” tiếp tục về section bộ môn trên trang chủ. Để cập nhật thay đổi điều hướng này, thay cả dist/arista-home.js và dist/arista-program.js vào hai file Custom Element tương ứng; không cần đổi page code hoặc import lại CMS.

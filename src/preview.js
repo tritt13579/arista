@@ -13,7 +13,11 @@ const assetUrl = value => value ? new URL(`../${value}`, import.meta.url).href :
 settings.logo = assetUrl(settings.logo);
 settings.locationImage = assetUrl(settings.locationImage);
 for (const section of sections) section.image = assetUrl(section.image);
-const programs = content.AristaPrograms.map(item => ({ ...item, image: assetUrl(item.image) }));
+const programs = content.AristaPrograms.map(item => ({
+  ...item, image: assetUrl(item.image),
+  // Route the two local detail examples without adding links inside cards.
+  detailUrl: ['Piano', 'Violin'].includes(item.title) ? `/${item.title.toLowerCase()}.html` : item.detailUrl,
+}));
 const teachers = content.AristaTeachers.map(item => ({ ...item, photo: assetUrl(item.photo) }));
 const achievementPhotos = content.AristaAchievementPhotos.map(item => ({ ...item, image: assetUrl(item.image) }));
 const studentMoments = content.AristaStudentMoments.map(item => ({ ...item, image: assetUrl(item.image) }));
@@ -22,22 +26,19 @@ const recognitions = (content.AristaRecognitions || []).map(item => ({ ...item, 
 const heroImages = (content.AristaHeroImages || []).map(item => ({ ...item, image: assetUrl(item.image) }));
 const home = createHomeContent(settings, sections, content.AristaHeroHighlights, content.AristaTeachingPhilosophy, programs, content.AristaLearningJourney, teachers, content.AristaAchievements, content.AristaAwardCounts, achievementPhotos, studentMoments, content.AristaFaq, testimonials, recognitions, heroImages);
 element.setAttribute('content', JSON.stringify(home));
-// Local-only links to the two detail prototypes. Production cards stay intact.
-element.shadowRoot.querySelectorAll('.program').forEach(card => {
-  const title = card.querySelector('h3')?.textContent;
-  if (!['Piano', 'Violin'].includes(title)) return;
+// Local blog navigation while the Wix Blog pages are being designed.
+for (const [selector, className] of [['#arista-nav', 'nav-link'], ['.mobile-nav', 'mobile-nav-link']]) {
   const link = document.createElement('a');
-  link.className = 'program-action';
-  link.textContent = 'Khám phá bộ môn →';
-  link.href = `./${title.toLowerCase()}.html`;
-  link.style.cssText = 'display:block;text-decoration:none;margin-top:16px';
-  card.querySelector('.program-copy').append(link);
-});
+  link.href = './blog.html';
+  link.className = className;
+  link.textContent = 'Góc học nhạc';
+  element.shadowRoot.querySelector(selector)?.append(link);
+}
 const initialSection = new URL(location.href).searchParams.get('section');
-if (['programs', 'testimonials'].includes(initialSection)) {
+if (['programs', 'testimonials', 'registration'].includes(initialSection)) {
   requestAnimationFrame(() => element.shadowRoot.getElementById(initialSection)?.scrollIntoView({ block: 'start' }));
 }
-element.addEventListener('arista-action', event => console.info('ARISTA ACTION:', event.detail));
+// element.addEventListener('arista-action', event => console.info('ARISTA ACTION:', event.detail));
 // Local preview never writes personal information to Wix.
 element.addEventListener('arista-registration-submit', event => {
   const { requestId } = event.detail;

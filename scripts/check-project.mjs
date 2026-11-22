@@ -3,6 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
+import { createHomeSeoMarkup } from '../src/seo/markup.js';
 import { createHomeContent } from '../src/content/home-content.js';
 import { imageFocusPosition } from '../src/utils/image-focus.js';
 import { contactHref } from '../src/sections/floating-contacts.js';
@@ -180,7 +181,7 @@ const handles={
 const $w=id=>{assert.ok(handles[id],`Unknown handle ${id}`);return handles[id];};
 $w.onReady=handler=>handler();
 const wixData={query(id){assert.equal(id,'AristaSiteSettings');return {limit(){return this;},async find(){return {items:content.AristaSiteSettings};}};}};
-vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace(/^import .*;$/gm, ''),{$w,wixData,submitTrialRegistration: async () => ({ok:true}),console:{info(){},error(){}}});
+vm.runInNewContext(fs.readFileSync('src/wix/arista-preview.page.js','utf8').replace(/^import .*;$/gm, ''),{$w,wixData,createHomeSeoMarkup,submitTrialRegistration: async () => ({ok:true}),console:{info(){},error(){}}});
 ready.reverse().forEach(handler=>handler());
 await new Promise(resolve=>setImmediate(resolve));
 assert.deepEqual(wixPayload,JSON.parse(JSON.stringify(createHomeContent(content.AristaSiteSettings[0],content.AristaPageContent,swapped,content.AristaTeachingPhilosophy,content.AristaPrograms,content.AristaLearningJourney,content.AristaTeachers,content.AristaAchievements,content.AristaAwardCounts,content.AristaAchievementPhotos,content.AristaStudentMoments,content.AristaFaq,content.AristaTestimonials,content.AristaRecognitions,content.AristaHeroImages))));

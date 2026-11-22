@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import { createProgramContent } from '../src/content/program-content.js';
+import { createProgramSeoMarkup } from '../src/seo/markup.js';
 import { youtubeThumbnailUrl } from '../src/utils/program-media-layout.js';
 
 for (const url of [
@@ -104,7 +105,7 @@ const element = { on: (name, handler) => { handlers[name] = handler; }, setAttri
 let datasetReady, pageReady, backendCalls = 0;
 const collections = { ...home, ...tables };
 const context = {
-  console, createProgramContent,
+  console, createProgramContent, createProgramSeoMarkup,
   submitTrialRegistration: async () => { backendCalls++; return { ok: true }; },
   $w: Object.assign(id => {
     if (id === '#aristaProgram') return element;
@@ -120,8 +121,9 @@ const context = {
   } },
 };
 vm.runInNewContext(pageCode, context);
-pageReady(); assert.equal(attributes.content.state, 'loading');
-await datasetReady(); assert.equal(attributes.content.state, 'ready');
+const initialization = pageReady(); assert.equal(attributes.content.state, 'loading');
+datasetReady();
+await initialization; assert.equal(attributes.content.state, 'ready');
 assert.equal(attributes.content.journey.length, 4, 'Query pagination must not drop journey rows');
 handlers['arista-ready'](); assert.equal(attributes.content.slug, 'piano');
 await handlers['arista-registration-submit']({ detail: { requestId: 'test-1', values: {} } });

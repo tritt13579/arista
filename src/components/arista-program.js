@@ -4,6 +4,8 @@ import registrationStyles from '../styles/registration.css';
 import footerStyles from '../styles/footer.css';
 import viewerStyles from '../styles/image-viewer.css';
 import detailStyles from '../styles/program-detail.css';
+import floatingStyles from '../styles/floating-contacts.css';
+import { renderFloatingContacts, updateFloatingContacts } from '../sections/floating-contacts.js';
 import { node } from '../utils/dom.js';
 import { loadFonts } from '../utils/fonts.js';
 import { renderRegistration } from '../sections/registration.js';
@@ -17,7 +19,7 @@ import skeletonStyles from '../styles/program-skeleton.css';
 import { animateProgramHero } from '../utils/program-hero-animation.js';
 import { animateProgramScroll } from '../utils/program-scroll-animation.js';
 
-const styles = [base, sections, registrationStyles, footerStyles, viewerStyles, detailStyles, momentsStyles, skeletonStyles].join('\n');
+const styles = [base, sections, registrationStyles, footerStyles, viewerStyles, detailStyles, momentsStyles, skeletonStyles, floatingStyles].join('\n');
 const text = (tag, className, value) => node(tag, className, value || '');
 const link = (label, href, className = '') => {
   const element = text('a', className, label);
@@ -76,10 +78,14 @@ class AristaProgram extends HTMLElement {
     } else this.shadowRoot.replaceChildren(style, renderProgramSkeleton());
   }
   dispose() {
+    this.shadowRoot.querySelector('.floating-contact-shell')?.dispose();
     this.disposeHeroAnimation?.();
     this.disposeScrollAnimation?.();
     this.disposeHeroAnimation = this.disposeScrollAnimation = null;
     this.controller?.abort();
+    this.contactObserver?.disconnect();
+    cancelAnimationFrame(this.contactFrame);
+    this.contactFrame = 0;
     this.registration?.dispose();
     this.moments?.dispose();
     clearTimeout(this.resultTimer);
@@ -104,7 +110,7 @@ class AristaProgram extends HTMLElement {
     style.textContent = styles;
     const header = node('header', 'pd-header');
     const brand = link('', data.homeUrl || './index.html', 'pd-brand');
-    brand.setAttribute('aria-label', 'Arista — Trang chủ');
+    brand.setAttribute('aria-label', 'Arista — Về trang chủ');
     brand.append(image(data.logo, 'Arista Music Center', '', true));
     header.append(brand, link('← Các bộ môn', data.programsUrl || './index.html?section=programs', 'pd-home-link'), link('Đăng ký', '#registration', 'cta pd-header-cta pd-register-link'));
     const main = node('main');
@@ -236,14 +242,37 @@ class AristaProgram extends HTMLElement {
       title.id ||= `${item.id}-heading`;
       item.setAttribute('aria-labelledby', title.id);
     });
-    const footer = renderFooter(data.footer, () => {
+    const backToTop = () => {
       window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       h1.focus({ preventScroll: true });
-    });
+    };
+    const footer = renderFooter(data.footer, backToTop);
     const skip = link('Bỏ qua điều hướng', '#main', 'pd-skip');
     main.tabIndex = -1;
     this.shadowRoot.append(style, skip, header, main, footer);
+    const contacts = renderFloatingContacts(data.contacts, () => {
+      registration.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      registration.focus({ preventScroll: true });
+    });
+    if (contacts) {
+      this.shadowRoot.append(contacts);
+      const updateContacts = () => {
+        if (this.contactFrame) return;
+        this.contactFrame = requestAnimationFrame(() => {
+          this.contactFrame = 0;
+          updateFloatingContacts(this);
+        });
+      };
+      window.addEventListener('scroll', updateContacts, { passive: true, signal: this.controller.signal });
+      window.addEventListener('resize', updateContacts, { signal: this.controller.signal });
+      if ('ResizeObserver' in window) {
+        this.contactObserver = new ResizeObserver(updateContacts);
+        this.contactObserver.observe(this);
+      }
+      updateFloatingContacts(this);
+    }
     this.shadowRoot.addEventListener('click', event => {
+      if (event.defaultPrevented) return;
       const anchor = event.target.closest('a[href^="#"]');
       if (!anchor) return;
       const destination = this.shadowRoot.getElementById(anchor.hash.slice(1));

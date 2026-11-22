@@ -9,6 +9,7 @@
 // Recognitions: recognitionsDataset (Read, no sorts), connected to AristaRecognitions.
 // Testimonials: testimonialsDataset (Read, no sorts), connected to AristaTestimonials.
 import wixData from 'wix-data';
+import { createHomeSeoMarkup } from 'public/arista-seo.js';
 import { submitTrialRegistration } from 'backend/trial-registration.web';
 
 $w.onReady(function () {
@@ -17,11 +18,11 @@ $w.onReady(function () {
     const quickActionBar = $w('#quickActionBar1');
     if (typeof quickActionBar.hide === 'function') {
       quickActionBar.hide().catch(error => {
-        console.warn('ARISTA: could not hide Quick Action Bar.', error);
+        // console.warn('ARISTA: could not hide Quick Action Bar.', error);
       });
     }
   } catch (error) {
-    console.warn('ARISTA: Quick Action Bar is unavailable on this view.', error);
+    // console.warn('ARISTA: Quick Action Bar is unavailable on this view.', error);
   }
   const element = $w('#aristaHome');
   let payload = { state: 'loading' };
@@ -30,13 +31,14 @@ $w.onReady(function () {
     const next = JSON.stringify(payload);
     if (next === lastSent) return;
     lastSent = next;
+    element.seoMarkup = createHomeSeoMarkup(payload);
     element.setAttribute('content', next);
   };
   element.on('arista-ready', send);
   element.on('arista-action', event => {
     // Rendered section navigation is handled inside the Custom Element.
     // Registration actions can preselect a program inside the Custom Element.
-    console.info('ARISTA ACTION:', event.detail);
+    // console.info('ARISTA ACTION:', event.detail);
   });
 
   let submitting = false;
@@ -73,7 +75,8 @@ $w.onReady(function () {
   const heroImages = readDataset($w('#heroImagesDataset'), '#heroImagesDataset');
   const recognitions = readDataset($w('#recognitionsDataset'), '#recognitionsDataset');
   send();
-  Promise.all([
+  // Wix must await the CMS payload before capturing server-rendered SEO HTML.
+  return Promise.all([
     wixData.query('AristaSiteSettings').limit(2).find({ consistentRead: true }),
     sections,
     highlights,
@@ -151,7 +154,7 @@ $w.onReady(function () {
     send();
   }).catch(error => {
     payload = { state: 'error', message: error.message || String(error) };
-    console.error('ARISTA CMS ERROR', error);
+    // console.error('ARISTA CMS ERROR', error);
     send();
   });
 });

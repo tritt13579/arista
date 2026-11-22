@@ -67,7 +67,7 @@ class AristaHome extends HTMLElement {
       try {
         this.shadowRoot.getElementById("registration")?.receiveResult(JSON.parse(newValue));
       } catch (_) {
-        console.warn("ARISTA: invalid registration response.");
+        // console.warn("ARISTA: invalid registration response.");
       }
       return;
     }
@@ -204,12 +204,13 @@ class AristaHome extends HTMLElement {
     try {
       data = JSON.parse(this.getAttribute("content") || "null");
     } catch (_) {
-      console.error("ARISTA: invalid content JSON.");
+      // console.error("ARISTA: invalid content JSON.");
       return;
     }
     if (!data) return;
-    if (data.state === "error")
-      console.error("ARISTA CMS:", data.message || "Failed to load content.");
+    if (data.state === "error") {
+      // console.error("ARISTA CMS:", data.message || "Failed to load content.");
+    }
     if (data.state === "ready") this.renderSections(data);
     if (data.state === "ready" && !data.hero) {
       this.closeMenu();

@@ -78,3 +78,14 @@ Lần cập nhật tương tác này chỉ cần thay dist/arista-home.js lên p
 
 
 Đã thử lướt nhanh 10 ảnh, dừng và rê chậm lần lượt: số ảnh ở lớp trên luôn 0 hoặc 1; không còn 3 ảnh giữ lớp trên như trước. Đã thử mở viewer bằng click/Enter, tap mobile, thay dữ liệu trong lúc chờ hover và tháo/gắn lại component. npm run check đã qua.
+
+
+## Khôi phục nền ảnh + navy (22/10/2026)
+
+Hero và header trang chủ đã khôi phục tông navy theo commit 13d2488. Giữ nguyên cung C, collection riêng, số lượng ảnh linh hoạt và hover hướng B đã sửa. Chữ hero trắng/vàng; header gradient có blur ở đầu trang, navy đậm khi cuộn. Không khôi phục các rule dl/dt/dd toàn cục; award-counts tiếp tục dùng CSS độc lập.
+
+Ảnh nền dùng AristaPageContent, dòng sectionKey=hero: field image, imageDescription và imageFocusHeight (0–100, mặc định 40). Dữ liệu này đã có trong payload trước đó, không cần đổi page code hoặc tạo/import collection mới. Nếu field image đang trống thì chọn lại ảnh nền ở dòng hero. Ảnh cung C vẫn chọn trong AristaHeroImages.
+
+Chữ và cung C xuất hiện độc lập với ảnh nền. Ảnh nền tải/giải mã xong mới hạ lớp navy trong 1 giây; ảnh không có hoặc tải lỗi giữ nền navy. Hỗ trợ giảm chuyển động. Nền chờ của component/local cũng navy để không nháy kem.
+
+Chỉ cập nhật dist/arista-home.js lên public/custom-elements/arista-home.js trên Wix. Đã kiểm tra desktop/mobile, menu mobile, viewer, grid award-counts; mô phỏng ảnh nền tải chậm (chữ hiện bình thường, shade giữ 1 rồi về 0 sau khi ảnh sẵn sàng), thiếu ảnh và header khi cuộn. npm run check đã qua. Chưa có thao tác Publish hoặc cập nhật trực tiếp Wix.

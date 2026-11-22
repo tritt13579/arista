@@ -1,18 +1,24 @@
 // Dynamic Item Page: AristaProgramDetails. Dataset ID: programDetailsDataset.
 // Custom Element ID: aristaProgram; tag: arista-program.
 import wixData from 'wix-data';
+import { createProgramSeoMarkup } from 'public/arista-seo.js';
 import { createProgramContent } from 'public/arista-program-content.js';
 import { submitTrialRegistration } from 'backend/trial-registration.web';
 
-$w.onReady(function () {
+$w.onReady(async function () {
   const element = $w('#aristaProgram');
   let payload = { state: 'loading' };
-  const send = () => element.setAttribute('content', JSON.stringify(payload));
+  const send = () => {
+    element.seoMarkup = createProgramSeoMarkup(payload);
+    element.setAttribute('content', JSON.stringify(payload));
+  };
   element.on('arista-ready', send);
   send();
   try {
     const bar = $w('#quickActionBar1');
-    if (typeof bar.hide === 'function') bar.hide().catch(error => console.warn('ARISTA QAB:', error));
+    if (typeof bar.hide === 'function') bar.hide().catch(error => {
+      // console.warn('ARISTA QAB:', error);
+    });
   } catch (_) { /* Mobile-only Wix element. */ }
 
   let submitting = false;
@@ -27,7 +33,9 @@ $w.onReady(function () {
     finally { submitting = false; }
   });
 
-  $w('#programDetailsDataset').onReady(async () => {
+  // Await the dynamic item AND its related queries in the page onReady promise.
+  // An unreturned dataset callback finishes too late for Wix's SEO snapshot.
+  await new Promise(resolve => $w('#programDetailsDataset').onReady(resolve));
     try {
       const detail = $w('#programDetailsDataset').getCurrentItem();
       if (!detail?.programKey || detail.show !== true) throw new Error('Bộ môn chưa được bật hiển thị.');
@@ -43,13 +51,12 @@ $w.onReady(function () {
       ]);
       if (settings.length !== 1) throw new Error('AristaSiteSettings cần đúng một dòng.');
       payload = createProgramContent(detail, Object.fromEntries(childIds.map((id, index) => [id, children[index]])), settings[0], sections, programs);
-      console.info('ARISTA PROGRAM READY', { programKey: detail.programKey, teachers: payload.teachers.length, photos: payload.gallery.length, videos: payload.videos.length });
+      // console.info('ARISTA PROGRAM READY', { programKey: detail.programKey, teachers: payload.teachers.length, photos: payload.gallery.length, videos: payload.videos.length });
     } catch (error) {
-      console.error('ARISTA PROGRAM CMS:', error);
+      // console.error('ARISTA PROGRAM CMS:', error);
       payload = { state: 'error', message: 'Chưa tải được thông tin bộ môn. Vui lòng thử tải lại trang hoặc liên hệ Arista.' };
     }
     send();
-  });
 });
 
 async function readAll(query) {
