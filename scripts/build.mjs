@@ -3,7 +3,7 @@ import { build, context } from "esbuild";
 // Public Velo module: no DOM, CSS, backend API or third-party runtime imports.
 const contentOptions = { entryPoints: ['src/content/program-content.js'], outfile: 'dist/arista-program-content.js', bundle: true, format: 'esm', platform: 'neutral', target: 'es2020' };
 const seoOptions = { entryPoints: ['src/seo/markup.js'], outfile: 'dist/arista-seo.js', bundle: true, format: 'esm', platform: 'neutral', target: 'es2020' };
-const blogPageOptions = { entryPoints: ['src/wix/arista-blog-shared.js'], outfile: 'dist/arista-blog-page.js', bundle: true, format: 'esm', platform: 'neutral', target: 'es2020', external: ['wix-data'] };
+const blogPageOptions = { entryPoints: ['src/wix/arista-blog-shared.js'], outfile: 'dist/arista-blog-page.js', bundle: true, format: 'esm', platform: 'neutral', target: 'es2020', external: ['wix-data', 'wix-location-frontend', 'wix-window-frontend'] };
 
 const options = {
   entryPoints: ["src/components/arista-home.js", "src/components/arista-program.js", "src/components/arista-blog.js"],

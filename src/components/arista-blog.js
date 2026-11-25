@@ -12,12 +12,13 @@ import floatingStyles from '../styles/floating-contacts.css';
 import { renderFloatingContacts, updateFloatingContacts } from '../sections/floating-contacts.js';
 import { preserveTestSiteLinks } from '../utils/test-site-links.js';
 import { createBlogMotion } from '../utils/blog-animation.js';
+import { withBlogRoute } from '../blog/routes.js';
 
 // Local preview font paths do not exist on Wix; loadFonts supplies hosted fonts.
 const hostedBlogStyles = blogStyles.replace(/@font-face\s*\{[^}]*\}/g, '').replace(/@import\s+url\([^;]*\);/g, '');
 
 class AristaBlog extends HTMLElement {
-  static get observedAttributes() { return ['content', 'registration-result']; }
+  static get observedAttributes() { return ['content', 'registration-result', 'blog-route']; }
   constructor() { super(); this.attachShadow({ mode: 'open' }); }
   connectedCallback() { loadFonts(); this.render(); this.emit('arista-ready', {}); }
   disconnectedCallback() { this.dispose(); }
@@ -26,11 +27,16 @@ class AristaBlog extends HTMLElement {
     if (previous === next || !this.isConnected) return;
     if (name === 'registration-result') {
       try { this.registration?.receiveResult(JSON.parse(next)); } catch { /* Invalid reply ignored. */ }
+    } else if (name === 'blog-route') {
+      try { this.applyRoute?.(JSON.parse(next)); } catch { /* Invalid route ignored. */ }
     } else this.render();
   }
   dispose() {
+    cancelAnimationFrame(this.filterScrollFrame);
+    this.pendingFilterScroll = false;
     this.motion?.dispose();
     this.motion = undefined;
+    this.applyRoute = undefined;
     this.events?.abort(); this.registration?.dispose();
     this.shadowRoot.querySelector('.floating-contact-shell')?.dispose();
     this.contactObserver?.disconnect();
@@ -43,10 +49,13 @@ class AristaBlog extends HTMLElement {
     let data;
     try { data = JSON.parse(this.getAttribute('content') || '{"state":"loading"}'); }
     catch { data = { state: 'error' }; }
+    // Velo supplies the actual page route in Preview/iframes. The fallback is
+    // useful when loading this component directly in a local browser.
+    if (data.state === 'ready' && !('activeCategoryId' in data)) data = withBlogRoute(data, location.href);
     const root = this.shadowRoot;
     root.innerHTML = `<style>${hostedBlogStyles}\n${floatingStyles}
       :host{display:block;min-width:0;background:#f7f5f0;color:#0c0f33;font-family:"Be Vietnam Pro",Arial,sans-serif;--navy:#0c0f33;--paper:#f7f5f0;--gold:#d9a441;--muted:#67697a;--line:#dddcd8}
-      .brand img{height:60px;width:100px;object-fit:contain}.missing-cover{display:grid;place-items:center;height:100%;color:#0c0f33}.blog-pagination{display:flex;justify-content:center;gap:10px;margin-top:40px}.blog-pagination button{padding:10px 16px;border:1px solid #dddcd8;background:transparent}.blog-pagination [aria-current]{background:#0c0f33;color:white}.article-body img{max-width:100%;height:auto;display:block;margin:24px 0}.article-body table{width:100%;border-collapse:collapse;display:block;overflow:auto}.article-body td{padding:12px;border:1px solid #dddcd8;min-width:110px}.article-body pre{overflow:auto}.blog-video{aspect-ratio:16/9;margin:24px 0}.blog-video iframe{width:100%;height:100%;border:0}.article-body a{color:inherit;text-decoration:underline}.article-body blockquote{border-left:3px solid #d9a441;margin:24px 0;padding-left:20px}
+      .brand img{height:60px;width:100px;object-fit:contain}.missing-cover{display:grid;place-items:center;height:100%;color:#0c0f33}.blog-pagination{display:flex;justify-content:center;gap:10px;margin-top:40px}.blog-pagination a{display:block;text-decoration:none;color:inherit;padding:10px 16px;border:1px solid #dddcd8;background:transparent}.blog-pagination [aria-current]{background:#0c0f33;color:white}.article-body img{max-width:100%;height:auto;display:block;margin:24px 0}.article-body table{width:100%;border-collapse:collapse;display:block;overflow:auto}.article-body td{padding:12px;border:1px solid #dddcd8;min-width:110px}.article-body pre{overflow:auto}.blog-video{aspect-ratio:16/9;margin:24px 0}.blog-video iframe{width:100%;height:100%;border:0}.article-body a{color:inherit;text-decoration:underline}.article-body blockquote{border-left:3px solid #d9a441;margin:24px 0;padding-left:20px}
       </style><div id="blog-app">${renderBlogMarkup(data)}</div><div id="blog-shared-footer"></div>`;
     if (data.state !== 'ready') return;
     const shared = root.getElementById('blog-shared-footer').attachShadow({ mode: 'open' });
@@ -85,24 +94,42 @@ class AristaBlog extends HTMLElement {
       if (!this.registration) return;
       event.preventDefault(); close(); this.registration.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, { signal }));
-    const requestedCategory = new URL(location.href).searchParams.get('category');
-    let category = !data.post && data.categories.some(item => item.id === requestedCategory) ? requestedCategory : '';
-    let page = 1;
-    const updateResults = () => {
-      const results = listResults(data, category, page);
+    this.applyRoute = route => {
+      if (data.post || route.routeKind !== data.routeKind || route.categoryMissing) return;
+      data = { ...data, ...route };
+      const results = listResults(data, data.activeCategoryId || '', data.requestedPage || 1);
       root.querySelector('#post-results').innerHTML = results.html;
       root.querySelector('.result-count').textContent = `${results.count} bài viết`;
-      root.querySelectorAll('[data-category]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+      root.querySelectorAll('[data-category]').forEach(link => {
+        if (link.dataset.category === (data.activeCategoryId || '')) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
       this.motion?.refreshCards();
+      if (this.pendingFilterScroll) {
+        this.pendingFilterScroll = false;
+        cancelAnimationFrame(this.filterScrollFrame);
+        // Wait for the new results to determine the document height. Align below
+        // the sticky header; scrollIntoView(start) would put filters behind it.
+        this.filterScrollFrame = requestAnimationFrame(() => {
+          if (signal.aborted) return;
+          const filter = root.querySelector('.filter-bar');
+          const header = root.querySelector('.blog-header');
+          const offset = (header?.getBoundingClientRect().height || 0) + 16;
+          window.scrollBy({ top: filter.getBoundingClientRect().top - offset, behavior: 'instant' });
+        });
+      }
     };
-    if (category) updateResults();
     root.addEventListener('click', event => {
-      const button = event.target.closest('[data-category],[data-blog-page]');
-      if (button) {
-        if ('category' in button.dataset) { category = button.dataset.category; page = 1; }
-        else page = Number(button.dataset.blogPage);
-        updateResults();
-        if ('blogPage' in button.dataset) root.querySelector('.filter-bar').scrollIntoView({ block: 'start' });
+      const link = event.target.closest('[data-category], [data-blog-page]');
+      // Keep native links for modified clicks, new tabs and Wix category pages.
+      if (link && data.routeKind === 'list' && !event.defaultPrevented && event.button === 0
+          && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+        event.preventDefault();
+        const categoryId = link.hasAttribute('data-category') ? link.dataset.category : data.activeCategoryId || '';
+        const page = link.hasAttribute('data-category') ? 1 : Number(link.dataset.blogPage);
+        if (categoryId === (data.activeCategoryId || '') && page === (data.requestedPage || 1)) return;
+        this.pendingFilterScroll = true;
+        this.emit('arista-blog-filter-change', { categoryId, page });
       }
       const toc = event.target.closest('[data-toc]');
       if (toc) { event.preventDefault(); const section = root.getElementById(toc.dataset.toc); if (section) window.scrollBy({ top: section.getBoundingClientRect().top - 110, behavior: 'smooth' }); }

@@ -1,5 +1,6 @@
 import { escapeHtml as e } from './rich-content.js';
 import { safeBlogUrl, postBodyMarkup } from './content.js';
+import { blogFilterHref, blogCategoryKey } from './routes.js';
 const href = value => e(safeBlogUrl(value));
 export const PAGE_SIZE = 12;
 
@@ -7,7 +8,7 @@ export function categoryLinks(post, blogPath, compact = false) {
   const categories = post.categories || [];
   const visible = compact ? categories.slice(0, 2) : categories;
   if (!visible.length) return '';
-  const links = visible.map(item => `<a href="${href(`${blogPath}?category=${encodeURIComponent(item.id)}`)}">${e(item.label)}</a>`);
+  const links = visible.map(item => `<a href="${href(blogFilterHref(blogPath, blogCategoryKey(item)))}">${e(item.label)}</a>`);
   if (compact && categories.length > 2) links.push(`<a class="category-more" href="${href(post.url)}#article-categories" aria-label="Xem tất cả ${categories.length} chuyên mục">+${categories.length - 2}</a>`);
   return `<span class="category-links ${compact ? 'category-links--compact' : ''}" aria-label="Chuyên mục">${links.join('')}</span>`;
 }
@@ -32,13 +33,19 @@ export function listResults(data, category = '', page = 1) {
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.max(1, Math.min(pages, page));
   const visible = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
-  if (!visible.length) return { count: 0, html: '<p class="blog-empty" role="status">Chưa có bài viết trong chuyên mục này.</p>' };
+  if (!visible.length) return { count: 0, page: 1, pages, html: '<p class="blog-empty" role="status">Chưa có bài viết trong chuyên mục này.</p>' };
   const featured = !category && current === 1;
   const chosen = featured ? visible.find(post => post.featured) || visible[0] : null;
   const rest = visible.filter(post => post !== chosen);
+  const pageHref = number => {
+    if (data.routeKind !== 'category') return blogFilterHref(data.paths.blog, blogCategoryKey(data.categories.find(item => item.id === category)), number, data.routeUrl);
+    const url = new URL(data.routeUrl, 'https://arista.invalid');
+    url.searchParams.set('page', String(number));
+    return `${url.pathname}${url.search}`;
+  };
   const html = `${chosen ? blogCard(chosen, true, data.paths.blog) : ''}${rest.length ? `<div class="post-grid ${chosen ? '' : 'category-grid'}">${rest.map(post => blogCard(post, false, data.paths.blog)).join('')}</div>` : ''}
-    ${pages > 1 ? `<nav class="blog-pagination" aria-label="Trang bài viết">${Array.from({ length: pages }, (_, i) => `<button type="button" data-blog-page="${i + 1}" ${current === i + 1 ? 'aria-current="page"' : ''}>${i + 1}</button>`).join('')}</nav>` : ''}`;
-  return { count: filtered.length, html };
+    ${pages > 1 ? `<nav class="blog-pagination" aria-label="Trang bài viết">${Array.from({ length: pages }, (_, i) => `<a href="${href(pageHref(i + 1))}" data-blog-page="${i + 1}" ${current === i + 1 ? 'aria-current="page"' : ''}>${i + 1}</a>`).join('')}</nav>` : ''}`;
+  return { count: filtered.length, page: current, pages, html };
 }
 
 export function renderBlogMarkup(data) {
@@ -48,8 +55,14 @@ export function renderBlogMarkup(data) {
   const navigation = `<a href="${href(paths.home)}">Về Arista</a><a href="${href(paths.blog)}" ${data.post ? '' : 'aria-current="page"'}>Góc học nhạc</a>`;
   const header = `<header class="blog-header"><div class="header-wrap"><a class="brand" href="${href(paths.home)}">${brand}</a><nav class="desktop-nav" aria-label="Điều hướng chính">${navigation}</nav><a class="header-contact" href="${href(paths.registration)}" data-registration>Đăng ký tư vấn ↗</a><button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="blog-mobile-menu"><span></span><span></span></button></div><nav id="blog-mobile-menu" class="mobile-links" hidden>${navigation}<a href="${href(paths.registration)}" data-registration>Đăng ký tư vấn ↗</a></nav></header>`;
   if (!data.post) {
-    const result = listResults(data);
-    return `${header}<main id="blog-main"><section class="journal-hero"><div class="container hero-grid"><div><p class="eyebrow">CHIA SẺ TỪ ARISTA</p><h1>Góc <em>học nhạc.</em></h1></div><p class="hero-description">Một chút kiến thức, một nguồn cảm hứng.<br>Cùng bạn đi xa hơn trên hành trình âm nhạc.</p></div></section><section class="journal-content container" aria-label="Bài viết"><div class="filter-bar"><div class="filters" role="group" aria-label="Lọc chuyên mục"><button type="button" data-category="" aria-pressed="true">Tất cả</button>${data.categories.map(item => `<button type="button" data-category="${e(item.id)}" aria-pressed="false">${e(item.label)}</button>`).join('')}</div><p class="result-count" aria-live="polite">${result.count} bài viết</p></div><div id="post-results">${result.html}</div></section></main>`;
+    if (data.categoryMissing) return `${header}<main id="blog-main" class="journal-content container"><h1>Không tìm thấy chuyên mục</h1><p>Vui lòng chọn chuyên mục khác trong Góc học nhạc.</p><a href="${href(paths.blog)}">Về Góc học nhạc</a></main>`;
+    const category = data.categories.find(item => item.id === data.activeCategoryId);
+    const result = listResults(data, category?.id || '', data.requestedPage || 1);
+    const nativeCategory = data.routeKind === 'category' && category;
+    const title = nativeCategory ? `Kiến thức <em>${e(category.label)}.</em>` : 'Góc <em>học nhạc.</em>';
+    const description = nativeCategory ? e(category.description || `Hướng dẫn và kinh nghiệm học ${category.label} từ Arista Music Center tại Nha Trang.`)
+      : 'Một chút kiến thức, một nguồn cảm hứng.<br>Cùng bạn đi xa hơn trên hành trình âm nhạc.';
+    return `${header}<main id="blog-main"><section class="journal-hero"><div class="container hero-grid"><div><p class="eyebrow">${nativeCategory ? 'GÓC HỌC NHẠC' : 'CHIA SẺ TỪ ARISTA'}</p><h1>${title}</h1></div><p class="hero-description">${description}</p></div></section><section class="journal-content container" aria-label="Bài viết"><div class="filter-bar"><nav class="filters" aria-label="Lọc chuyên mục"><a href="${href(blogFilterHref(paths.blog, '', 1, data.routeUrl))}" data-category="" ${category ? '' : 'aria-current="page"'}>Tất cả</a>${data.categories.map(item => `<a href="${href(blogFilterHref(paths.blog, blogCategoryKey(item), 1, data.routeUrl))}" data-category="${e(item.id)}" ${item.id === category?.id ? 'aria-current="page"' : ''}>${e(item.label)}</a>`).join('')}</nav><p class="result-count" aria-live="polite">${result.count} bài viết</p></div><div id="post-results">${result.html}</div></section></main>`;
   }
   const post = data.post;
   const date = post.date ? `<span>·</span><time datetime="${e(post.date)}">${new Date(post.date).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}</time>` : '';

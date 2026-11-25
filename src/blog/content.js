@@ -18,6 +18,28 @@ export function resolveBlogPostUrl(raw, postBasePath = '') {
       /[\u0000-\u0020/\\?#]/.test(slug) || ['.', '..'].includes(slug)) return '';
   return `${postBasePath}${encodeURIComponent(slug)}`;
 }
+
+export function resolveBlogCategoryUrl(raw, categoryBasePath = '/blog/categories/') {
+  if (!/^\/(?!\/)[\w/-]+\/$/.test(categoryBasePath)) return '';
+  const candidate = safeBlogUrl(raw.categoryPageUrl);
+  if (candidate) {
+    const path = new URL(candidate, 'https://arista.invalid').pathname;
+    if (path.startsWith(categoryBasePath)) {
+      const slug = path.slice(categoryBasePath.length).replace(/\/$/, '');
+      try {
+        const decoded = decodeURIComponent(slug);
+        if (decoded && !/[\u0000-\u0020/\\?#]/.test(decoded) && !['.', '..'].includes(decoded)) {
+          return `${categoryBasePath}${encodeURIComponent(decoded)}`;
+        }
+      } catch { /* Try the public slug fields below. */ }
+    }
+  }
+  for (const slug of [raw.slug, raw.categoryPageSlug]) {
+    if (typeof slug !== 'string' || !slug || /[\u0000-\u0020/\\?#]/.test(slug) || ['.', '..'].includes(slug)) continue;
+    return `${categoryBasePath}${encodeURIComponent(slug)}`;
+  }
+  return '';
+}
 const supported = new Set(['TEXT', 'PARAGRAPH', 'HEADING', 'BULLETED_LIST', 'ORDERED_LIST',
   'LIST_ITEM', 'BLOCKQUOTE', 'CODE_BLOCK', 'DIVIDER', 'TABLE', 'TABLE_ROW', 'TABLE_CELL', 'IMAGE', 'CAPTION', 'GALLERY', 'VIDEO']);
 
@@ -64,7 +86,8 @@ export function normalizeBlogPost(raw, categories = [], writers = [], settings =
   return {
     id: String(raw._id || ''), title: String(raw.title || ''), excerpt: String(raw.excerpt || ''),
     url: resolveBlogPostUrl(raw, paths.postBasePath), image: imageUrl(raw.coverImage),
-    categories: labels.map(item => ({ id: item._id, label: String(item.label || '') })),
+    categories: labels.map(item => ({ id: item._id, label: String(item.label || ''),
+      url: resolveBlogCategoryUrl(item, paths.categoryBasePath || `${paths.blog || '/blog'}/categories/`) })),
     mainCategoryId: labels.some(item => item._id === mainCategoryId) ? mainCategoryId : '',
     category: String(labels[0]?.label || 'Góc học nhạc'), author,
     avatar: avatar ? { type: isBrand ? 'logo' : 'photo', src: avatar }

@@ -3,7 +3,7 @@ import { imageUrl } from '../utils/image-url.js';
 import { normalizeBlogPost } from './content.js';
 import { renderBlogMarkup } from './view.js';
 import { createHomeSeoMarkup } from '../seo/markup.js';
-import { safeBlogUrl } from './content.js';
+import { safeBlogUrl, resolveBlogCategoryUrl } from './content.js';
 
 function relatedProgram(post, programs) {
   const key = value => String(value || '').normalize('NFC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('vi');
@@ -27,9 +27,15 @@ export function createBlogPayload({ posts = [], currentPost = null, categories =
   const post = currentPost ? normalizeBlogPost(currentPost, categories, writers, settings, true, paths) : null;
   if (post?.unsupported.length) return { state: 'unsupported', unsupported: post.unsupported };
   if (post) post.relatedProgram = relatedProgram(post, programs);
+  const publicCategories = categories.map(item => ({ id: String(item._id), label: String(item.label || ''),
+    description: String(item.description || ''),
+    url: resolveBlogCategoryUrl(item, paths.categoryBasePath || `${paths.blog}/categories/`) }));
+  if (paths.categoryBasePath && publicCategories.some(item => !item.url)) {
+    throw new Error('Some public categories are missing a usable categoryPageUrl or slug.');
+  }
   return {
     state: 'ready', posts: normalized, post,
-    categories: categories.map(item => ({ id: String(item._id), label: String(item.label || '') })),
+    categories: publicCategories,
     brandName: settings.brandName || 'Arista Music Center', logo: imageUrl(settings.logo),
     paths, contacts: home.contacts, registration: home.registration, footer: home.footer,
   };

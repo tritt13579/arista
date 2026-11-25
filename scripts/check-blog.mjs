@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createBlogPayload, createBlogSeoMarkup } from '../src/blog/payload.js';
-import { safeBlogUrl, normalizeBlogPost, resolveBlogPostUrl } from '../src/blog/content.js';
+import { safeBlogUrl, normalizeBlogPost, resolveBlogPostUrl, resolveBlogCategoryUrl } from '../src/blog/content.js';
+import { withBlogRoute, blogFilterHref, blogCategoryKey } from '../src/blog/routes.js';
 import { richContentToHtml } from '../src/blog/rich-content.js';
 import { imageUrl } from '../src/utils/image-url.js';
 import { listResults, categoryLinks } from '../src/blog/view.js';
@@ -133,13 +134,91 @@ assert.equal((listResults(list, '', 3).html.match(/class="post-card /g) || []).l
 assert.ok(!listResults(list, 'piano').html.includes('featured-card'));
 assert.equal(listResults(list, 'piano').count, 13);
 assert.equal(listResults(list, 'missing').count, 0);
+
+// Reproduce the live regression: a Violin URL must not show the Piano feed,
+// including the SEO HTML generated before the custom element runs.
+const routedCategories = [
+  { _id: 'piano', label: 'Piano', slug: 'piano', description: 'Hướng dẫn Piano <Arista>' },
+  { _id: 'violin', label: 'Violin', categoryPageUrl: 'https://www.aristamusiccenter.com/blog/categories/violin' },
+  { _id: 'art', label: 'Mỹ thuật', categoryPageSlug: 'my-thuat' },
+];
+const routed = createBlogPayload({ posts: [{ ...record, title: 'Bài chỉ thuộc Piano' }],
+  currentPost: null, categories: routedCategories, settings, paths: { ...paths, categoryBasePath: '/blog/categories/' } });
+const allRoute = withBlogRoute(routed, 'https://www.aristamusiccenter.com/blog');
+assert.equal(allRoute.activeCategoryId, '');
+assert.equal(listResults(allRoute).count, 1);
+for (const url of ['/blog/categories/piano', '/blog/categories/piano/', '/blog?category=piano', '/blog/categories/piano?rc=test-site']) {
+  const selected = withBlogRoute(routed, url);
+  assert.equal(selected.activeCategoryId, 'piano');
+  const markup = createBlogSeoMarkup(selected);
+  assert.ok(markup.includes(url.startsWith('/blog?') ? 'Góc <em>học nhạc.</em>' : 'Kiến thức <em>Piano.</em>'));
+  if (!url.startsWith('/blog?')) assert.ok(markup.includes('Hướng dẫn Piano &lt;Arista&gt;'));
+  assert.ok(markup.includes('data-category="piano" aria-current="page"'));
+  assert.ok(!markup.includes('featured-card'));
+  assert.ok(markup.includes('data-category=""'));
+}
+const violinMarkup = createBlogSeoMarkup(withBlogRoute(routed, '/blog/categories/violin'));
+assert.ok(violinMarkup.includes('Kiến thức <em>Violin.</em>'));
+assert.ok(violinMarkup.includes('Chưa có bài viết trong chuyên mục này.'));
+assert.ok(!violinMarkup.includes('Bài chỉ thuộc Piano'));
+for (const url of ['/blog/categories/missing', '/blog/categories/%zz', '/blog/tags/piano', '/blog?category=missing']) {
+  const missing = withBlogRoute(routed, url);
+  assert.equal(missing.categoryMissing, true);
+  assert.ok(!createBlogSeoMarkup(missing).includes('Bài chỉ thuộc Piano'));
+}
+assert.equal(withBlogRoute(payload, '/blog/categories/violin').post.id, payload.post.id);
+assert.ok(categoryLinks(routed.posts[0], '/blog').includes('href="/blog?category=piano&amp;page=1"'));
+assert.equal(resolveBlogCategoryUrl({ categoryPageUrl: '/blog/categories/piano?x=1' }), '/blog/categories/piano');
+assert.equal(resolveBlogCategoryUrl({ categoryPageUrl: '/unknown', slug: 'piano' }), '/blog/categories/piano');
+assert.equal(resolveBlogCategoryUrl({ categoryPageSlug: 'my-thuat' }), '/blog/categories/my-thuat');
+for (const slug of ['../bad', '..', '%bad?x=1', 'bad#hash', 'bad\\path', 'bad\npath']) {
+  assert.equal(resolveBlogCategoryUrl({ slug }), '');
+}
+assert.throws(() => createBlogPayload({ settings, paths: { ...paths, categoryBasePath: '/blog/categories/' },
+  categories: [{ _id: 'missing', label: 'Missing URL' }] }), /categories.*categoryPageUrl/);
 assert.throws(() => createBlogPayload({ posts: [{ ...record, postPageURL: '' }], settings, paths }), /postPageURL/);
 const source = fs.readFileSync('src/wix/arista-blog-shared.js', 'utf8');
 assert.ok(source.includes("wixData.get('Blog/Posts', current._id)"));
 assert.ok(!source.includes('suppressAuth') && !source.includes('draftPosts'));
 assert.ok(source.includes("'#post1' : '#blog1'"));
+assert.ok(source.includes('wixLocationFrontend.onChange'));
+assert.ok(source.includes('withBlogRoute(allContent, wixLocationFrontend.url)'));
 for (const file of ['dist/arista-blog.js', 'dist/arista-blog-page.js']) {
   const output = fs.readFileSync(file, 'utf8');
   assert.ok(!output.includes('src/preview/blog-content') && !output.includes('cms/content.json'));
 }
 console.info('Blog checks passed: public data, escaped rich content, native fallback, URLs, avatars, pagination, SEO and production isolation.');
+
+assert.equal(blogFilterHref('/blog', 'violin', 1, '/blog?category=piano&page=2&rc=test-site&utm_source=fb'), '/blog?rc=test-site&utm_source=fb&category=violin&page=1');
+assert.equal(blogFilterHref('/blog', '', 1, '/blog?category=piano&page=2&rc=test-site'), '/blog?rc=test-site');
+assert.equal(blogFilterHref('/blog', '', 2), '/blog?category=&page=2');
+for (const page of ['bad', '-3', 'Infinity', '0', '999999999999999999999']) {
+  assert.equal(withBlogRoute(routed, `/blog?category=piano&page=${page}`).requestedPage, 1);
+}
+const pageTwo = withBlogRoute(list, '/blog?category=piano&page=2');
+assert.equal(pageTwo.requestedPage, 2);
+assert.equal(pageTwo.routeKind, 'list');
+assert.equal((createBlogSeoMarkup(pageTwo).match(/class="post-card /g) || []).length, 1);
+assert.equal(listResults(list, 'piano', 999).page, 2);
+assert.equal(withBlogRoute(routed, '/blog/categories/piano').routeKind, 'category');
+
+// Slugs differ from IDs: URL generation and old links must select the same feed.
+const slugData = { ...routed, categories: [
+  { id: 'uuid-piano', label: 'Đổi tên vẫn giữ slug', url: '/blog/categories/piano' },
+  { id: 'uuid-art', label: 'Mỹ thuật', url: '/blog/categories/my-thuat' },
+  { id: 'uuid-vi', label: 'Tiếng Việt', url: '/blog/categories/h%E1%BB%8Dc-nh%E1%BA%A1c' },
+] };
+for (const key of ['uuid-piano', 'piano']) {
+  const resolved = withBlogRoute(slugData, `/blog?category=${key}&page=2`);
+  assert.equal(resolved.activeCategoryId, 'uuid-piano');
+  assert.equal(resolved.requestedPage, 2);
+  assert.equal(resolved.categoryMissing, false);
+}
+assert.equal(withBlogRoute(slugData, '/blog?category=my-thuat').activeCategoryId, 'uuid-art');
+assert.equal(withBlogRoute(slugData, '/blog?category=h%E1%BB%8Dc-nh%E1%BA%A1c').activeCategoryId, 'uuid-vi');
+assert.equal(blogCategoryKey(slugData.categories[0]), 'piano');
+assert.equal(blogCategoryKey({id:'legacy-id'}), 'legacy-id');
+const slugMarkup = createBlogSeoMarkup(withBlogRoute(slugData, '/blog'));
+assert.ok(slugMarkup.includes('href="/blog?category=piano&amp;page=1" data-category="uuid-piano"'));
+assert.ok(!slugMarkup.includes('category=uuid-piano'));
+assert.ok(categoryLinks({categories:slugData.categories}, '/blog').includes('category=my-thuat&amp;page=1'));

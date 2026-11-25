@@ -220,18 +220,24 @@ em {
   flex-wrap: wrap;
   gap: 8px;
 }
-.filters button {
+.filters button,
+.filters a {
   border: 1px solid transparent;
   border-radius: 30px;
   padding: 10px 20px;
   font-size: 12px;
   background: transparent;
   color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
-.filters button:hover {
+.filters button:hover,
+.filters a:hover {
   border-color: #c5c2b9;
 }
-.filters button[aria-pressed="true"] {
+.filters button[aria-pressed="true"],
+.filters a[aria-current="page"] {
   background: var(--navy);
   color: white;
 }
@@ -1046,7 +1052,8 @@ em {
   .filters {
     gap: 2px;
   }
-  .filters button {
+  .filters button,
+  .filters a {
     font-size: 10px;
     padding: 9px 14px;
   }
