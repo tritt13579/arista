@@ -1,5 +1,8 @@
 import { posts } from "./blog-content.js";
 import { mountSharedFooter } from "./blog-footer.js";
+import { createBlogMotion } from "../utils/blog-animation.js";
+
+let motion;
 
 const app = document.querySelector("#blog-app");
 const params = new URLSearchParams(location.search);
@@ -18,6 +21,27 @@ const escape = (value) =>
   );
 const postUrl = (post) =>
   `./blog-post.html?bai=${encodeURIComponent(post.slug)}`;
+function authorAvatar(author, avatar) {
+  const initials = String(author || "?").trim().split(/\s+/)
+    .slice(0, 2).map(word => Array.from(word)[0] || "").join("").toLocaleUpperCase("vi");
+  const kind = avatar?.src && ["logo", "photo"].includes(avatar.type)
+    ? avatar.type : "initials";
+  return `<span class="author-mark author-mark--${kind}" aria-hidden="true">${
+    kind === "initials" ? escape(initials)
+      : `<img src="${escape(avatar.src)}" alt="" width="36" height="36">`
+  }</span>`;
+}
+function mediaFigure(media, cover = false) {
+  const credit = media.source
+    ? `<a href="${escape(media.source)}" target="_blank" rel="noopener noreferrer">${escape(media.credit)}</a>`
+    : escape(media.credit);
+  const img = `<img src="${escape(media.src)}" alt="${escape(media.alt)}" width="1400" height="840"
+      style="object-position:${escape(media.position || 'center')}" ${cover ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}>`;
+  return `<figure class="${cover ? 'article-cover' : 'article-figure'} ${media.source ? '' : 'editorial-illustration'}">
+    ${media.source ? img : `<a href="${escape(media.src)}" target="_blank" rel="noopener" aria-label="Mở sơ đồ để xem rõ (tab mới)">${img}</a>`}
+    <figcaption>${escape(media.caption)} <span>${credit}${media.source ? '' : ' · Mở hình để xem rõ'}</span></figcaption>
+  </figure>`;
+}
 const readingTime = (post) =>
   Math.max(
     1,
@@ -55,7 +79,7 @@ const footer = `<div id="shared-blog-footer"></div>`;
 function card(post, featured = false) {
   return `<article class="post-card ${featured ? "featured-card" : ""}">
     <a class="card-image" href="${postUrl(post)}" tabindex="-1" aria-hidden="true">
-      <img src="${post.image}" alt="" width="1400" height="940" ${featured ? 'fetchpriority="high"' : 'loading="lazy"'}>
+      <img src="${post.image}" alt="" width="1400" height="940" style="object-position:${escape(post.cover.position || 'center')}" ${featured ? 'fetchpriority="high"' : 'loading="lazy"'}>
       <span class="image-arrow" aria-hidden="true">↗</span>
     </a>
     <div class="card-copy">
@@ -102,6 +126,7 @@ function renderList() {
           : ""
       }`
       : `<div class="post-grid category-grid">${filtered.map(post => card(post)).join("")}</div>`;
+    motion?.refreshCards();
     if (changeUrl) {
       const url = new URL(location.href);
       category === "Tất cả"
@@ -135,16 +160,16 @@ function renderArticle() {
     <section class="article-hero container">
       <nav class="breadcrumbs" aria-label="Đường dẫn"><a href="./index.html">Arista</a><span aria-hidden="true">/</span><a href="./blog.html">Góc học nhạc</a><span aria-hidden="true">/</span><a href="./blog.html?chuyen-muc=${encodeURIComponent(post.category)}">${post.category}</a></nav>
       <div class="article-heading"><p class="eyebrow">${post.category.toLocaleUpperCase("vi")}</p><h1>${post.title}</h1>
-        <div class="byline"><span class="author-mark" aria-hidden="true">A</span><span>Arista Music Center</span><span class="meta-dot" aria-hidden="true">·</span><span>${readingTime(post)} phút đọc</span><span class="draft-label">Bài mẫu</span></div>
+        <div class="byline">${authorAvatar(post.author, post.authorAvatar)}<span>${escape(post.author)}</span><span class="meta-dot" aria-hidden="true">·</span><span>${readingTime(post)} phút đọc</span></div>
       </div>
-      <figure class="article-cover"><img src="${post.image}" alt="${escape(post.imageAlt)}" width="1400" height="940" fetchpriority="high"><figcaption>Ảnh minh họa · <a href="${post.imageSource}" target="_blank" rel="noopener noreferrer">${post.photographer} / Unsplash</a></figcaption></figure>
+      ${mediaFigure(post.cover, true)}
     </section>
     <div class="reading-layout container">
       <aside class="article-sidebar"><details class="toc" open><summary>Trong bài viết</summary><nav aria-label="Mục lục">${post.sections.map((section) => `<a href="#${section.id}">${section.title}</a>`).join("")}</nav></details>
         <a class="sidebar-link" href="./piano.html"><span>HỌC CÙNG ARISTA</span>Tìm hiểu lớp Piano <span aria-hidden="true">↗</span></a>
       </aside>
       <article class="article-body" aria-label="Nội dung bài viết"><p class="article-intro">${post.introduction}</p>
-        ${post.sections.map((section) => `<section id="${section.id}"><h2>${section.title}</h2>${section.body}</section>`).join("")}
+        ${post.sections.map((section) => `<section id="${section.id}"><h2>${section.title}</h2>${section.body}${section.media ? mediaFigure(section.media) : ''}</section>`).join("")}
         <div class="reading-sources"><details><summary>Tài liệu tham khảo</summary><ul>${post.sources.map((source) => `<li><a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title} ↗</a></li>`).join("")}</ul></details></div>
         <div class="article-end"><a href="./blog.html">← Về Góc học nhạc</a><button type="button" id="copy-article">Sao chép liên kết ↗</button><span id="share-status" role="status"></span></div>
       </article>
@@ -154,6 +179,10 @@ function renderArticle() {
       .map((item) => card(item))
       .join("")}</div></section>
   </main>${footer}`;
+  const avatarImage = document.querySelector(".author-mark img");
+  avatarImage?.addEventListener("error", () => {
+    avatarImage.parentElement.outerHTML = authorAvatar(post.author);
+  }, { once: true });
   document
     .querySelector("#copy-article")
     .addEventListener("click", async () => {
@@ -187,6 +216,11 @@ function renderArticle() {
 
 if (isArticle) renderArticle();
 else renderList();
+motion = createBlogMotion(app, { article: isArticle });
+window.addEventListener('pagehide', () => motion.dispose());
+window.addEventListener('pageshow', event => {
+  if (event.persisted) motion = createBlogMotion(app, { article: isArticle });
+});
 
 await mountSharedFooter();
 document.querySelectorAll('a[href="./index.html?section=registration"]').forEach(link => {

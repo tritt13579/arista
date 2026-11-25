@@ -257,8 +257,10 @@ em {
   object-fit: cover;
   transition: transform 450ms ease;
 }
-.card-image:hover img {
-  transform: scale(1.035);
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card-image:hover img {
+    transform: scale(1.035);
+  }
 }
 .image-arrow {
   position: absolute;
@@ -275,8 +277,8 @@ em {
 }
 .featured-card {
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  border: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
 }
 .featured-card .card-image {
   aspect-ratio: auto;
@@ -285,9 +287,13 @@ em {
 .featured-card .card-image img {
   position: absolute;
   inset: 0;
+  object-fit: contain;
+}
+.featured-card .card-image {
+  background: #eee6d6;
 }
 .featured-card .card-copy {
-  padding: 48px 40px;
+  padding: 48px 0;
   align-self: center;
 }
 .post-meta {
@@ -299,6 +305,49 @@ em {
   font-size: 10px;
   line-height: 1.6;
   margin-bottom: 22px;
+}
+.category-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.category-links a {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: #8d641f;
+  font-size: 10px;
+  line-height: 1.6;
+  text-decoration: none;
+  letter-spacing: .3px;
+}
+.category-links a:hover,
+.category-links a:focus-visible {
+  color: var(--navy);
+  border-color: var(--gold);
+}
+.post-meta .reading-time {
+  flex: none;
+  white-space: nowrap;
+}
+.article-category-heading {
+  margin-bottom: 20px;
+}
+.article-heading .article-category-heading {
+  text-align: center;
+}
+.article-categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0 22px;
+  font-size: 11px;
+  scroll-margin-top: 110px;
+}
+.article-body .category-links a {
+  text-decoration: none;
 }
 .post-meta span:first-child {
   color: #8d641f;
@@ -475,17 +524,36 @@ em {
   color: var(--muted);
 }
 .author-mark {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
-  border: 1px solid #cec6b6;
   border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
   font:
     17px "Playfair Display",
     Georgia,
     serif;
   color: #8d641f;
+}
+.author-mark--logo {
+  background: var(--navy);
+}
+.author-mark--logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+.author-mark--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.author-mark--initials {
+  background: #eee6d6;
+  color: var(--navy);
+  font: 600 12px/1 "Be Vietnam Pro", Arial, sans-serif;
 }
 .meta-dot {
   margin: 0 4px;
@@ -499,10 +567,12 @@ em {
   margin: 0;
 }
 .article-cover > img {
+  display: block;
   width: 100%;
   height: clamp(260px, 38vw, 470px);
-  object-fit: cover;
-  object-position: center 56%;
+  object-fit: contain;
+  object-position: center;
+  background: #eee6d6;
 }
 .article-cover figcaption {
   text-align: right;
@@ -513,6 +583,112 @@ em {
 .article-cover figcaption a {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.article-cover figcaption {
+  line-height: 1.8;
+}
+.article-cover figcaption span,
+.article-figure figcaption span {
+  display: block;
+}
+.article-cover.editorial-illustration img {
+  width: 100%;
+  height: clamp(260px, 38vw, 470px);
+  object-fit: contain;
+  background: #eee6d6;
+}
+.article-figure {
+  margin: 30px 0;
+}
+.article-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+.article-figure figcaption {
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+  text-align: center;
+}
+.article-body .article-figure img {
+  margin: 0;
+}
+.article-body .article-figure figcaption p {
+  margin: 0;
+}
+.article-figure figcaption a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.editorial-note,
+.practice-journal {
+  padding: 24px;
+  margin: 28px 0;
+  background: #eee6d6;
+  border-left: 3px solid var(--gold);
+}
+.editorial-note ul {
+  margin-bottom: 0;
+}
+.practice-journal .journal-label {
+  color: #8d641f;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.practice-journal dl {
+  margin-bottom: 0;
+}
+.practice-journal dt {
+  font-weight: 600;
+}
+.practice-journal dd {
+  margin: 0 0 16px;
+}
+.practice-journal dd:last-child {
+  margin-bottom: 0;
+}
+.article-table-wrap {
+  margin: 26px 0;
+  overflow-x: auto;
+}
+.table-hint {
+  display: none;
+}
+@media (max-width: 640px) {
+  .table-hint {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+  }
+}
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.article-table caption {
+  text-align: left;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.article-table th,
+.article-table td {
+  padding: 14px;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  min-width: 140px;
+}
+.article-table thead {
+  background: var(--navy);
+  color: white;
+}
+.article-table tbody th {
+  background: #eee6d6;
 }
 .reading-layout {
   display: grid;
@@ -575,8 +751,13 @@ em {
   letter-spacing: 1px;
   margin-bottom: 10px;
 }
-.sidebar-link > span:last-child {
-  margin-left: 8px;
+.sidebar-link-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar-link-label svg {
+  flex: none;
 }
 .article-body {
   min-width: 0;
@@ -614,6 +795,22 @@ em {
   text-decoration: underline;
   text-decoration-color: #ba8a36;
   text-underline-offset: 4px;
+}
+.article-body .article-end > a {
+  text-decoration: none;
+}
+.article-body .article-end > a:hover,
+.article-body .article-end > a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.article-end #copy-article {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.article-end #copy-article svg {
+  flex: none;
 }
 .reading-sources {
   border-top: 1px solid var(--line);
@@ -695,7 +892,7 @@ em {
     gap: 22px;
   }
   .featured-card .card-copy {
-    padding: 32px;
+    padding: 32px 0;
   }
   .post-card h2 {
     font-size: 31px;
@@ -762,6 +959,7 @@ em {
   .post-card h3 {
     font-size: 25px;
   }
+  .featured-card,
   .post-grid {
     gap: 26px;
   }
@@ -858,6 +1056,8 @@ em {
   }
   .featured-card {
     grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
   }
   .featured-card .card-image {
     aspect-ratio: 1.4;

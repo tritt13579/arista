@@ -25,6 +25,7 @@ import { renderFaq } from "../sections/faq.js";
 import { renderRegistration } from "../sections/registration.js";
 import { renderFooter } from "../sections/footer.js";
 import { renderFloatingContacts, updateFloatingContacts } from "../sections/floating-contacts.js";
+import { preserveTestSiteLinks } from '../utils/test-site-links.js';
 import { openImageViewer } from "../utils/image-viewer.js";
 
 class AristaHome extends HTMLElement {
@@ -38,6 +39,8 @@ class AristaHome extends HTMLElement {
     bindHeader(this);
   }
   connectedCallback() {
+    this.disposeTestLinks?.();
+    this.disposeTestLinks = preserveTestSiteLinks(this.shadowRoot);
     loadFonts();
     this.lastSectionsKey = "";
     this.lastDisplayKey = "";
@@ -111,6 +114,7 @@ class AristaHome extends HTMLElement {
     this.closeMenu();
   }
   disconnectedCallback() {
+    this.disposeTestLinks?.();
     this.shadowRoot.querySelector('.hero-visual')?.dispose?.();
     this.shadowRoot.getElementById("recognitions")?.dispose();
     this.shadowRoot.getElementById("faq")?.dispose();

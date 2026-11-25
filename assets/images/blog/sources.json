@@ -1,0 +1,105 @@
+{
+  "checkedOn": "2026-11-22",
+  "stockLicense": "https://unsplash.com/license",
+  "notes": "Stock photographs illustrate editorial topics. They are not presented as Arista facilities, staff, students or endorsements. SVG diagrams are original project assets. No publication dates or named expert reviews have been invented.",
+  "assets": [
+    {
+      "file": "assets/images/blog/first-lesson.jpg",
+      "kind": "stock photograph",
+      "creator": "Kateryna Hliznitsova",
+      "source": "https://unsplash.com/photos/a-person-playing-a-piano-with-their-hands-SOw2TJnbS2I",
+      "license": "Unsplash License",
+      "alt": "Hai bàn tay đặt trên bàn phím piano gỗ",
+      "caption": "Ảnh minh họa thao tác trên bàn phím piano."
+    },
+    {
+      "file": "assets/images/blog/keyboard-map.svg",
+      "kind": "original educational illustration",
+      "creator": "Arista website project",
+      "source": null,
+      "license": "Original project asset",
+      "alt": "Bàn phím một quãng tám: Đô C, Rê D, Mi E, Fa F, Sol G, La A, Si B, Đô C; Đô ở bên trái nhóm hai phím đen.",
+      "caption": "Tìm nhóm hai phím đen, rồi nhìn sang phím trắng liền bên trái để xác định nốt Đô."
+    },
+    {
+      "file": "assets/images/blog/practice-plan.svg",
+      "kind": "original educational illustration",
+      "creator": "Arista website project",
+      "source": null,
+      "license": "Original project asset",
+      "alt": "Sơ đồ buổi tập piano 20 phút: chuẩn bị, tập trung, nối câu và ghi chú",
+      "caption": "Một cách chia buổi tập để thử áp dụng; điều chỉnh thời lượng cùng giáo viên."
+    },
+    {
+      "file": "assets/images/blog/practice-hands.jpg",
+      "kind": "stock photograph",
+      "creator": "Isaac Ibbott",
+      "source": "https://unsplash.com/photos/person-playing-piano--002g4wurYQ",
+      "license": "Unsplash License",
+      "alt": "Người chơi piano nhìn ngang, hai tay trên bàn phím và phản chiếu trên thân đàn",
+      "caption": "Tập riêng chỗ nối giữa hai câu giúp buổi tập có một nhiệm vụ rõ ràng."
+    },
+    {
+      "file": "assets/images/blog/grand-room.jpg",
+      "kind": "stock photograph",
+      "creator": "Clu Soh",
+      "source": "https://unsplash.com/photos/black-grand-piano-on-white-room-0OHsrQ6G5Cc",
+      "license": "Unsplash License",
+      "alt": "Đàn grand piano màu đen và ghế trong căn phòng sáng",
+      "caption": "Piano cơ cần được cân nhắc cùng diện tích và điều kiện sử dụng tại nhà."
+    },
+    {
+      "file": "assets/images/blog/digital-headphones.jpg",
+      "kind": "stock photograph",
+      "creator": "Viktor Forgacs",
+      "source": "https://unsplash.com/photos/headphones-on-piano-keyboard-in-studio-H6YkQEnD5Gk",
+      "license": "Unsplash License",
+      "alt": "Tai nghe đặt trên bàn phím điện có các nút điều khiển",
+      "caption": "Tai nghe và khả năng điều chỉnh âm lượng là những tính năng cần thử trên đúng mẫu đàn."
+    }
+  ],
+  "articles": [
+    {
+      "slug": "nguoi-moi-hoc-piano-nen-bat-dau-tu-dau",
+      "title": "Người mới học piano nên bắt đầu từ đâu?",
+      "references": [
+        {
+          "title": "Yamaha · Now, Let's Play Some Notes! — cấu trúc bàn phím",
+          "url": "https://www.yamaha.com/en/musical_instrument_guide/piano/play/"
+        },
+        {
+          "title": "Yamaha · Correct Posture When Playing the Piano — tư thế",
+          "url": "https://www.yamaha.com/en/musical_instrument_guide/piano/play/play002.html"
+        }
+      ]
+    },
+    {
+      "slug": "xay-dung-thoi-quen-luyen-piano-tai-nha",
+      "title": "Luyện piano tại nhà: tập gì trong 20 phút?",
+      "references": [
+        {
+          "title": "Oak National Academy · Effective practice techniques",
+          "url": "https://www.thenational.academy/teachers/lessons/effective-practice-techniques"
+        }
+      ]
+    },
+    {
+      "slug": "piano-co-hay-piano-dien-cho-nguoi-moi",
+      "title": "Piano cơ hay piano điện: chọn theo nhu cầu học",
+      "references": [
+        {
+          "title": "Yamaha · Choosing a Piano: Acoustic or Digital?",
+          "url": "https://www.yamaha.com/en/musical_instrument_guide/piano/selection/selection002.html"
+        },
+        {
+          "title": "Yamaha · P-225 — ví dụ về bàn phím 88 phím có trọng lượng và phụ kiện",
+          "url": "https://shop.usa.yamaha.com/en/p/instruments/keyboards-synthesizers/digital-pianos/p-225-88-key-portable-digital-piano"
+        },
+        {
+          "title": "Yamaha · TransAcoustic — ví dụ về chế độ quiet trên piano cơ",
+          "url": "https://usa.yamaha.com/products/musical_instruments/pianos/transacoustic/ta3/index.html"
+        }
+      ]
+    }
+  ]
+}

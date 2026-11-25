@@ -6,6 +6,7 @@ import viewerStyles from '../styles/image-viewer.css';
 import detailStyles from '../styles/program-detail.css';
 import floatingStyles from '../styles/floating-contacts.css';
 import { renderFloatingContacts, updateFloatingContacts } from '../sections/floating-contacts.js';
+import { preserveTestSiteLinks } from '../utils/test-site-links.js';
 import { node } from '../utils/dom.js';
 import { loadFonts } from '../utils/fonts.js';
 import { renderRegistration } from '../sections/registration.js';
@@ -58,6 +59,8 @@ class AristaProgram extends HTMLElement {
     this.renderPending();
   }
   connectedCallback() {
+    this.disposeTestLinks?.();
+    this.disposeTestLinks = preserveTestSiteLinks(this.shadowRoot);
     loadFonts(); this.render();
     this.dispatchEvent(new CustomEvent('arista-ready', { bubbles: true, composed: true }));
   }
@@ -67,7 +70,7 @@ class AristaProgram extends HTMLElement {
       try { this.registration?.receiveResult(JSON.parse(this.getAttribute(name))); } catch (_) { /* Invalid external payload. */ }
     } else this.render();
   }
-  disconnectedCallback() { this.dispose(); }
+  disconnectedCallback() { this.dispose(); this.disposeTestLinks?.(); }
   closeMenu() {}
   renderPending(data) {
     const style = node('style'); style.textContent = styles;

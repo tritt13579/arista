@@ -1,6 +1,11 @@
 import { imageUrl, setResponsiveImage } from "../utils/image-url.js";
 import { imageFocusPosition } from "../utils/image-focus.js";
 
+export function homeHeaderMenu(menu) {
+  return [...menu.filter(item => item.href !== '/blog' && item.target !== 'blog'),
+    { title: 'Góc học nhạc', href: '/blog' }];
+}
+
 export const headerTemplate = `
 <header hidden lang="vi">
   <div class="header-inner">
@@ -28,6 +33,7 @@ export const headerTemplate = `
 `;
 
 export function renderHeader(root, hero, menu, action) {
+  menu = homeHeaderMenu(menu);
   const img = root.querySelector(".logo");
   const url = imageUrl(hero.logo);
   img.hidden = !url;
@@ -44,11 +50,12 @@ export function renderHeader(root, hero, menu, action) {
     action(String(hero.primaryTarget || ""), String(label || ""));
   root.querySelector("nav").replaceChildren(
     ...menu.map((item) => {
-      const button = document.createElement("button");
-      button.type = "button";
+      const button = document.createElement(item.href ? "a" : "button");
+      if (item.href) button.href = item.href;
+      else button.type = "button";
       button.className = "nav-link";
       button.textContent = String(item.title || "");
-      button.addEventListener("click", () =>
+      if (!item.href) button.addEventListener("click", () =>
         action(String(item.target || ""), String(item.title || "")),
       );
       return button;
@@ -62,8 +69,9 @@ export function renderHeader(root, hero, menu, action) {
   });
   root.querySelector(".mobile-nav").replaceChildren(
     ...menu.map((item, index) => {
-      const link = document.createElement("button");
-      link.type = "button";
+      const link = document.createElement(item.href ? "a" : "button");
+      if (item.href) link.href = item.href;
+      else link.type = "button";
       link.className = "mobile-nav-link";
       link.style.setProperty("--item-index", index);
       const number = document.createElement("span");
@@ -78,7 +86,7 @@ export function renderHeader(root, hero, menu, action) {
       arrow.setAttribute("aria-hidden", "true");
       arrow.textContent = "↗";
       link.append(number, title, arrow);
-      link.addEventListener("click", () =>
+      if (!item.href) link.addEventListener("click", () =>
         action(String(item.target || ""), String(item.title || "")),
       );
       return link;
@@ -148,7 +156,7 @@ export function bindHeader(host) {
   });
   host.shadowRoot.addEventListener("keydown", (event) => {
     if (event.key === "Tab" && dialog.open) {
-      const buttons = [...dialog.querySelectorAll("button")].filter(
+      const buttons = [...dialog.querySelectorAll("button, a[href]")].filter(
         (button) => !button.disabled && button.getClientRects().length > 0,
       );
       const first = buttons[0];
